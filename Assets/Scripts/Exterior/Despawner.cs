@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class EnemyDespawn : MonoBehaviour
+public class Despawner : MonoBehaviour
 {
+    [SerializeField] private string targetTag = "Enemy";
+
     private void Start()
     {
         
@@ -17,7 +19,7 @@ public class EnemyDespawn : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.transform.tag == "Enemy")
+        if (collision.transform.CompareTag(targetTag))
         {
             Destroy(collision.gameObject);
         }

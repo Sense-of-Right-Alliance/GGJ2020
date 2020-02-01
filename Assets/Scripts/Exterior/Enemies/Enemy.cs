@@ -3,32 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class EnemyShip : MonoBehaviour
+public class Enemy : MonoBehaviour
 {
     [SerializeField] GameObject explosionPrefab;
-    [SerializeField] float speed = 5f;
     [SerializeField] int hitPoints = 2;
-
-    Rigidbody2D rigidbody2D;
-
-    private void Awake()
-    {
-        rigidbody2D = GetComponent<Rigidbody2D>();
-    }
 
     private void Start()
     {
         
-    }
-
-    private void Update()
-    {
-        UpdateMovement();
-    }
-
-    private void UpdateMovement()
-    {
-        rigidbody2D.AddForce(speed * Vector2.down);
     }
 
     public void TakeHit(int damage)
