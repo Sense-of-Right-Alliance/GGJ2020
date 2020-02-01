@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.SceneManagement;
 
 public class ExteriorManager : MonoBehaviour
 {
@@ -34,7 +35,7 @@ public class ExteriorManager : MonoBehaviour
 
     public void HandleShipDestroyed(Ship ship)
     {
-        // TODO: Handle game over
         Debug.Log("ExteriorManager -> Game Over!");
+        SceneManager.LoadScene(0);
     }
 }
