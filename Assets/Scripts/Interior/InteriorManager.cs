@@ -5,6 +5,9 @@ using System.Linq;
 
 public class InteriorManager : MonoBehaviour
 {
+    [SerializeField] GameObject resourcePrefab;
+    [SerializeField] Transform resourceSpawn;
+
     private void Start()
     {
         
@@ -12,6 +15,15 @@ public class InteriorManager : MonoBehaviour
 
     private void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.R)) // Debug!
+        {
+            SpawnResource();
+        }
+    }
+
+    // Spawns a resource game object inside the ship, which the interior player can pickup and drop off at a station
+    public void SpawnResource()
+    {
+        GameObject.Instantiate<GameObject>(resourcePrefab, resourceSpawn.position, Quaternion.identity);
     }
 }

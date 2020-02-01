@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class Ship : MonoBehaviour
 {
-    [SerializeField] int hitPoints = 5;
-    [SerializeField] float horizontalSpeed = 5f;
-    [SerializeField] float verticalSpeed = 5f;
+    [SerializeField] int MaxHitPoints = 5;
+    [SerializeField] float speed = 3f;
+    //[SerializeField] float verticalSpeed = 5f;
+
+    [SerializeField] float speedBoost = 0f;
+    [SerializeField] float fireRateBoost = 0f;
 
     [SerializeField] GameObject projectilePrefab;
     [SerializeField] GameObject explosionPrefab;
@@ -15,9 +18,21 @@ public class Ship : MonoBehaviour
 
     [SerializeField] Transform projectileSpawnTransform;
 
+    [SerializeField] Sprite[] damageSprites;
+    [SerializeField] SpriteRenderer damageRenderer;
+
     [SerializeField] Vector2 velocity = Vector2.zero;
 
+    private int currentHitPoints = 0;
+    private float speedBoostTimer = 0f;
+
+    private float fireRate = 3f; // shots per second
+    private float fireTimer = 0f;
+    
+    private float fireRateBoostTimer = 0f;
+
     Rigidbody2D rigidbody2D;
+
 
     private void Awake()
     {
@@ -27,71 +42,128 @@ public class Ship : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        
+        currentHitPoints = MaxHitPoints;
+        UpdateDamageSprite();
+        speedBoost = 0;
+        fireRateBoost = 0f;
     }
 
     // Update is called once per frame
     private void Update()
     {
+        UpdateSpeedBoost();
+        UpdateFireRateBoost();
         UpdateMovement();
         UpdateProjectile();
+    }
+
+    private void UpdateSpeedBoost()
+    {
+        speedBoostTimer -= Time.deltaTime;
+        if (speedBoostTimer <= 0f)
+        {
+            speedBoostTimer = 0;
+            speedBoost = 0;
+        }
+    }
+
+    private void UpdateFireRateBoost()
+    {
+        fireRateBoostTimer -= Time.deltaTime;
+        if (fireRateBoostTimer <= 0f)
+        {
+            fireRateBoostTimer = 0f;
+            fireRateBoost = 0f;
+        }
     }
 
     void UpdateMovement()
     {
         velocity *= 0.5f;
 
+        float boostedSpeed = speed + speedBoost;
+
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            velocity.x -= horizontalSpeed;// * Time.deltaTime;
+            velocity.x -= boostedSpeed;// * Time.deltaTime;
         }
         else if (Input.GetKey(KeyCode.RightArrow))
         {
-            velocity.x += horizontalSpeed;// * Time.deltaTime;
+            velocity.x += boostedSpeed;// * Time.deltaTime;
         }
 
         if (Input.GetKey(KeyCode.UpArrow))
         {
-            velocity.y += horizontalSpeed;// * Time.deltaTime;
+            velocity.y += boostedSpeed;// * Time.deltaTime;
         }
         else if (Input.GetKey(KeyCode.DownArrow))
         {
-            velocity.y -= horizontalSpeed;// * Time.deltaTime;
+            velocity.y -= boostedSpeed;// * Time.deltaTime;
         }
-
-        /*
-        Vector3 newPos = transform.position;
-        newPos.x += velocity.x;
-        newPos.y += velocity.y;
-        */
-
-        //transform.position = newPos;
 
         rigidbody2D.AddForce(velocity);
     }
 
     void UpdateProjectile()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Space))
         {
-            Instantiate(projectilePrefab, projectileSpawnTransform.position, Quaternion.identity);
+            fireTimer -= Time.deltaTime;
+            if (fireTimer <= 0f)
+            {
+                fireTimer = 1f / (fireRate + fireRateBoost);
+                Instantiate(projectilePrefab, projectileSpawnTransform.position, Quaternion.identity);
+            }
         }
     }
 
-    public void takeHit(int damage)
+    public void TakeHit(int damage)
     {
-        hitPoints -= damage;
+        currentHitPoints = Mathf.Max(currentHitPoints - damage, 0);
 
-        if (hitPoints <= 0)
+        if (currentHitPoints <= 0)
         {
             if (explosionPrefab != null) Instantiate(explosionPrefab, transform.position, Quaternion.identity);
             exteriorManager.HandleShipDestroyed(this);
             Destroy(gameObject);
         }
+
+        UpdateDamageSprite();
     }
 
-    public void repairDamage(int damage)
+    private void UpdateDamageSprite()
     {
-        hitPoints += damage;
+        float percent = (currentHitPoints * 1f) / (MaxHitPoints * 1f);
+
+        //Debug.Log("damage percent = " + percent + " index = " + Mathf.FloorToInt(damageSprites.Length * percent));
+
+        if (percent >= 1f) damageRenderer.enabled = false;
+        else
+        {
+            damageRenderer.enabled = true;
+            damageRenderer.sprite = damageSprites[Mathf.FloorToInt(damageSprites.Length * percent)];
+        }
+    }
+
+    public void RepairDamage(int amount)
+    {
+        currentHitPoints = Mathf.Min(currentHitPoints + amount, MaxHitPoints);
+
+        UpdateDamageSprite();
+    }
+
+    public void BoostSpeed(float amount, float duration)
+    {
+        speedBoost += amount;
+
+        speedBoostTimer += duration;
+
+        Debug.Log("Ship Boosting Speed: Boost = " + speedBoost + " timer = " + speedBoostTimer);
+    }
+
+    public void BoostFireRate(float amount, float duration)
+    {
+        fireRateBoost = amount;
+        fireRateBoostTimer += duration;
     }
 }
