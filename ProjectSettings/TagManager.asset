@@ -24,7 +24,7 @@ TagManager:
   - Bounds
   - InteriorBounds
   - InteriorPlayer
-  - 
+  - InteriorBackground
   - 
   - 
   - 
@@ -50,6 +50,9 @@ TagManager:
     locked: 0
   - name: Enemy Ship
     uniqueID: 3742355973
+    locked: 0
+  - name: Interior Background
+    uniqueID: 4158086377
     locked: 0
   - name: Player Ship
     uniqueID: 2081759439
