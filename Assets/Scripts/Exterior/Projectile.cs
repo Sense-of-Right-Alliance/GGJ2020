@@ -36,7 +36,7 @@ public class Projectile : MonoBehaviour
         else if (collision.transform.tag == "Enemy")
         {
             if (explosionPrefab != null) Instantiate(explosionPrefab, transform.position, Quaternion.identity);
-            collision.gameObject.GetComponent<EnemyShip>().TakeHit(damage);
+            collision.gameObject.GetComponent<Enemy>().TakeHit(damage);
             Destroy(gameObject);
         }
     }
