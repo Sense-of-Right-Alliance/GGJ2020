@@ -7,6 +7,7 @@ TagManager:
   - Bounds
   - Enemy
   - Player Projectile
+  - Interior Resource
   layers:
   - Default
   - TransparentFX
@@ -21,8 +22,8 @@ TagManager:
   - Player Projectile
   - Enemy Projectile
   - Bounds
-  - 
-  - 
+  - InteriorBounds
+  - InteriorPlayer
   - 
   - 
   - 
@@ -58,4 +59,10 @@ TagManager:
     locked: 0
   - name: Player Laser
     uniqueID: 4077113917
+    locked: 0
+  - name: Interior Ship
+    uniqueID: 2417938109
+    locked: 0
+  - name: Interior Player
+    uniqueID: 1797689083
     locked: 0

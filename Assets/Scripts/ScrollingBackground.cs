@@ -13,7 +13,7 @@ public class ScrollingBackground : MonoBehaviour
     private void Start()
     {
         SpriteRenderer spriteRenderer = backgrounds[0].GetComponent<SpriteRenderer>();
-        spriteHeight = spriteRenderer.sprite.bounds.size.y;
+        spriteHeight = spriteRenderer.sprite.bounds.size.y * backgrounds[0].transform.localScale.y;
 
         Vector2 newPos = backgrounds[0].position;
         newPos.y = backgrounds[1].position.y + spriteHeight;

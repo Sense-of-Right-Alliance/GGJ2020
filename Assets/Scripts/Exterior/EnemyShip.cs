@@ -45,7 +45,7 @@ public class EnemyShip : MonoBehaviour
     {
         if (collision.transform.tag == "Player")
         {
-            collision.gameObject.GetComponent<Ship>().takeHit(hitPoints); // deals damage in remaining hitpoints... 'cause yeah
+            collision.gameObject.GetComponent<Ship>().TakeHit(hitPoints); // deals damage in remaining hitpoints... 'cause yeah
             Destroy(gameObject);
         }
     }
