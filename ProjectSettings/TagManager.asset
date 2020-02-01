@@ -3,7 +3,10 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Bounds
+  - Enemy
+  - Player Projectile
   layers:
   - Default
   - TransparentFX
@@ -13,11 +16,11 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Player
+  - Enemy
+  - Player Projectile
+  - Enemy Projectile
+  - Bounds
   - 
   - 
   - 
@@ -40,4 +43,19 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: BG
+    uniqueID: 1127121769
+    locked: 0
+  - name: Enemy Ship
+    uniqueID: 3742355973
+    locked: 0
+  - name: Player Ship
+    uniqueID: 2081759439
+    locked: 0
+  - name: Enemy Laser
+    uniqueID: 3819103359
+    locked: 0
+  - name: Player Laser
+    uniqueID: 4077113917
     locked: 0
