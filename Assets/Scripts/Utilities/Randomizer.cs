@@ -13,7 +13,7 @@ public static class Randomizer
 
     public static EnemyType GetEnemyType()
     {
-        return (EnemyType)UnityEngine.Random.Range(1, 2);
+        return (EnemyType)UnityEngine.Random.Range(1, 4);
     }
 
     public static SpawnPattern GetSpawnPattern()

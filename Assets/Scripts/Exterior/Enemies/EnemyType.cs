@@ -7,4 +7,6 @@ public enum EnemyType
 {
     Unknown,
     Speedster,
+    PlainJane,
+    BigBoi,
 }
