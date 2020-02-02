@@ -33,7 +33,7 @@ public class InteriorPlayer : MonoBehaviour
 
     void UpdateMovement()
     {
-        velocity *= 0.5f;
+        velocity = new Vector2(0,0); //*= 0.5f;
 
         if (Input.GetKey(KeyCode.A))
         {
@@ -42,7 +42,11 @@ public class InteriorPlayer : MonoBehaviour
         else if (Input.GetKey(KeyCode.D))
         {
             velocity.x += speed;
+        } else
+        {
+            velocity.x = Input.GetAxis("Horizontal");
         }
+
 
         if (Input.GetKey(KeyCode.W))
         {
@@ -51,6 +55,9 @@ public class InteriorPlayer : MonoBehaviour
         else if (Input.GetKey(KeyCode.S))
         {
             velocity.y -= speed;
+        } else
+        {
+            velocity.y = Input.GetAxis("Vertical");
         }
 
         rigidbody2D.AddForce(velocity);

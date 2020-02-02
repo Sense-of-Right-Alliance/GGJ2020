@@ -83,20 +83,20 @@ public class Ship : MonoBehaviour
 
         float boostedSpeed = speed + speedBoost;
 
-        if (Input.GetKey(KeyCode.LeftArrow))
+        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetAxis("Horizontal2") < 0)
         {
             velocity.x -= boostedSpeed;// * Time.deltaTime;
         }
-        else if (Input.GetKey(KeyCode.RightArrow))
+        else if (Input.GetKey(KeyCode.RightArrow) || Input.GetAxis("Horizontal2") > 0)
         {
             velocity.x += boostedSpeed;// * Time.deltaTime;
         }
 
-        if (Input.GetKey(KeyCode.UpArrow))
+        if (Input.GetKey(KeyCode.UpArrow) || Input.GetAxis("Vertical2") < 0)
         {
             velocity.y += boostedSpeed;// * Time.deltaTime;
         }
-        else if (Input.GetKey(KeyCode.DownArrow))
+        else if (Input.GetKey(KeyCode.DownArrow) || Input.GetAxis("Vertical2") > 0)
         {
             velocity.y -= boostedSpeed;// * Time.deltaTime;
         }
@@ -106,7 +106,7 @@ public class Ship : MonoBehaviour
 
     void UpdateProjectile()
     {
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Space) || Input.GetButton("A2"))
         {
             fireTimer -= Time.deltaTime;
             if (fireTimer <= 0f)
