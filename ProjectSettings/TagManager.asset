@@ -9,6 +9,7 @@ TagManager:
   - Player Projectile
   - Interior Resource
   - Resource
+  - AmbushEnemy
   layers:
   - Default
   - TransparentFX
