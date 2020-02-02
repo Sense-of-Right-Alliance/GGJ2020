@@ -69,11 +69,11 @@ public class InteriorPlayer : MonoBehaviour
         {
             if (heldResource == null && overResources.Count > 0)
             {
-                Debug.Log("Interior Player Picking Up Resource!");
+                //Debug.Log("Interior Player Picking Up Resource!");
                 PickupResource();
             } else
             {
-                Debug.Log("Interior Player Dropping Resource!");
+                //Debug.Log("Interior Player Dropping Resource!");
                 DropResource();
             }
         }
@@ -87,14 +87,20 @@ public class InteriorPlayer : MonoBehaviour
 
     void PickupResource()
     {
-        heldResource = overResources[0];
-        overResources.RemoveAt(0);
+        if (heldResource == null)
+        {
+            heldResource = overResources[0];
+            overResources.RemoveAt(0);
+        }
     }
 
-    void DropResource()
+    public void DropResource()
     {
-        overResources.Add(heldResource);
-        heldResource = null;
+        if (heldResource != null)
+        {
+            overResources.Add(heldResource);
+            heldResource = null;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

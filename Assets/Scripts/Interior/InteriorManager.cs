@@ -11,6 +11,7 @@ public class InteriorManager : MonoBehaviour
 
     [SerializeField] float flameChance = 0.6f;
 
+    [SerializeField] Ship exteriorShip;
     [SerializeField] InteriorPlayer interiorPlayer;
     [SerializeField] Station[] stations;
 
@@ -24,6 +25,8 @@ public class InteriorManager : MonoBehaviour
         if (interiorCamera == null) interiorCamera = GameObject.Find("InteriorCamera");
         if (interiorCameraQuad == null) interiorCameraQuad = GameObject.Find("InteriorCameraQuad");
         if (interiorShipMap == null) interiorShipMap = GameObject.Find("ShipInteriorMap");
+
+        if (exteriorShip == null) exteriorShip = GameObject.Find("ExteriorShip").GetComponent<Ship>();
     }
 
     private void Start()
@@ -52,9 +55,10 @@ public class InteriorManager : MonoBehaviour
         interiorCameraQuad.GetComponent<CameraShake>().Shake(0.3f,0.005f);
         interiorShipMap.GetComponent<CameraShake>().Shake(0.3f, 0.005f);
 
+        interiorPlayer.DropResource();
         interiorPlayer.RandomPush();
 
-        if (Random.value < flameChance && stations.Length > 0)
+        if (exteriorShip.Shields <= 0 && Random.value < flameChance && stations.Length > 0)
         {
             Station igniteStation = stations[Random.Range(0, stations.Length)];
             if (flamePrefab != null)
