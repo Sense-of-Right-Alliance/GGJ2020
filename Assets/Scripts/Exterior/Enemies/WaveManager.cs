@@ -95,8 +95,7 @@ public class WaveManager : MonoBehaviour
     {
         var enemyType = Randomizer.GetEnemyType();
         var spawnPattern = Randomizer.GetSpawnPattern();
-        //var spawnZone = Randomizer.GetSpawnZone();
-        var spawnZone = SpawnZone.Top;
+        var spawnZone = Randomizer.GetSpawnZone();
 
         var randomizedSquadron = new Squadron(enemyType, spawnPattern, spawnZone);
 
