@@ -136,6 +136,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   explosionPrefab: {fileID: 0}
   hitPoints: 2
+  resourcePickupPrefab: {fileID: 1346024567363085296, guid: 363461cbd48a8bd44b2475ac184559d6,
+    type: 3}
+  dropChance: 0.5
 --- !u!50 &942606664080155765
 Rigidbody2D:
   serializedVersion: 4
@@ -170,3 +173,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 3
+  direction: {x: 0, y: -1}

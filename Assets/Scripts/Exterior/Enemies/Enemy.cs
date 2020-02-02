@@ -7,6 +7,8 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField] GameObject explosionPrefab;
     [SerializeField] int hitPoints = 2;
+    [SerializeField] GameObject resourcePickupPrefab;
+    [SerializeField] float dropChance = 0.5f; // chance
 
     private void Start()
     {
@@ -19,6 +21,7 @@ public class Enemy : MonoBehaviour
         if (hitPoints <= 0)
         {
             if (explosionPrefab != null) Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+            if (resourcePickupPrefab != null && Random.value < dropChance) Instantiate(resourcePickupPrefab, transform.position, Quaternion.identity);
             Destroy(gameObject);
         }
     }
