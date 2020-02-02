@@ -9,13 +9,36 @@ public class Enemy : MonoBehaviour
     [SerializeField] int hitPoints = 2;
     [SerializeField] GameObject resourcePickupPrefab;
     [SerializeField] float dropChance = 0.5f; // chance
+    [SerializeField] GameObject projectilePrefab;
+    [SerializeField] Transform projectileSpawnTransform;
+    [SerializeField] private float shootDelay = 0.2f;
 
     private MovementBehaviour _movementBehaviour;
+
+    private float _shootTimer;
 
     private void Start()
     {
         _movementBehaviour = GetComponent<MovementBehaviour>();
         _movementBehaviour.direction = -transform.up;
+
+        _shootTimer = shootDelay;
+    }
+
+    private void Update()
+    {
+        _shootTimer -= Time.deltaTime;
+
+        if (_shootTimer <= 0f)
+        {
+            Shoot();
+            _shootTimer = shootDelay;
+        }
+    }
+
+    private void Shoot()
+    {
+        Instantiate(projectilePrefab, projectileSpawnTransform.position, transform.rotation);
     }
 
     public void TakeHit(int damage)

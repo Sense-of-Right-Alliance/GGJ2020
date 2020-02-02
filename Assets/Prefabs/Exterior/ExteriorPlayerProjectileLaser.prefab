@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -5212794706183490967}
   - component: {fileID: -1635305100421136544}
   m_Layer: 10
-  m_Name: ExteriorLaserProjectile
+  m_Name: ExteriorPlayerLaserProjectile
   m_TagString: Player Projectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
