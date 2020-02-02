@@ -5,19 +5,23 @@ using System.Linq;
 
 public class WeaponStation : Station
 {
-    private void Start()
-    {
-        
-    }
-
-    private void Update()
-    {
-        
-    }
-
     protected override void ProcessResource(Resource r)
     {
         Debug.Log("Weapon Station Processing!");
         Ship.BoostFireRate(r.Value * 3f, r.Value * 5f);
+    }
+
+    public override void Deactivate()
+    {
+        base.Deactivate();
+
+        Ship.DisableFiring();
+    }
+
+    public override void Reactivate()
+    {
+        base.Reactivate();
+
+        Ship.EnableFiring();
     }
 }

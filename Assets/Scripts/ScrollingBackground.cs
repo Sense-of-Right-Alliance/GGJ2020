@@ -30,7 +30,7 @@ public class ScrollingBackground : MonoBehaviour
             Vector2 newPos = backgrounds[i].position;
             newPos.y -= scrollSpeed * Time.deltaTime;
             
-            if (newPos.y < -spriteHeight)
+            if (newPos.y < -spriteHeight * 1f)
             {
                 newPos.y = backgrounds[(i+1) % backgrounds.Length].position.y + spriteHeight;
             }

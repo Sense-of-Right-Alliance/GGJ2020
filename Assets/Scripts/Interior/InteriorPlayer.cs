@@ -44,7 +44,7 @@ public class InteriorPlayer : MonoBehaviour
             velocity.x += speed;
         } else
         {
-            velocity.x = Input.GetAxis("Horizontal");
+            velocity.x = Input.GetAxis("Horizontal1") * speed;
         }
 
 
@@ -57,7 +57,7 @@ public class InteriorPlayer : MonoBehaviour
             velocity.y -= speed;
         } else
         {
-            velocity.y = Input.GetAxis("Vertical");
+            velocity.y = Input.GetAxis("Vertical1") * speed;
         }
 
         rigidbody2D.AddForce(velocity);
@@ -110,5 +110,14 @@ public class InteriorPlayer : MonoBehaviour
         {
             overResources.Remove(collision.gameObject);
         }
+    }
+
+    public void RandomPush()
+    {
+        Vector2 v = new Vector2(Random.Range(-1f,1f) * 1500f, Random.Range(-1f, 1f) * 1500f);
+
+        //Debug.Log("pushing player " + v.ToString());
+
+        rigidbody2D.AddForce(v);
     }
 }

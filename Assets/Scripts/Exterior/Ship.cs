@@ -5,16 +5,19 @@ using UnityEngine;
 public class Ship : MonoBehaviour
 {
     [SerializeField] int MaxHitPoints = 5;
-    [SerializeField] float speed = 3f;
-    //[SerializeField] float verticalSpeed = 5f;
 
+    [SerializeField] float speed = 3f;
     [SerializeField] float speedBoost = 0f;
+    [SerializeField] float maxSpeed = 10f;
+
+    [SerializeField] float fireRate = 3f; // shots per second
     [SerializeField] float fireRateBoost = 0f;
 
     [SerializeField] GameObject projectilePrefab;
     [SerializeField] GameObject explosionPrefab;
 
     [SerializeField] ExteriorManager exteriorManager;
+    [SerializeField] InteriorManager interiorManager;
 
     [SerializeField] Transform projectileSpawnTransform;
 
@@ -25,10 +28,10 @@ public class Ship : MonoBehaviour
 
     private int currentHitPoints = 0;
     private float speedBoostTimer = 0f;
+    private float crippledMovementSpeed = 0f;
 
-    private float fireRate = 8f; // shots per second
+    private bool firingEnabled = true;
     private float fireTimer = 0f;
-    
     private float fireRateBoostTimer = 0f;
 
     Rigidbody2D rigidbody2D;
@@ -37,6 +40,9 @@ public class Ship : MonoBehaviour
     private void Awake()
     {
         rigidbody2D = GetComponent<Rigidbody2D>();
+
+        if (exteriorManager == null) exteriorManager = GameObject.FindObjectOfType<ExteriorManager>();
+        if (interiorManager == null) interiorManager = GameObject.FindObjectOfType<InteriorManager>();
     }
 
     // Start is called before the first frame update
@@ -54,7 +60,7 @@ public class Ship : MonoBehaviour
         UpdateSpeedBoost();
         UpdateFireRateBoost();
         UpdateMovement();
-        UpdateProjectile();
+        if (firingEnabled) UpdateProjectile();
     }
 
     private void UpdateSpeedBoost()
@@ -79,26 +85,33 @@ public class Ship : MonoBehaviour
 
     void UpdateMovement()
     {
-        velocity *= 0.5f;
+        velocity = new Vector2();//*= 0.5f;
 
-        float boostedSpeed = speed + speedBoost;
+        float boostedSpeed = Mathf.Max(0,Mathf.Min(speed + speedBoost - crippledMovementSpeed, maxSpeed));
 
-        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetAxis("Horizontal2") < 0)
+        if (Input.GetKey(KeyCode.LeftArrow))
         {
             velocity.x -= boostedSpeed;// * Time.deltaTime;
         }
-        else if (Input.GetKey(KeyCode.RightArrow) || Input.GetAxis("Horizontal2") > 0)
+        else if (Input.GetKey(KeyCode.RightArrow))
         {
             velocity.x += boostedSpeed;// * Time.deltaTime;
+        } else
+        {
+            velocity.x = Input.GetAxis("Horizontal2") * boostedSpeed;
         }
 
-        if (Input.GetKey(KeyCode.UpArrow) || Input.GetAxis("Vertical2") < 0)
+        if (Input.GetKey(KeyCode.UpArrow))
         {
             velocity.y += boostedSpeed;// * Time.deltaTime;
         }
-        else if (Input.GetKey(KeyCode.DownArrow) || Input.GetAxis("Vertical2") > 0)
+        else if (Input.GetKey(KeyCode.DownArrow))
         {
             velocity.y -= boostedSpeed;// * Time.deltaTime;
+        }
+        else
+        {
+            velocity.y = Input.GetAxis("Vertical2") * boostedSpeed;
         }
 
         rigidbody2D.AddForce(velocity);
@@ -129,6 +142,8 @@ public class Ship : MonoBehaviour
         }
 
         UpdateDamageSprite();
+
+        interiorManager.HandleShipDamage();
     }
 
     private void UpdateDamageSprite()
@@ -158,12 +173,27 @@ public class Ship : MonoBehaviour
 
         speedBoostTimer += duration;
 
-        Debug.Log("Ship Boosting Speed: Boost = " + speedBoost + " timer = " + speedBoostTimer);
+        //Debug.Log("Ship Boosting Speed: Boost = " + speedBoost + " timer = " + speedBoostTimer);
     }
 
     public void BoostFireRate(float amount, float duration)
     {
         fireRateBoost = amount;
         fireRateBoostTimer += duration;
+    }
+
+    public void CrippleMovement(float amount)
+    {
+        crippledMovementSpeed = amount;
+    }
+
+    public void DisableFiring()
+    {
+        firingEnabled = false;
+    }
+
+    public void EnableFiring()
+    {
+        firingEnabled = true;
     }
 }

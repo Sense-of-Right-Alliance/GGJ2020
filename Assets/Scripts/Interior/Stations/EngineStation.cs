@@ -5,19 +5,24 @@ using System.Linq;
 
 public class EngineStation : Station
 {
-    private void Start()
-    {
-        
-    }
-
-    private void Update()
-    {
-        
-    }
 
     protected override void ProcessResource(Resource r)
     {
         Debug.Log("Engine Station Processing!");
-        Ship.BoostSpeed(r.Value * 6f, r.Value * 5f);
+        Ship.BoostSpeed(r.Value * 3f, r.Value * 6f);
+    }
+
+    public override void Deactivate()
+    {
+        base.Deactivate();
+
+        Ship.CrippleMovement(3f);
+    }
+
+    public override void Reactivate()
+    {
+        base.Reactivate();
+
+        Ship.CrippleMovement(0f);
     }
 }

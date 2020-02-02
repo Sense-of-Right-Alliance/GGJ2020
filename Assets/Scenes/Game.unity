@@ -1070,6 +1070,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   exteriorShip: {fileID: 0}
+  activated: 0
 --- !u!58 &410399004
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -1248,6 +1249,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   exteriorShip: {fileID: 0}
+  activated: 1
 --- !u!1 &480817478
 GameObject:
   m_ObjectHideFlags: 0
@@ -1705,6 +1707,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   exteriorShip: {fileID: 0}
+  activated: 0
 --- !u!58 &736944284
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -1991,6 +1994,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   exteriorShip: {fileID: 0}
+  activated: 1
 --- !u!1 &778529698
 GameObject:
   m_ObjectHideFlags: 0
@@ -2037,6 +2041,17 @@ MonoBehaviour:
   resourcePrefab: {fileID: 4660719601325771396, guid: 5fce5f9d81cb36d4e8d04d1f8ea7e08e,
     type: 3}
   resourceSpawn: {fileID: 608331567}
+  flamePrefab: {fileID: 4493216524806061772, guid: 5de765d239be8b6419a76f97028bd244,
+    type: 3}
+  flameChance: 0.6
+  interiorPlayer: {fileID: 0}
+  stations:
+  - {fileID: 1500790288}
+  - {fileID: 764113777}
+  - {fileID: 468980656}
+  interiorCamera: {fileID: 0}
+  interiorCameraQuad: {fileID: 0}
+  interiorShipMap: {fileID: 0}
 --- !u!1 &799045496
 GameObject:
   m_ObjectHideFlags: 0
@@ -2048,8 +2063,9 @@ GameObject:
   - component: {fileID: 799045497}
   - component: {fileID: 799045498}
   - component: {fileID: 799045499}
+  - component: {fileID: 799045500}
   m_Layer: 0
-  m_Name: Camera
+  m_Name: InteriorCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2063,7 +2079,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 799045496}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 30, y: -6, z: -10}
+  m_LocalPosition: {x: 30, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 331577374}
@@ -2125,6 +2141,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   followTarget: {fileID: 81000325}
+--- !u!114 &799045500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 799045496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a2912a4be22a6f449d85d76549009da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shake_decay: 0
+  shake_intensity: 0
 --- !u!1 &894931560
 GameObject:
   m_ObjectHideFlags: 0
@@ -2733,6 +2763,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   exteriorShip: {fileID: 0}
+  activated: 0
 --- !u!58 &1136984897
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -2954,6 +2985,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1269864556}
   - component: {fileID: 1269864557}
+  - component: {fileID: 1269864558}
   m_Layer: 0
   m_Name: ShipInteriorMap
   m_TagString: Untagged
@@ -3039,6 +3071,20 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1269864558
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1269864555}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a2912a4be22a6f449d85d76549009da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shake_decay: 0
+  shake_intensity: 0
 --- !u!1 &1319963083
 GameObject:
   m_ObjectHideFlags: 0
@@ -3297,6 +3343,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   exteriorShip: {fileID: 0}
+  activated: 1
 --- !u!1 &1567448982
 GameObject:
   m_ObjectHideFlags: 0
@@ -3587,6 +3634,7 @@ GameObject:
   - component: {fileID: 1737135822}
   - component: {fileID: 1737135821}
   - component: {fileID: 1737135820}
+  - component: {fileID: 1737135823}
   m_Layer: 0
   m_Name: InteriorCameraQuad
   m_TagString: Untagged
@@ -3669,6 +3717,20 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1737135818}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1737135823
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1737135818}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a2912a4be22a6f449d85d76549009da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shake_decay: 0
+  shake_intensity: 0
 --- !u!1 &1748563224
 GameObject:
   m_ObjectHideFlags: 0
@@ -4011,6 +4073,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemySpeedsterPrefab: {fileID: 4303212633405705334, guid: 3db5c4a9122b6c246a60304705d69368,
     type: 3}
+  enemyPlainJanePrefab: {fileID: 4303212633405705334, guid: 59ce3d331d990fa42aed61cea8ab1e90,
+    type: 3}
+  enemyBigBoiPrefab: {fileID: 4303212633405705334, guid: a407daa2025117848a1603cfb2e6f4d8,
+    type: 3}
   spawnDelay: 0.3
   enemyTopSpawnTransform: {fileID: 688071271}
   enemyBottomSpawnTransform: {fileID: 1169332290}
@@ -4318,7 +4384,7 @@ PrefabInstance:
     - target: {fileID: 2709358210058121327, guid: 990b27246ed4d83499c01f1565057762,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -6
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2709358210058121327, guid: 990b27246ed4d83499c01f1565057762,
         type: 3}
