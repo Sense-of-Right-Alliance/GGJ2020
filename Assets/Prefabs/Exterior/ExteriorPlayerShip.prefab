@@ -213,7 +213,7 @@ MonoBehaviour:
   speed: 4
   speedBoost: 0
   maxSpeed: 8
-  fireRate: 3
+  fireRate: 6
   fireRateBoost: 0
   projectilePrefab: {fileID: 2989912971476457516, guid: 85bde06338b7eac4da4e14c331c0bcf1,
     type: 3}

@@ -23,8 +23,6 @@ public class Projectile : MonoBehaviour
         newPos.y += speed * Time.deltaTime;
 
         transform.position = newPos;
-
-        // TODO: Use rigidbody physics
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -37,6 +35,12 @@ public class Projectile : MonoBehaviour
         {
             if (explosionPrefab != null) Instantiate(explosionPrefab, transform.position, Quaternion.identity);
             collision.gameObject.GetComponent<Enemy>().TakeHit(damage);
+            Destroy(gameObject);
+        }
+        else if (collision.transform.CompareTag("Asteroid"))
+        {
+            if (explosionPrefab != null) Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+            collision.gameObject.GetComponent<Asteroid>().TakeHit(damage);
             Destroy(gameObject);
         }
     }

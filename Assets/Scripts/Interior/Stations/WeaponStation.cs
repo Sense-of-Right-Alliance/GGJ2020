@@ -8,7 +8,7 @@ public class WeaponStation : Station
     protected override void ProcessResource(Resource r)
     {
         Debug.Log("Weapon Station Processing!");
-        Ship.BoostFireRate(r.Value * 3f, r.Value * 5f);
+        Ship.BoostFireRate(r.Value * 8f, r.Value * 5f);
     }
 
     public override void Deactivate()

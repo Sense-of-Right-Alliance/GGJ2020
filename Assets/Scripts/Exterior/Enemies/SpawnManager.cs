@@ -9,7 +9,9 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] GameObject enemySpeedsterPrefab;
     [SerializeField] GameObject enemyPlainJanePrefab;
     [SerializeField] GameObject enemyBigBoiPrefab;
-    [SerializeField] float spawnDelay = 0.3f; // seconds between each ship spawn in squadron
+    [SerializeField] GameObject hugeAsteroidPrefab;
+    [SerializeField] GameObject mediumAsteroidPrefab;
+    [SerializeField] float spawnDelay = 0.5f; // seconds between each ship spawn in squadron
     [SerializeField] Transform enemyTopSpawnTransform;
     [SerializeField] Transform enemyBottomSpawnTransform;
     [SerializeField] float spawnWidth = 10f;
@@ -34,6 +36,8 @@ public class SpawnManager : MonoBehaviour
             { EnemyType.Speedster, enemySpeedsterPrefab },
             { EnemyType.PlainJane, enemyPlainJanePrefab },
             { EnemyType.BigBoi, enemyBigBoiPrefab },
+            { EnemyType.HugeAsteroid, hugeAsteroidPrefab },
+            { EnemyType.MediumAsteroid, mediumAsteroidPrefab },
         };
     }
 
@@ -126,36 +130,41 @@ public class SpawnManager : MonoBehaviour
     {
         Vector2 referenceVector;
         Quaternion rotation;
-        string tag;
+        string tagName;
         switch (squadron.SpawnZone)
         {
             case SpawnZone.Bottom:
                 referenceVector = enemyBottomSpawnTransform.position;
                 rotation = Quaternion.Euler(0, 0, 180f);
-                tag = "AmbushEnemy";
+                tagName = "AmbushEnemy";
                 break;
             case SpawnZone.Top:
             case SpawnZone.Unknown:
             default:
                 referenceVector = enemyTopSpawnTransform.position;
                 rotation = Quaternion.identity;
-                tag = "Enemy";
+                tagName = "Enemy";
                 break;
+        }
+
+        if (squadron.EnemyType == EnemyType.HugeAsteroid || squadron.EnemyType == EnemyType.MediumAsteroid)
+        {
+            tagName = "Asteroid";
         }
 
         switch (squadron.SpawnPattern)
         {
             case SpawnPattern.Center:
-                StartCoroutine(SpawnCenter(referenceVector, squadron.EnemyType, rotation, tag));
+                StartCoroutine(SpawnCenter(referenceVector, squadron.EnemyType, rotation, tagName));
                 break;
             case SpawnPattern.Random:
-                StartCoroutine(SpawnRandom(referenceVector, squadron.EnemyType, rotation, tag));
+                StartCoroutine(SpawnRandom(referenceVector, squadron.EnemyType, rotation, tagName));
                 break;
             case SpawnPattern.FlyingV:
-                StartCoroutine(SpawnFlyingV(referenceVector, squadron.EnemyType, rotation, tag, false));
+                StartCoroutine(SpawnFlyingV(referenceVector, squadron.EnemyType, rotation, tagName, false));
                 break;
             case SpawnPattern.FlyingVInverted:
-                StartCoroutine(SpawnFlyingV(referenceVector, squadron.EnemyType, rotation, tag, true));
+                StartCoroutine(SpawnFlyingV(referenceVector, squadron.EnemyType, rotation, tagName, true));
                 break;
         }
     }

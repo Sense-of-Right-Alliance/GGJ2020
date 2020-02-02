@@ -10,7 +10,7 @@ public class Ship : MonoBehaviour
     [SerializeField] float speedBoost = 0f;
     [SerializeField] float maxSpeed = 10f;
 
-    [SerializeField] float fireRate = 3f; // shots per second
+    [SerializeField] float fireRate = 6f; // shots per second
     [SerializeField] float fireRateBoost = 0f;
 
     [SerializeField] GameObject projectilePrefab;

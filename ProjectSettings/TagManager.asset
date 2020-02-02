@@ -10,6 +10,7 @@ TagManager:
   - Interior Resource
   - Resource
   - AmbushEnemy
+  - Asteroid
   layers:
   - Default
   - TransparentFX

@@ -9,13 +9,36 @@ public class Enemy : MonoBehaviour
     [SerializeField] int hitPoints = 2;
     [SerializeField] GameObject resourcePickupPrefab;
     [SerializeField] float dropChance = 0.5f; // chance
+    [SerializeField] GameObject projectilePrefab;
+    [SerializeField] Transform projectileSpawnTransform;
+    [SerializeField] private float shootDelay = 0.2f;
 
     private MovementBehaviour _movementBehaviour;
+
+    private float _shootTimer;
 
     private void Start()
     {
         _movementBehaviour = GetComponent<MovementBehaviour>();
         _movementBehaviour.direction = -transform.up;
+
+        _shootTimer = shootDelay;
+    }
+
+    private void Update()
+    {
+        _shootTimer -= Time.deltaTime;
+
+        if (_shootTimer <= 0f)
+        {
+            Shoot();
+            _shootTimer = shootDelay;
+        }
+    }
+
+    private void Shoot()
+    {
+        Instantiate(projectilePrefab, projectileSpawnTransform.position, transform.rotation);
     }
 
     public void TakeHit(int damage)
@@ -23,15 +46,20 @@ public class Enemy : MonoBehaviour
         hitPoints -= damage;
         if (hitPoints <= 0)
         {
-            if (explosionPrefab != null) Instantiate(explosionPrefab, transform.position, Quaternion.identity);
-            if (resourcePickupPrefab != null && Random.value < dropChance) Instantiate(resourcePickupPrefab, transform.position, Quaternion.identity);
-            Destroy(gameObject);
+            BlowUp();
         }
+    }
+
+    public void BlowUp()
+    {
+        if (explosionPrefab != null) Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+        if (resourcePickupPrefab != null && Random.value < dropChance) Instantiate(resourcePickupPrefab, transform.position, Quaternion.identity);
+        Destroy(gameObject);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.transform.tag == "Player")
+        if (collision.transform.CompareTag("Player"))
         {
             collision.gameObject.GetComponent<Ship>().TakeHit(1); // deals only 1 damage because we're not masochists
             Destroy(gameObject);

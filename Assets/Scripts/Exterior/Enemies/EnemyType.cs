@@ -9,4 +9,6 @@ public enum EnemyType
     Speedster,
     PlainJane,
     BigBoi,
+    HugeAsteroid,
+    MediumAsteroid,
 }

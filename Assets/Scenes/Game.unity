@@ -246,7 +246,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -9, y: 0}
+  m_Offset: {x: -9.5, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -411,7 +411,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 9, y: 0}
+  m_Offset: {x: 9.5, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -540,7 +540,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -10}
+  m_Offset: {x: 0, y: -10.5}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -551,7 +551,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 18, y: 1}
+  m_Size: {x: 20, y: 1}
   m_EdgeRadius: 0
 --- !u!1 &108746598
 GameObject:
@@ -597,7 +597,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 10}
+  m_Offset: {x: 0, y: 10.5}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -608,7 +608,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 18, y: 1}
+  m_Size: {x: 20, y: 1}
   m_EdgeRadius: 0
 --- !u!1 &120336316
 GameObject:
@@ -827,8 +827,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 305988523}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.848, y: 0.56, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.05, z: 1}
+  m_LocalPosition: {x: -0.8474, y: 0.56, z: 0}
+  m_LocalScale: {x: 0.5004484, y: 0.05, z: 1}
   m_Children: []
   m_Father: {fileID: 1269864556}
   m_RootOrder: 9
@@ -1800,8 +1800,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 737286379}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.92, y: 0.56, z: 0}
-  m_LocalScale: {x: 0.45, y: 0.05, z: 1}
+  m_LocalPosition: {x: 0.8709, y: 0.56, z: 0}
+  m_LocalScale: {x: 0.48833996, y: 0.05, z: 1}
   m_Children: []
   m_Father: {fileID: 1269864556}
   m_RootOrder: 10
@@ -4077,6 +4077,10 @@ MonoBehaviour:
     type: 3}
   enemyBigBoiPrefab: {fileID: 4303212633405705334, guid: a407daa2025117848a1603cfb2e6f4d8,
     type: 3}
+  hugeAsteroidPrefab: {fileID: 4303212633405705334, guid: 5d009058a920e6b4ba903acf5d8ceb03,
+    type: 3}
+  mediumAsteroidPrefab: {fileID: 4303212633405705334, guid: e9bec8fcaf78864488a2e8e0562a568f,
+    type: 3}
   spawnDelay: 0.3
   enemyTopSpawnTransform: {fileID: 688071271}
   enemyBottomSpawnTransform: {fileID: 1169332290}
@@ -4376,6 +4380,11 @@ PrefabInstance:
       propertyPath: exteriorManager
       value: 
       objectReference: {fileID: 1888508384}
+    - target: {fileID: 2709358210058121326, guid: 990b27246ed4d83499c01f1565057762,
+        type: 3}
+      propertyPath: interiorManager
+      value: 
+      objectReference: {fileID: 778529700}
     - target: {fileID: 2709358210058121327, guid: 990b27246ed4d83499c01f1565057762,
         type: 3}
       propertyPath: m_LocalPosition.x
