@@ -2440,7 +2440,7 @@ GameObject:
   - component: {fileID: 1852490941}
   - component: {fileID: 1852490940}
   m_Layer: 0
-  m_Name: ExteriorCameraQuad (1)
+  m_Name: ExteriorCameraQuad
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2532,6 +2532,7 @@ GameObject:
   - component: {fileID: 1888508385}
   - component: {fileID: 1888508384}
   - component: {fileID: 1888508386}
+  - component: {fileID: 1888508387}
   m_Layer: 0
   m_Name: ExteriorManager
   m_TagString: Untagged
@@ -2577,12 +2578,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98e4fe53f3ef425a81d19d4baec49b86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyFighterPrefab: {fileID: 4303212633405705334, guid: 3db5c4a9122b6c246a60304705d69368,
+  enemySpeedsterPrefab: {fileID: 4303212633405705334, guid: 3db5c4a9122b6c246a60304705d69368,
     type: 3}
-  spawnRate: 3
+  spawnDelay: 0.3
   enemyTopSpawnTransform: {fileID: 688071271}
   enemyBottomSpawnTransform: {fileID: 1169332290}
   spawnWidth: 10
+--- !u!114 &1888508387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1888508383}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bbb0e10420286d4b9f6e07bce49d166, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waveNumber: 0
 --- !u!1 &1950095767
 GameObject:
   m_ObjectHideFlags: 0
