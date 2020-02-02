@@ -362,6 +362,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   logo: {fileID: 1279237448}
+  gorilla: {fileID: 751926908}
+  orangutan: {fileID: 1809088289}
   logoAnimateSpeed: 5
 --- !u!4 &1224548116
 Transform:
