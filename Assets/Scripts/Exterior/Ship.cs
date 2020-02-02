@@ -5,10 +5,12 @@ using UnityEngine;
 public class Ship : MonoBehaviour
 {
     [SerializeField] int MaxHitPoints = 5;
-    [SerializeField] float speed = 3f;
-    //[SerializeField] float verticalSpeed = 5f;
 
+    [SerializeField] float speed = 3f;
     [SerializeField] float speedBoost = 0f;
+    [SerializeField] float maxSpeed = 8f;
+
+    [SerializeField] float fireRate = 3f; // shots per second
     [SerializeField] float fireRateBoost = 0f;
 
     [SerializeField] GameObject projectilePrefab;
@@ -26,7 +28,6 @@ public class Ship : MonoBehaviour
     private int currentHitPoints = 0;
     private float speedBoostTimer = 0f;
 
-    private float fireRate = 8f; // shots per second
     private float fireTimer = 0f;
     
     private float fireRateBoostTimer = 0f;
@@ -81,7 +82,7 @@ public class Ship : MonoBehaviour
     {
         velocity *= 0.5f;
 
-        float boostedSpeed = speed + speedBoost;
+        float boostedSpeed = Mathf.Min(speed + speedBoost, maxSpeed);
 
         if (Input.GetKey(KeyCode.LeftArrow) || Input.GetAxis("Horizontal2") < 0)
         {

@@ -68,7 +68,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2081759439
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 24
   m_Sprite: {fileID: 21300000, guid: 4cf7260f9b1f3114eb08641a38dab5b5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -184,7 +184,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2081759439
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 07317c6ddb5af524d90fc0bb7f61b379, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -210,8 +210,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MaxHitPoints: 5
-  speed: 3
-  speedBoost: 1
+  speed: 1
+  speedBoost: 0
+  fireRate: 3
   fireRateBoost: 0
   projectilePrefab: {fileID: 2989912971476457516, guid: 85bde06338b7eac4da4e14c331c0bcf1,
     type: 3}
