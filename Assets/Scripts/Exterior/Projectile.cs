@@ -29,11 +29,11 @@ public class Projectile : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.transform.tag == "Bounds")
+        if (collision.transform.CompareTag("Bounds"))
         {
             Destroy(gameObject);
         }
-        else if (collision.transform.tag == "Enemy")
+        else if (collision.transform.CompareTag("Enemy") || collision.transform.CompareTag("AmbushEnemy"))
         {
             if (explosionPrefab != null) Instantiate(explosionPrefab, transform.position, Quaternion.identity);
             collision.gameObject.GetComponent<Enemy>().TakeHit(damage);
