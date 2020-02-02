@@ -6,13 +6,13 @@ public class Projectile : MonoBehaviour
 {
     [SerializeField] GameObject explosionPrefab;
 
-    [SerializeField] float speed = 10f;
+    [SerializeField] float speed = 40f;
     [SerializeField] int damage = 1;
 
     // Start is called before the first frame update
     private void Start()
     {
-        Debug.Log("Projectile Inited!");
+
     }
 
     // Update is called once per frame

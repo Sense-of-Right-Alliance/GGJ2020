@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -5212794706183490967}
   - component: {fileID: -1635305100421136544}
   m_Layer: 10
-  m_Name: LaserProjectile
+  m_Name: ExteriorLaserProjectile
   m_TagString: Player Projectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -71,7 +71,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -217853379
-  m_SortingLayer: 5
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 358013e93ee609a43b7b0cca03bb177c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -96,7 +96,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12a85cd842c39774884b26e4e31d517a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
+  explosionPrefab: {fileID: 0}
+  speed: 40
+  damage: 1
 --- !u!60 &-5212794706183490967
 PolygonCollider2D:
   m_ObjectHideFlags: 0

@@ -26,7 +26,7 @@ public class Ship : MonoBehaviour
     private int currentHitPoints = 0;
     private float speedBoostTimer = 0f;
 
-    private float fireRate = 3f; // shots per second
+    private float fireRate = 8f; // shots per second
     private float fireTimer = 0f;
     
     private float fireRateBoostTimer = 0f;
@@ -106,9 +106,9 @@ public class Ship : MonoBehaviour
 
     void UpdateProjectile()
     {
+        fireTimer -= Time.deltaTime;
         if (Input.GetKey(KeyCode.Space) || Input.GetButton("A2"))
         {
-            fireTimer -= Time.deltaTime;
             if (fireTimer <= 0f)
             {
                 fireTimer = 1f / (fireRate + fireRateBoost);

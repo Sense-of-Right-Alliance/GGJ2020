@@ -21,7 +21,6 @@ public class Despawner : MonoBehaviour
     {
         for (int i = 0; i < targetTags.Length; i++)
         {
-            Debug.Log(" despawn; tag hit = " + collision.transform.tag);
             if (collision.transform.CompareTag(targetTags[i]))
             {
                 Destroy(collision.gameObject);
