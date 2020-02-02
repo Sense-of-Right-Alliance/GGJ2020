@@ -6,13 +6,13 @@ using UnityEngine;
 public class MovementBehaviour : MonoBehaviour
 {
     [SerializeField] float speed = 3f;
-    [SerializeField] private Vector2 direction = Vector2.down;
+    public Vector2 direction = Vector2.down;
 
-    Rigidbody2D rigidbody2D;
+    private Rigidbody2D _rigidbody2D;
 
     private void Awake()
     {
-        rigidbody2D = GetComponent<Rigidbody2D>();
+        _rigidbody2D = GetComponent<Rigidbody2D>();
     }
 
     private void Start()
@@ -27,6 +27,6 @@ public class MovementBehaviour : MonoBehaviour
 
     private void UpdateMovement()
     {
-        rigidbody2D.AddForce(speed * direction);
+        _rigidbody2D.AddForce(speed * direction.normalized);
     }
 }
