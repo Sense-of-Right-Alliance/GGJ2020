@@ -7,6 +7,8 @@ using UnityEngine;
 public class SpawnManager : MonoBehaviour
 {
     [SerializeField] GameObject enemySpeedsterPrefab;
+    [SerializeField] GameObject enemyPlainJanePrefab;
+    [SerializeField] GameObject enemyBigBoiPrefab;
     [SerializeField] float spawnDelay = 0.3f; // seconds between each ship spawn in squadron
     [SerializeField] Transform enemyTopSpawnTransform;
     [SerializeField] Transform enemyBottomSpawnTransform;
@@ -29,7 +31,9 @@ public class SpawnManager : MonoBehaviour
     {
         _enemyPrefabs = new Dictionary<EnemyType, GameObject>
         {
-            { EnemyType.Speedster, enemySpeedsterPrefab }
+            { EnemyType.Speedster, enemySpeedsterPrefab },
+            { EnemyType.PlainJane, enemyPlainJanePrefab },
+            { EnemyType.BigBoi, enemyBigBoiPrefab },
         };
     }
 

@@ -22,19 +22,19 @@ public class WaveManager : MonoBehaviour
         new Wave(new List<WaveEvent>
         {
             WaveEvent.ShortDelay(),
-            WaveEvent.SpawnSquadron(new Squadron(EnemyType.Speedster, SpawnPattern.Center)),
+            WaveEvent.SpawnSquadron(new Squadron(EnemyType.BigBoi, SpawnPattern.Center)),
             WaveEvent.ShortDelay(),
         }),
         new Wave(new List<WaveEvent>
         {
             WaveEvent.ShortDelay(),
-            WaveEvent.SpawnSquadron(new Squadron(EnemyType.Speedster, SpawnPattern.FlyingVInverted)),
+            WaveEvent.SpawnSquadron(new Squadron(EnemyType.BigBoi, SpawnPattern.FlyingVInverted)),
             WaveEvent.ShortDelay(),
         }),
         new Wave(new List<WaveEvent>
         {
             WaveEvent.ShortDelay(),
-            WaveEvent.SpawnSquadron(new Squadron(EnemyType.Speedster, SpawnPattern.Random)),
+            WaveEvent.SpawnSquadron(new Squadron(EnemyType.PlainJane, SpawnPattern.Random)),
             WaveEvent.ShortDelay(),
         }),
     };
