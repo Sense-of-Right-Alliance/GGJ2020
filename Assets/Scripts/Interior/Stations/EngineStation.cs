@@ -18,6 +18,6 @@ public class EngineStation : Station
     protected override void ProcessResource(Resource r)
     {
         Debug.Log("Engine Station Processing!");
-        Ship.BoostSpeed(r.Value * 10f, r.Value * 5f);
+        Ship.BoostSpeed(r.Value * 6f, r.Value * 5f);
     }
 }
