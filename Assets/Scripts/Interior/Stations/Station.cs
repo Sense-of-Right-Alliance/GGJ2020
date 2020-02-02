@@ -6,6 +6,7 @@ using System.Linq;
 public class Station : MonoBehaviour
 {
     [SerializeField] Ship exteriorShip;
+    [SerializeField] bool activated = true;
 
     protected Ship Ship { get { return exteriorShip; }  }
 
@@ -16,7 +17,7 @@ public class Station : MonoBehaviour
 
     private void Start()
     {
-        
+        activated = true;
     }
 
     private void Update()
@@ -26,7 +27,7 @@ public class Station : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Interior Resource")
+        if (activated && collision.tag == "Interior Resource")
         {
             ProcessResource(collision.gameObject.GetComponent<Resource>());
             Destroy(collision.gameObject);
@@ -36,5 +37,15 @@ public class Station : MonoBehaviour
     protected virtual void ProcessResource(Resource r)
     {
         
+    }
+
+    public virtual void Deactivate()
+    {
+        activated = false;
+    }
+
+    public virtual void Reactivate()
+    {
+        activated = true;
     }
 }

@@ -111,4 +111,13 @@ public class InteriorPlayer : MonoBehaviour
             overResources.Remove(collision.gameObject);
         }
     }
+
+    public void RandomPush()
+    {
+        Vector2 v = new Vector2(Random.Range(-1f,1f) * 1500f, Random.Range(-1f, 1f) * 1500f);
+
+        //Debug.Log("pushing player " + v.ToString());
+
+        rigidbody2D.AddForce(v);
+    }
 }
