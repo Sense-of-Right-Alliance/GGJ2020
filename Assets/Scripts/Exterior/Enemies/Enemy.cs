@@ -10,9 +10,12 @@ public class Enemy : MonoBehaviour
     [SerializeField] GameObject resourcePickupPrefab;
     [SerializeField] float dropChance = 0.5f; // chance
 
+    private MovementBehaviour _movementBehaviour;
+
     private void Start()
     {
-        
+        _movementBehaviour = GetComponent<MovementBehaviour>();
+        _movementBehaviour.direction = -transform.up;
     }
 
     public void TakeHit(int damage)
@@ -30,7 +33,7 @@ public class Enemy : MonoBehaviour
     {
         if (collision.transform.tag == "Player")
         {
-            collision.gameObject.GetComponent<Ship>().TakeHit(hitPoints); // deals damage in remaining hitpoints... 'cause yeah
+            collision.gameObject.GetComponent<Ship>().TakeHit(1); // deals only 1 damage because we're not masochists
             Destroy(gameObject);
         }
     }

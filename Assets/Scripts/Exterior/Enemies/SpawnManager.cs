@@ -38,20 +38,21 @@ public class SpawnManager : MonoBehaviour
 
     }
 
-    private IEnumerator SpawnCenter(Vector2 reference, EnemyType enemyType)
+    private IEnumerator SpawnCenter(Vector2 reference, EnemyType enemyType, Quaternion rotation, string tagName)
     {
         Debug.Log("Spawning Center Formation");
         var prefab = _enemyPrefabs[enemyType];
 
         for (int i = 0; i < _squadronSpawns[SpawnPattern.Center]; i++)
         {
-            Instantiate(prefab, reference, Quaternion.identity);
+            var enemy = Instantiate(prefab, reference, rotation);
+            enemy.tag = tagName;
 
             yield return new WaitForSeconds(spawnDelay);
         }
     }
 
-    private IEnumerator SpawnRandom(Vector2 reference, EnemyType enemyType)
+    private IEnumerator SpawnRandom(Vector2 reference, EnemyType enemyType, Quaternion rotation, string tagName)
     {
         Debug.Log("Spawning Random 'Formation'");
         float radius = spawnWidth / 2.0f;
@@ -63,13 +64,14 @@ public class SpawnManager : MonoBehaviour
             var spawnPos = reference;
             spawnPos.x += UnityEngine.Random.Range(-radius, radius);
 
-            Instantiate(prefab, spawnPos, Quaternion.identity);
+            var enemy = Instantiate(prefab, spawnPos, rotation);
+            enemy.tag = tagName;
 
             yield return new WaitForSeconds(spawnDelay);
         }
     }
 
-    private IEnumerator SpawnFlyingV(Vector2 reference, EnemyType enemyType, bool inverted)
+    private IEnumerator SpawnFlyingV(Vector2 reference, EnemyType enemyType, Quaternion rotation, string tagName, bool inverted)
     {
         Debug.Log("Spawning Flying V Formation " + (inverted ? "(inverted)" : "(normal)"));
         float radius = spawnWidth / 2.0f;
@@ -108,7 +110,8 @@ public class SpawnManager : MonoBehaviour
             for (int j = 0; j < spawnLocations[i].Count; j++)
             {
                 var spawnPos = spawnLocations[i][j];
-                Instantiate(prefab, spawnPos, Quaternion.identity);
+                var enemy = Instantiate(prefab, spawnPos, rotation);
+                enemy.tag = tagName;
             }
 
             yield return new WaitForSeconds(spawnDelay);
@@ -118,31 +121,37 @@ public class SpawnManager : MonoBehaviour
     public void Spawn(Squadron squadron)
     {
         Vector2 referenceVector;
+        Quaternion rotation;
+        string tag;
         switch (squadron.SpawnZone)
         {
             case SpawnZone.Bottom:
                 referenceVector = enemyBottomSpawnTransform.position;
+                rotation = Quaternion.Euler(0, 0, 180f);
+                tag = "AmbushEnemy";
                 break;
             case SpawnZone.Top:
             case SpawnZone.Unknown:
             default:
                 referenceVector = enemyTopSpawnTransform.position;
+                rotation = Quaternion.identity;
+                tag = "Enemy";
                 break;
         }
 
         switch (squadron.SpawnPattern)
         {
             case SpawnPattern.Center:
-                StartCoroutine(SpawnCenter(referenceVector, squadron.EnemyType));
+                StartCoroutine(SpawnCenter(referenceVector, squadron.EnemyType, rotation, tag));
                 break;
             case SpawnPattern.Random:
-                StartCoroutine(SpawnRandom(referenceVector, squadron.EnemyType));
+                StartCoroutine(SpawnRandom(referenceVector, squadron.EnemyType, rotation, tag));
                 break;
             case SpawnPattern.FlyingV:
-                StartCoroutine(SpawnFlyingV(referenceVector, squadron.EnemyType, false));
+                StartCoroutine(SpawnFlyingV(referenceVector, squadron.EnemyType, rotation, tag, false));
                 break;
             case SpawnPattern.FlyingVInverted:
-                StartCoroutine(SpawnFlyingV(referenceVector, squadron.EnemyType, true));
+                StartCoroutine(SpawnFlyingV(referenceVector, squadron.EnemyType, rotation, tag, true));
                 break;
         }
     }
