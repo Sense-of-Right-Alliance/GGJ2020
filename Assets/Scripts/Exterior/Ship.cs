@@ -1,10 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Ship : MonoBehaviour
 {
-    [SerializeField] int MaxHitPoints = 5;
+    public UnityEvent shipHitEvent;
+
+    [SerializeField] int maxHitPoints = 5;
+    public int MaxHitPoints { get { return maxHitPoints; } }
 
     [SerializeField] float speed = 3f;
     [SerializeField] float speedBoost = 0f;
@@ -14,6 +18,7 @@ public class Ship : MonoBehaviour
     [SerializeField] float fireRateBoost = 0f;
 
     [SerializeField] GameObject projectilePrefab;
+    [SerializeField] GameObject energyBallPrefab;
     [SerializeField] GameObject explosionPrefab;
 
     [SerializeField] ExteriorManager exteriorManager;
@@ -24,9 +29,13 @@ public class Ship : MonoBehaviour
     [SerializeField] Sprite[] damageSprites;
     [SerializeField] SpriteRenderer damageRenderer;
 
+    [SerializeField] Sprite[] shieldsSprites;
+    [SerializeField] SpriteRenderer shieldsRenderer;
+
     [SerializeField] Vector2 velocity = Vector2.zero;
 
     private int currentHitPoints = 0;
+    public int HitPoints { get { return currentHitPoints; } }
     private float speedBoostTimer = 0f;
     private float crippledMovementSpeed = 0f;
 
@@ -36,6 +45,7 @@ public class Ship : MonoBehaviour
 
     Rigidbody2D rigidbody2D;
 
+    List<float> spreadStacks = new List<float>();
 
     private void Awake()
     {
@@ -43,13 +53,17 @@ public class Ship : MonoBehaviour
 
         if (exteriorManager == null) exteriorManager = GameObject.FindObjectOfType<ExteriorManager>();
         if (interiorManager == null) interiorManager = GameObject.FindObjectOfType<InteriorManager>();
+
+        if (shipHitEvent == null) shipHitEvent = new UnityEvent();
+
+        currentHitPoints = maxHitPoints;
     }
 
     // Start is called before the first frame update
     private void Start()
     {
-        currentHitPoints = MaxHitPoints;
         UpdateDamageSprite();
+        UpdateShieldsSprite();
         speedBoost = 0;
         fireRateBoost = 0f;
     }
@@ -59,28 +73,52 @@ public class Ship : MonoBehaviour
     {
         UpdateSpeedBoost();
         UpdateFireRateBoost();
+        UpdateWeaponSpread();
         UpdateMovement();
         if (firingEnabled) UpdateProjectile();
     }
 
     private void UpdateSpeedBoost()
     {
-        speedBoostTimer -= Time.deltaTime;
-        if (speedBoostTimer <= 0f)
+        if (speedBoost > 0f)
         {
-            speedBoostTimer = 0;
-            speedBoost = 0;
+            speedBoostTimer -= Time.deltaTime;
+            if (speedBoostTimer <= 0f)
+            {
+                speedBoostTimer = 0f;
+                speedBoost = 0f;
+            }
         }
     }
 
     private void UpdateFireRateBoost()
     {
-        fireRateBoostTimer -= Time.deltaTime;
-        if (fireRateBoostTimer <= 0f)
+        if (fireRateBoost > 0f)
         {
-            fireRateBoostTimer = 0f;
-            fireRateBoost = 0f;
+            fireRateBoostTimer -= Time.deltaTime;
+            if (fireRateBoostTimer <= 0f)
+            {
+                fireRateBoostTimer = 0f;
+                fireRateBoost = 0f;
+            }
         }
+    }
+
+    private void UpdateWeaponSpread()
+    {
+        if (spreadStacks.Count > 0 && spreadEnabled)
+        {
+            for (int i = spreadStacks.Count-1; i >= 0; i--)
+            {
+                spreadStacks[i] -= Time.deltaTime;
+                if (spreadStacks[i] <= 0f)
+                {
+                    spreadStacks.RemoveAt(i);
+                    i++;
+                    if (spreadStacks.Count == 0) break;
+                }
+            }
+        }        
     }
 
     void UpdateMovement()
@@ -126,29 +164,52 @@ public class Ship : MonoBehaviour
             {
                 fireTimer = 1f / (fireRate + fireRateBoost);
                 Instantiate(projectilePrefab, projectileSpawnTransform.position, Quaternion.identity);
+
+                if (spreadEnabled) // spread fire
+                {
+                    Vector2 newPos;
+                    float spreadDist = 0.5f;
+                    for (int i = 0; i < spreadStacks.Count; i++)
+                    {
+                        newPos = projectileSpawnTransform.position;
+                        newPos.x -= spreadDist * (i + 1);
+                        Instantiate(projectilePrefab, newPos, Quaternion.identity);
+                        newPos = projectileSpawnTransform.position;
+                        newPos.x += spreadDist * (i + 1);
+                        Instantiate(projectilePrefab, newPos, Quaternion.identity);
+                    }
+                }
             }
         }
     }
 
     public void TakeHit(int damage)
     {
-        currentHitPoints = Mathf.Max(currentHitPoints - damage, 0);
-
-        if (currentHitPoints <= 0)
+        if (shields > 0)
         {
-            if (explosionPrefab != null) Instantiate(explosionPrefab, transform.position, Quaternion.identity);
-            exteriorManager.HandleShipDestroyed(this);
-            Destroy(gameObject);
+            shields = Mathf.Max(shields - 1, 0); // could change to damage, if wanted that. But currently just negates a hit
+            UpdateShieldsSprite();
+        }
+        else
+        {
+            currentHitPoints = Mathf.Max(currentHitPoints - damage, 0);
+            UpdateDamageSprite();
+
+            if (currentHitPoints <= 0)
+            {
+                if (explosionPrefab != null) Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+                exteriorManager.HandleShipDestroyed(this);
+                Destroy(gameObject);
+            }
         }
 
-        UpdateDamageSprite();
-
+        shipHitEvent.Invoke();
         interiorManager.HandleShipDamage();
     }
 
     private void UpdateDamageSprite()
     {
-        float percent = (currentHitPoints * 1f) / (MaxHitPoints * 1f);
+        float percent = (currentHitPoints * 1f) / (maxHitPoints * 1f);
 
         //Debug.Log("damage percent = " + percent + " index = " + Mathf.FloorToInt(damageSprites.Length * percent));
 
@@ -162,7 +223,7 @@ public class Ship : MonoBehaviour
 
     public void RepairDamage(int amount)
     {
-        currentHitPoints = Mathf.Min(currentHitPoints + amount, MaxHitPoints);
+        currentHitPoints = Mathf.Min(currentHitPoints + amount, maxHitPoints);
 
         UpdateDamageSprite();
     }
@@ -187,13 +248,47 @@ public class Ship : MonoBehaviour
         crippledMovementSpeed = amount;
     }
 
-    public void DisableFiring()
+    public void DisableFiring() { firingEnabled = false; }
+    public void EnableFiring() { firingEnabled = true; }
+    
+    public void AddWeaponSpread(float duration)
     {
-        firingEnabled = false;
+        spreadStacks.Add(duration);
+    }
+    private bool spreadEnabled = true;
+    public void DisableSpread() { spreadEnabled = false; }
+    public void EnableSpread() { spreadEnabled = true; }
+
+    public void FireEnergyBall(float size)
+    {
+        if (energyBallPrefab != null)
+        {
+            Instantiate(energyBallPrefab, transform.position, Quaternion.identity);
+        }
     }
 
-    public void EnableFiring()
+    [SerializeField] int shields = 0;
+    public int Shields { get { return shields; } }
+    public int MaxShields { get { return shieldsSprites.Length; } }
+
+    private bool shieldsEnabled = true;
+    public void AddShields(int amount)
     {
-        firingEnabled = true;
+        shields = Mathf.Min(shields +amount, shieldsSprites.Length);
+
+        UpdateShieldsSprite();
     }
+
+    private void UpdateShieldsSprite()
+    {
+        if (shields <= 0 || !shieldsEnabled) shieldsRenderer.enabled = false;
+        else
+        {
+            shieldsRenderer.enabled = true;
+            shieldsRenderer.sprite = shieldsSprites[shields-1];
+        }
+    }
+
+    public void DisableShields() { shieldsEnabled = false; UpdateShieldsSprite(); }
+    public void EnableShields() { shieldsEnabled = true; UpdateShieldsSprite(); }
 }

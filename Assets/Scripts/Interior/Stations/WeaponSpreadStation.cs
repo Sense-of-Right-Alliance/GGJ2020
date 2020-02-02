@@ -3,25 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class EngineStation : DurationStation
+public class WeaponSpreadStation : DurationStation
 {
     protected override void ProcessResource(Resource r)
     {
-        //Debug.Log("Engine Station Processing!");
-        Ship.BoostSpeed(r.Value * 3f, r.Value * Duration);
+        //Debug.Log("Weapon SPREAD Station Processing!");
+
+        Ship.AddWeaponSpread(r.Value * Duration);
     }
 
     public override void Deactivate()
     {
         base.Deactivate();
 
-        Ship.CrippleMovement(3f);
+        Ship.DisableSpread();
     }
 
     public override void Reactivate()
     {
         base.Reactivate();
 
-        Ship.CrippleMovement(0f);
+        Ship.EnableSpread();
     }
 }

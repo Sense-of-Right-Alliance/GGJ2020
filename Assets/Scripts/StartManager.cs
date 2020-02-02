@@ -7,6 +7,9 @@ using UnityEngine.SceneManagement;
 public class StartManager : MonoBehaviour
 {
     [SerializeField] GameObject logo;
+    [SerializeField] GameObject gorilla;
+    [SerializeField] GameObject orangutan;
+
     [SerializeField] float logoAnimateSpeed = 5f;
 
     private int state = 0;
@@ -14,6 +17,9 @@ public class StartManager : MonoBehaviour
     private Vector2 startPos;
     private Vector2 endPos;
     private float t = 0f;
+
+    private bool p1Ready = false;
+    private bool p2Ready = false;
 
     private void Start()
     {
@@ -28,9 +34,17 @@ public class StartManager : MonoBehaviour
 
     private void UpdateIdle()
     {
-        if (Input.GetKeyDown(KeyCode.Space)
-             || Input.GetButtonDown("A1") || Input.GetButtonDown("B1")
-             || Input.GetButtonDown("A2") || Input.GetButtonDown("B2"))
+        if (Input.GetButtonDown("A1") || Input.GetButtonDown("B1"))
+        {
+            p1Ready = true;
+        }
+
+        if (Input.GetButtonDown("A2") || Input.GetButtonDown("B2"))
+        {
+            p2Ready = true;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space) && p1Ready && p2Ready)
         {
             startPos = logo.transform.position;
 
