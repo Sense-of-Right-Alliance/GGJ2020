@@ -135,7 +135,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   explosionPrefab: {fileID: 0}
-  hitPoints: 2
+  hitPoints: 1
   resourcePickupPrefab: {fileID: 1346024567363085296, guid: 363461cbd48a8bd44b2475ac184559d6,
     type: 3}
   dropChance: 0.5
