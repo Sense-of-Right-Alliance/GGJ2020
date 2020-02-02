@@ -4077,6 +4077,10 @@ MonoBehaviour:
     type: 3}
   enemyBigBoiPrefab: {fileID: 4303212633405705334, guid: a407daa2025117848a1603cfb2e6f4d8,
     type: 3}
+  hugeAsteroidPrefab: {fileID: 4303212633405705334, guid: 5d009058a920e6b4ba903acf5d8ceb03,
+    type: 3}
+  mediumAsteroidPrefab: {fileID: 4303212633405705334, guid: e9bec8fcaf78864488a2e8e0562a568f,
+    type: 3}
   spawnDelay: 0.3
   enemyTopSpawnTransform: {fileID: 688071271}
   enemyBottomSpawnTransform: {fileID: 1169332290}

@@ -37,5 +37,11 @@ public class Projectile : MonoBehaviour
             collision.gameObject.GetComponent<Enemy>().TakeHit(damage);
             Destroy(gameObject);
         }
+        else if (collision.transform.CompareTag("Asteroid"))
+        {
+            if (explosionPrefab != null) Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+            collision.gameObject.GetComponent<Asteroid>().TakeHit(damage);
+            Destroy(gameObject);
+        }
     }
 }

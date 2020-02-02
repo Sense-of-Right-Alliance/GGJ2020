@@ -16,26 +16,35 @@ public class WaveManager : MonoBehaviour
         new Wave(new List<WaveEvent>
         {
             WaveEvent.ShortDelay(),
-            WaveEvent.SpawnSquadron(new Squadron(EnemyType.Speedster, SpawnPattern.FlyingV)),
+            WaveEvent.SpawnSquadron(new Squadron(EnemyType.HugeAsteroid, SpawnPattern.Center)),
             WaveEvent.ShortDelay(),
+            WaveEvent.SpawnSquadron(new Squadron(EnemyType.Speedster, SpawnPattern.FlyingV, SpawnZone.Bottom)),
+            WaveEvent.SpawnSquadron(new Squadron(EnemyType.Speedster, SpawnPattern.FlyingVInverted, SpawnZone.Bottom)),
+            WaveEvent.MediumDelay(),
+            WaveEvent.SpawnSquadron(new Squadron(EnemyType.PlainJane, SpawnPattern.Random)),
+            WaveEvent.SpawnSquadron(new Squadron(EnemyType.PlainJane, SpawnPattern.Random)),
+            WaveEvent.ShortDelay(),
+            WaveEvent.SpawnSquadron(new Squadron(EnemyType.BigBoi, SpawnPattern.FlyingVInverted, SpawnZone.Bottom)),
         }),
         new Wave(new List<WaveEvent>
         {
             WaveEvent.ShortDelay(),
-            WaveEvent.SpawnSquadron(new Squadron(EnemyType.BigBoi, SpawnPattern.Center)),
-            WaveEvent.ShortDelay(),
+            WaveEvent.SpawnSquadron(new Squadron(EnemyType.Speedster, SpawnPattern.FlyingV)),
         }),
         new Wave(new List<WaveEvent>
         {
             WaveEvent.ShortDelay(),
             WaveEvent.SpawnSquadron(new Squadron(EnemyType.BigBoi, SpawnPattern.FlyingVInverted)),
-            WaveEvent.ShortDelay(),
         }),
         new Wave(new List<WaveEvent>
         {
             WaveEvent.ShortDelay(),
             WaveEvent.SpawnSquadron(new Squadron(EnemyType.PlainJane, SpawnPattern.Random)),
+        }),
+        new Wave(new List<WaveEvent>
+        {
             WaveEvent.ShortDelay(),
+            WaveEvent.SpawnSquadron(new Squadron(EnemyType.BigBoi, SpawnPattern.Center, SpawnZone.Bottom)),
         }),
     };
 

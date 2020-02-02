@@ -46,15 +46,20 @@ public class Enemy : MonoBehaviour
         hitPoints -= damage;
         if (hitPoints <= 0)
         {
-            if (explosionPrefab != null) Instantiate(explosionPrefab, transform.position, Quaternion.identity);
-            if (resourcePickupPrefab != null && Random.value < dropChance) Instantiate(resourcePickupPrefab, transform.position, Quaternion.identity);
-            Destroy(gameObject);
+            BlowUp();
         }
+    }
+
+    public void BlowUp()
+    {
+        if (explosionPrefab != null) Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+        if (resourcePickupPrefab != null && Random.value < dropChance) Instantiate(resourcePickupPrefab, transform.position, Quaternion.identity);
+        Destroy(gameObject);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.transform.tag == "Player")
+        if (collision.transform.CompareTag("Player"))
         {
             collision.gameObject.GetComponent<Ship>().TakeHit(1); // deals only 1 damage because we're not masochists
             Destroy(gameObject);
