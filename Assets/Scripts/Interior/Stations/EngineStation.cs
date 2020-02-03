@@ -10,14 +10,14 @@ public class EngineStation : DurationStation
         base.ProcessResource(r);
 
         //Debug.Log("Engine Station Processing!");
-        Ship.BoostSpeed(r.Value * 3f, r.Value * Duration);
+        Ship.BoostSpeed(r.Value * 20f, r.Value * Duration);
     }
 
     public override void Deactivate()
     {
         base.Deactivate();
 
-        Ship.CrippleMovement(3f);
+        Ship.CrippleMovement(15f);
     }
 
     public override void Reactivate()

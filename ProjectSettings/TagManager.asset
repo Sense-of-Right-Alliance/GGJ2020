@@ -12,6 +12,7 @@ TagManager:
   - AmbushEnemy
   - Asteroid
   - Enemy Projectile
+  - Despawner
   layers:
   - Default
   - TransparentFX
@@ -31,7 +32,7 @@ TagManager:
   - InteriorBackground
   - Resource
   - Asteroid
-  - 
+  - Despawner
   - 
   - 
   - 

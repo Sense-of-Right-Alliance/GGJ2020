@@ -46,7 +46,7 @@ public class InteriorPlayer : MonoBehaviour
             velocity.x += speed;
         } else
         {
-            velocity.x = Input.GetAxis("Horizontal1") * speed;
+            velocity.x = Input.GetAxis("Horizontal1") * speed;// * Time.deltaTime;
         }
 
 
@@ -59,7 +59,7 @@ public class InteriorPlayer : MonoBehaviour
             velocity.y -= speed;
         } else
         {
-            velocity.y = Input.GetAxis("Vertical1") * speed;
+            velocity.y = Input.GetAxis("Vertical1") * speed;// * Time.deltaTime;
         }
 
         rigidbody2D.AddForce(velocity);
