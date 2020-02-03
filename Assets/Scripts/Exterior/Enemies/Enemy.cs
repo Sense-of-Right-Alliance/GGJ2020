@@ -17,12 +17,15 @@ public class Enemy : MonoBehaviour
     [SerializeField] int scoreValue = 100;
 
     private MovementBehaviour _movementBehaviour;
+    private AudioSource audioSource;
 
     private float _shootTimer;
 
     private void Start()
     {
-        _movementBehaviour = GetComponent<MovementBehaviour>();
+        audioSource = GetComponent<AudioSource>();
+
+           _movementBehaviour = GetComponent<MovementBehaviour>();
         _movementBehaviour.direction = -transform.up;
 
         _shootTimer = shootDelay;
@@ -41,6 +44,7 @@ public class Enemy : MonoBehaviour
 
     private void Shoot()
     {
+        audioSource.Play();
         Instantiate(projectilePrefab, projectileSpawnTransform.position, transform.rotation * shootDirection);
     }
 
