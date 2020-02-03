@@ -60,6 +60,9 @@ public class Flame : MonoBehaviour
     private void Extinguish()
     {
         station.Reactivate();
+
+        ScoreManager.scoreManager.FireExtinguished();
+        
         Destroy(gameObject);
     }
 }

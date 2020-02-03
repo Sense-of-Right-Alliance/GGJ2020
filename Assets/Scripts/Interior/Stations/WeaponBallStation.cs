@@ -7,9 +7,16 @@ public class WeaponBallStation : Station
 {
     protected override void ProcessResource(Resource r)
     {
+        base.ProcessResource(r);
+
         //Debug.Log("Weapon Station Processing!");
 
         Ship.FireEnergyBall(r.Value);
+    }
+
+    protected override void AddScore()
+    {
+        ScoreManager.scoreManager.MainCannonCharged();
     }
 
     public override void Deactivate()

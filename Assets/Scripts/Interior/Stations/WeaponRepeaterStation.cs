@@ -7,6 +7,8 @@ public class WeaponRepeaterStation : DurationStation
 {
     protected override void ProcessResource(Resource r)
     {
+        base.ProcessResource(r);
+
         //Debug.Log("Weapon Station Processing!");
         Ship.BoostFireRate(r.Value * 8f, r.Value * Duration);
     }

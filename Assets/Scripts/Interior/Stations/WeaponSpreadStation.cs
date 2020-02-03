@@ -7,6 +7,8 @@ public class WeaponSpreadStation : DurationStation
 {
     protected override void ProcessResource(Resource r)
     {
+        base.ProcessResource(r);
+
         //Debug.Log("Weapon SPREAD Station Processing!");
 
         Ship.AddWeaponSpread(r.Value * Duration);

@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class StartManager : MonoBehaviour
 {
     [SerializeField] GameObject logo;
     [SerializeField] GameObject gorilla;
     [SerializeField] GameObject orangutan;
+
+    [SerializeField] TextMeshProUGUI scoreText;
 
     [SerializeField] float logoAnimateSpeed = 5f;
 
@@ -31,6 +34,9 @@ public class StartManager : MonoBehaviour
 
         gorillaSprite.color = Color.gray;
         orangutanSprite.color = Color.gray;
+
+        int highScore = PlayerPrefs.GetInt("highscore");
+        scoreText.text = "HS: " + highScore.ToString();
     }
 
     private void Update()

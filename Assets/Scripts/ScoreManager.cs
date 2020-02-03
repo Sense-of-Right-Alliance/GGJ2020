@@ -3,17 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using UnityEngine.UI;
+using TMPro;
 
 public class ScoreManager : MonoBehaviour
 {
     public static ScoreManager scoreManager;
 
-    [SerializeField] Text scoreText;
+    [SerializeField] TextMeshProUGUI scoreText;
 
     [SerializeField] Ship exteriorPlayer;
     [SerializeField] InteriorPlayer interiorPlayer;
 
     [SerializeField] int score = 0;
+    public int Score { get { return score; } }
 
     private void Awake()
     {
@@ -22,7 +24,7 @@ public class ScoreManager : MonoBehaviour
 
     private void Start()
     {
-        if (scoreText == null) scoreText = GameObject.Find("Score Text").GetComponent<Text>();
+        if (scoreText == null) scoreText = GameObject.Find("Score Text").GetComponent<TextMeshProUGUI>();
 
         if (exteriorPlayer == null) exteriorPlayer = GameObject.FindObjectOfType<Ship>();
         exteriorPlayer.shipHitEvent.AddListener(PlayerShipHit);
@@ -36,15 +38,15 @@ public class ScoreManager : MonoBehaviour
         UpdateScoreText();
     }
 
-    private void PlayerShipHit()
-    {
-        AddScore(-100);
-    }
+    public void PlayerShipHit() { AddScore(-100); }
 
-    private void EnemyDestroyed(int hp)
-    {
-        AddScore(100 * hp);
-    }
+    public void EnemyDestroyed(int hp) { AddScore(100 * hp); }
+
+    public void MainCannonCharged() { AddScore(500); }
+
+    public void StationUsed() { AddScore(75); }
+
+    public void FireExtinguished() { AddScore(75); }
 
     private void AddScore(int amount)
     {
