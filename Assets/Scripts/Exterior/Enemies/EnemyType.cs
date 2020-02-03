@@ -9,6 +9,8 @@ public enum EnemyType
     Speedster,
     PlainJane,
     BigBoi,
+    CrabLeft,
+    CrabRight,
     HugeAsteroid,
     MediumAsteroid,
 }
