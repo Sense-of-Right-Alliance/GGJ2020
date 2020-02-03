@@ -508,7 +508,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   maxHitPoints: 5
-  speed: 4
+  speed: 20
   speedBoost: 0
   maxSpeed: 8
   fireRate: 3

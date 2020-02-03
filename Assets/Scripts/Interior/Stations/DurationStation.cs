@@ -16,7 +16,7 @@ public class DurationStation : Station
     {
         //Debug.Log("Weapon SPREAD Station Processing!");
 
-        Ship.AddWeaponSpread(r.Value * duration);
+        //Ship.AddWeaponSpread(r.Value * duration);
     }
 
     protected override void InitPips()

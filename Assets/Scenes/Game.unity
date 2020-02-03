@@ -721,9 +721,9 @@ GameObject:
   - component: {fileID: 125536493}
   - component: {fileID: 125536495}
   - component: {fileID: 125536494}
-  m_Layer: 9
+  m_Layer: 18
   m_Name: EnemyDespawnerAbove
-  m_TagString: Enemy
+  m_TagString: Despawner
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -793,9 +793,9 @@ GameObject:
   - component: {fileID: 167639954}
   - component: {fileID: 167639956}
   - component: {fileID: 167639955}
-  m_Layer: 9
+  m_Layer: 18
   m_Name: SafetyDespawnerAbove
-  m_TagString: Enemy
+  m_TagString: Despawner
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1054,9 +1054,9 @@ GameObject:
   - component: {fileID: 325573594}
   - component: {fileID: 325573596}
   - component: {fileID: 325573595}
-  m_Layer: 9
+  m_Layer: 18
   m_Name: EnemyDespawnerBelow
-  m_TagString: Enemy
+  m_TagString: Despawner
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1090,6 +1090,7 @@ MonoBehaviour:
   targetTags:
   - Enemy
   - Resource
+  - Asteroid
 --- !u!61 &325573596
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2897,9 +2898,9 @@ GameObject:
   - component: {fileID: 1130472983}
   - component: {fileID: 1130472985}
   - component: {fileID: 1130472984}
-  m_Layer: 9
+  m_Layer: 18
   m_Name: SafetyDespawnerBelow
-  m_TagString: Enemy
+  m_TagString: Despawner
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3420,9 +3421,9 @@ GameObject:
   - component: {fileID: 1429657721}
   - component: {fileID: 1429657723}
   - component: {fileID: 1429657722}
-  m_Layer: 9
+  m_Layer: 18
   m_Name: SafetyDespawnerRight
-  m_TagString: Enemy
+  m_TagString: Despawner
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4372,9 +4373,9 @@ GameObject:
   - component: {fileID: 1802455801}
   - component: {fileID: 1802455803}
   - component: {fileID: 1802455802}
-  m_Layer: 9
+  m_Layer: 18
   m_Name: SafetyDespawnerLeft
-  m_TagString: Enemy
+  m_TagString: Despawner
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5029,11 +5030,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: InteriorPlayer
-      objectReference: {fileID: 0}
-    - target: {fileID: 4133146544276248415, guid: a8112b66de8a1ac45a8221ef55331b87,
-        type: 3}
-      propertyPath: speed
-      value: 25
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a8112b66de8a1ac45a8221ef55331b87, type: 3}

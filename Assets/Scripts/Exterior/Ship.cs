@@ -12,7 +12,7 @@ public class Ship : MonoBehaviour
 
     [SerializeField] float speed = 3f;
     [SerializeField] float speedBoost = 0f;
-    [SerializeField] float maxSpeed = 10f;
+    [SerializeField] float maxSpeed = 60f;
 
     [SerializeField] float fireRate = 6f; // shots per second
     [SerializeField] float fireRateBoost = 0f;
@@ -127,7 +127,7 @@ public class Ship : MonoBehaviour
     {
         velocity = new Vector2();//*= 0.5f;
 
-        float boostedSpeed = Mathf.Max(0,Mathf.Min(speed + speedBoost - crippledMovementSpeed, maxSpeed));
+        float boostedSpeed = Mathf.Max(0, Mathf.Min(speed + speedBoost - crippledMovementSpeed, maxSpeed));// * Time.deltaTime;
 
         if (Input.GetKey(KeyCode.LeftArrow))
         {
