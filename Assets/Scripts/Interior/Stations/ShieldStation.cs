@@ -7,9 +7,10 @@ public class ShieldStation : Station
 {
     protected override void ProcessResource(Resource r)
     {
+        base.ProcessResource(r);
+        
         //Debug.Log("Shields Station Processing!");
 
-        //Ship.BoostFireRate(r.Value * 8f, r.Value * 5f);
         Ship.AddShields(r.Value);
     }
 

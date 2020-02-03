@@ -99,7 +99,12 @@ public class Station : MonoBehaviour
 
     protected virtual void ProcessResource(Resource r)
     {
-        
+        AddScore();
+    }
+
+    protected virtual void AddScore()
+    {
+        ScoreManager.scoreManager.StationUsed();
     }
 
     public virtual void Deactivate()

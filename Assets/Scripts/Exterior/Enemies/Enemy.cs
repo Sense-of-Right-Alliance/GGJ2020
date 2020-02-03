@@ -18,8 +18,12 @@ public class Enemy : MonoBehaviour
 
     private float _shootTimer;
 
+    private int maxHitPoints = 2; // for scoring
+
     private void Start()
     {
+        maxHitPoints = hitPoints;
+
         _movementBehaviour = GetComponent<MovementBehaviour>();
         _movementBehaviour.direction = -transform.up;
 
@@ -53,6 +57,8 @@ public class Enemy : MonoBehaviour
 
     public void BlowUp()
     {
+        ScoreManager.scoreManager.EnemyDestroyed(maxHitPoints);
+
         if (explosionPrefab != null) Instantiate(explosionPrefab, transform.position, Quaternion.identity);
         if (resourcePickupPrefab != null && Random.value < dropChance) Instantiate(resourcePickupPrefab, transform.position, Quaternion.identity);
         Destroy(gameObject);

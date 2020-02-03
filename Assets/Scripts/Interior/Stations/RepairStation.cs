@@ -7,8 +7,9 @@ public class RepairStation : Station
 {
     protected override void ProcessResource(Resource r)
     {
+        base.ProcessResource(r);
+
         //Debug.Log("Repair Station Processing!");
-        // Todo: Repair ship HP
 
         Ship.RepairDamage(r.Value);
     }

@@ -7,6 +7,8 @@ public class EngineStation : DurationStation
 {
     protected override void ProcessResource(Resource r)
     {
+        base.ProcessResource(r);
+
         //Debug.Log("Engine Station Processing!");
         Ship.BoostSpeed(r.Value * 3f, r.Value * Duration);
     }
