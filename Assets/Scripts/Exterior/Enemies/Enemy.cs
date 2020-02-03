@@ -20,12 +20,16 @@ public class Enemy : MonoBehaviour
     private AudioSource audioSource;
 
     private float _shootTimer;
+    
+
+    private void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+        _movementBehaviour = GetComponent<MovementBehaviour>();
+    }
 
     private void Start()
     {
-        audioSource = GetComponent<AudioSource>();
-
-           _movementBehaviour = GetComponent<MovementBehaviour>();
         _movementBehaviour.direction = -transform.up;
 
         _shootTimer = shootDelay;

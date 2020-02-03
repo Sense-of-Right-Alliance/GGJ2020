@@ -43,8 +43,8 @@ GameObject:
   - component: {fileID: 4303212633405705338}
   - component: {fileID: 942606664080155765}
   - component: {fileID: -4036976034239442463}
-  - component: {fileID: 6419929551361845430}
-  - component: {fileID: -3534326532599893245}
+  - component: {fileID: 5194407470678875318}
+  - component: {fileID: 8969438039634935896}
   m_Layer: 9
   m_Name: ExteriorEnemyShipCrabRight
   m_TagString: Enemy
@@ -59,16 +59,16 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4303212633405705334}
-  m_LocalRotation: {x: 0, y: -0, z: 0.7071068, w: -0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.25, y: 1.25, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children:
   - {fileID: 3216565227471800770}
   - {fileID: 1893962244664238022}
   - {fileID: 4562367507393438188}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 270}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &4303212633405705335
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -108,7 +108,7 @@ SpriteRenderer:
   m_SortingLayerID: -552611323
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 3e6b78109ca50e84d8bb9fcb09440c18, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 812a8655ece0ad444a775629c31cf2da, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -142,7 +142,7 @@ MonoBehaviour:
   projectileSpawnTransform: {fileID: 4562367507393438188}
   shootDelay: 1.25
   shootDirection: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
-  scoreValue: 325
+  scoreValue: 100
 --- !u!50 &942606664080155765
 Rigidbody2D:
   serializedVersion: 4
@@ -178,7 +178,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 1
   direction: {x: 0, y: -1}
---- !u!60 &6419929551361845430
+--- !u!60 &5194407470678875318
 PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -195,7 +195,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.72, y: 1.51}
+    oldSize: {x: 1.51, y: 1.72}
     newSize: {x: 0.93, y: 0.84}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -203,55 +203,52 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -0.17999999, y: -0.525}
-      - {x: -0.19999999, y: -0.315}
-      - {x: 0.12, y: -0.265}
-      - {x: 0.19999999, y: -0.375}
-      - {x: 0.19999999, y: -0.505}
-      - {x: 0.22, y: -0.525}
-      - {x: 0.32999998, y: -0.525}
-      - {x: 0.35, y: -0.505}
-      - {x: 0.37, y: -0.505}
-      - {x: 0.59, y: -0.755}
-      - {x: 0.84999996, y: -0.755}
-      - {x: 0.85999995, y: -0.645}
-      - {x: 0.85999995, y: -0.385}
-      - {x: 0.53, y: -0.105}
-      - {x: 0.51, y: 0.044999998}
-      - {x: 0.64, y: 0.175}
-      - {x: 0.63, y: 0.21499999}
-      - {x: 0.58, y: 0.33499998}
-      - {x: 0.65, y: 0.525}
-      - {x: 0.69, y: 0.72499996}
-      - {x: 0.64, y: 0.755}
-      - {x: 0.55, y: 0.755}
-      - {x: 0.45999998, y: 0.615}
-      - {x: 0.29999998, y: 0.60499996}
-      - {x: 0.24, y: 0.545}
-      - {x: 0.24, y: 0.325}
-      - {x: 0.12, y: 0.275}
-      - {x: 0.099999994, y: 0.345}
-      - {x: -0.13, y: 0.315}
-      - {x: -0.24, y: 0.315}
-      - {x: -0.22999999, y: 0.53499997}
-      - {x: -0.29, y: 0.615}
-      - {x: -0.45999998, y: 0.60499996}
-      - {x: -0.5, y: 0.73499995}
-      - {x: -0.53, y: 0.755}
-      - {x: -0.65999997, y: 0.755}
-      - {x: -0.71, y: 0.655}
-      - {x: -0.59, y: 0.355}
-      - {x: -0.64, y: 0.175}
-      - {x: -0.52, y: 0.005}
-      - {x: -0.53999996, y: -0.125}
-      - {x: -0.85999995, y: -0.39499998}
-      - {x: -0.85999995, y: -0.73499995}
-      - {x: -0.84, y: -0.755}
-      - {x: -0.57, y: -0.755}
-      - {x: -0.38, y: -0.49499997}
-      - {x: -0.38, y: -0.45499998}
-      - {x: -0.34, y: -0.53499997}
---- !u!82 &-3534326532599893245
+    - - {x: 0.525, y: -0.32999998}
+      - {x: 0.525, y: -0.22}
+      - {x: 0.515, y: -0.17999999}
+      - {x: 0.315, y: -0.17999999}
+      - {x: 0.265, y: -0.14}
+      - {x: 0.265, y: 0.14}
+      - {x: 0.545, y: 0.21}
+      - {x: 0.525, y: 0.32999998}
+      - {x: 0.505, y: 0.35}
+      - {x: 0.705, y: 0.55}
+      - {x: 0.755, y: 0.58}
+      - {x: 0.755, y: 0.83}
+      - {x: 0.745, y: 0.85999995}
+      - {x: 0.39499998, y: 0.85999995}
+      - {x: 0.295, y: 0.76}
+      - {x: -0.005, y: 0.51}
+      - {x: -0.175, y: 0.65999997}
+      - {x: -0.325, y: 0.59999996}
+      - {x: -0.66499996, y: 0.68}
+      - {x: -0.72499996, y: 0.69}
+      - {x: -0.755, y: 0.64}
+      - {x: -0.755, y: 0.55}
+      - {x: -0.695, y: 0.51}
+      - {x: -0.60499996, y: 0.47}
+      - {x: -0.60499996, y: 0.29999998}
+      - {x: -0.545, y: 0.24}
+      - {x: -0.275, y: 0.14999999}
+      - {x: -0.345, y: 0.099999994}
+      - {x: -0.325, y: -0.13}
+      - {x: -0.315, y: -0.24}
+      - {x: -0.545, y: -0.24}
+      - {x: -0.60499996, y: -0.29999998}
+      - {x: -0.695, y: -0.51}
+      - {x: -0.755, y: -0.53}
+      - {x: -0.755, y: -0.65999997}
+      - {x: -0.72499996, y: -0.7}
+      - {x: -0.645, y: -0.69}
+      - {x: -0.195, y: -0.65}
+      - {x: -0.145, y: -0.61}
+      - {x: -0.015, y: -0.51}
+      - {x: 0.105, y: -0.53}
+      - {x: 0.385, y: -0.85999995}
+      - {x: 0.73499995, y: -0.85999995}
+      - {x: 0.755, y: -0.82}
+      - {x: 0.755, y: -0.59999996}
+--- !u!82 &8969438039634935896
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -263,7 +260,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 8b5ae5ff6d267b64882c3d54b2031267, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.242
+  m_Volume: 0.427
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -401,7 +398,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8843378885518691197}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.5, z: 0}
+  m_LocalPosition: {x: 0.4, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4303212633405705332}

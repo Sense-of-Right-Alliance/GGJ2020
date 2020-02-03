@@ -17,25 +17,26 @@ public class WaveManager : MonoBehaviour
         {
             WaveEvent.ShortDelay(),
             WaveEvent.SpawnSquadron(new Squadron(EnemyType.Speedster, SpawnPattern.FlyingVInverted)),
+            WaveEvent.SpawnSquadron(new Squadron(EnemyType.CrabRight, SpawnPattern.Column, SpawnZone.Right)),
         }),
         new Wave(new List<WaveEvent>
         {
-            WaveEvent.ShortDelay(),
+            WaveEvent.LongDelay(),
             WaveEvent.SpawnSquadron(new Squadron(EnemyType.BigBoi, SpawnPattern.FlyingV, SpawnZone.Bottom)),
+            WaveEvent.SpawnSquadron(new Squadron(EnemyType.CrabLeft, SpawnPattern.Column, SpawnZone.Left)),
         }),
         new Wave(new List<WaveEvent>
         {
-            WaveEvent.MediumDelay(),
+            WaveEvent.LongDelay(),
             WaveEvent.SpawnSquadron(new Squadron(EnemyType.Speedster, SpawnPattern.FlyingV)),
             WaveEvent.ShortDelay(),
-            WaveEvent.SpawnSquadron(new Squadron(EnemyType.PlainJane, SpawnPattern.Center)),
-            WaveEvent.ShortDelay(),
+            WaveEvent.SpawnSquadron(new Squadron(EnemyType.CrabRight, SpawnPattern.Column, SpawnZone.Right)),
             WaveEvent.SpawnSquadron(new Squadron(EnemyType.BigBoi, SpawnPattern.FlyingVInverted)),
         }),
         new Wave(new List<WaveEvent>
         {
-            WaveEvent.ShortDelay(),
-            WaveEvent.SpawnSquadron(new Squadron(EnemyType.HugeAsteroid, SpawnPattern.Center)),
+            WaveEvent.LongDelay(),
+            WaveEvent.SpawnSquadron(new Squadron(EnemyType.HugeAsteroid, SpawnPattern.Center, SpawnZone.TopAsteroid)),
             WaveEvent.ShortDelay(),
             WaveEvent.SpawnSquadron(new Squadron(EnemyType.Speedster, SpawnPattern.FlyingV, SpawnZone.Bottom)),
             WaveEvent.SpawnSquadron(new Squadron(EnemyType.Speedster, SpawnPattern.FlyingVInverted, SpawnZone.Bottom)),
@@ -47,21 +48,39 @@ public class WaveManager : MonoBehaviour
         }),
         new Wave(new List<WaveEvent>
         {
-            WaveEvent.ShortDelay(),
+            WaveEvent.LongDelay(),
             WaveEvent.SpawnSquadron(new Squadron(EnemyType.Speedster, SpawnPattern.FlyingV)),
+            WaveEvent.SpawnSquadron(new Squadron(EnemyType.CrabLeft, SpawnPattern.Column, SpawnZone.Left)),
         }),
         new Wave(new List<WaveEvent>
         {
+            WaveEvent.LongDelay(),
+            WaveEvent.SpawnSquadron(new Squadron(EnemyType.CrabLeft, SpawnPattern.Column, SpawnZone.Left)),
+        }),
+        new Wave(new List<WaveEvent>
+        {
+            WaveEvent.ShortDelay(),
+            WaveEvent.SpawnSquadron(new Squadron(EnemyType.BigBoi, SpawnPattern.FlyingVInverted)),
+            WaveEvent.ShortDelay(),
+            WaveEvent.SpawnSquadron(new Squadron(EnemyType.BigBoi, SpawnPattern.FlyingVInverted)),
             WaveEvent.ShortDelay(),
             WaveEvent.SpawnSquadron(new Squadron(EnemyType.BigBoi, SpawnPattern.FlyingVInverted)),
         }),
         new Wave(new List<WaveEvent>
         {
             WaveEvent.ShortDelay(),
+            WaveEvent.SpawnSquadron(new Squadron(EnemyType.HugeAsteroid, SpawnPattern.Center, SpawnZone.TopAsteroid)),
+            WaveEvent.LongDelay(),
+            WaveEvent.SpawnSquadron(new Squadron(EnemyType.HugeAsteroid, SpawnPattern.Center, SpawnZone.TopAsteroid)),
+            WaveEvent.LongDelay(),
+            WaveEvent.SpawnSquadron(new Squadron(EnemyType.CrabRight, SpawnPattern.Column, SpawnZone.Right)),
             WaveEvent.SpawnSquadron(new Squadron(EnemyType.PlainJane, SpawnPattern.Random)),
         }),
         new Wave(new List<WaveEvent>
         {
+            WaveEvent.LongDelay(),
+            WaveEvent.SpawnSquadron(new Squadron(EnemyType.Speedster, SpawnPattern.FlyingV, SpawnZone.Bottom)),
+            WaveEvent.SpawnSquadron(new Squadron(EnemyType.Speedster, SpawnPattern.FlyingVInverted, SpawnZone.Bottom)),
             WaveEvent.ShortDelay(),
             WaveEvent.SpawnSquadron(new Squadron(EnemyType.BigBoi, SpawnPattern.Center, SpawnZone.Bottom)),
         }),
@@ -71,6 +90,8 @@ public class WaveManager : MonoBehaviour
             WaveEvent.SpawnSquadron(new Squadron(EnemyType.BigBoi, SpawnPattern.FlyingV)),
             WaveEvent.ShortDelay(),
             WaveEvent.SpawnSquadron(new Squadron(EnemyType.HugeAsteroid, SpawnPattern.Center, SpawnZone.TopAsteroid)),
+            WaveEvent.ShortDelay(),
+            WaveEvent.SpawnSquadron(new Squadron(EnemyType.BigBoi, SpawnPattern.FlyingVInverted)),
         })
         
     };
