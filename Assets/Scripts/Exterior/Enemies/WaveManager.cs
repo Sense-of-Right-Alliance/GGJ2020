@@ -48,7 +48,7 @@ public class WaveManager : MonoBehaviour
         }),
     };
 
-    private void Start()
+    private void Awake()
     {
         _spawnManager = GetComponent<SpawnManager>();
     }
