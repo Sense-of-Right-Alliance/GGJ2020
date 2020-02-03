@@ -113,7 +113,7 @@ public class SpawnManager : MonoBehaviour
         float spacing = 0f;
         if (numberOfSpawns != 1)
         {
-            spacing = radius / (numberOfSpawns - 1);
+            spacing = spawnWidth / (numberOfSpawns - 1);
         }
 
         var spawnLocations = new List<List<Vector2>>(numberOfSpawns);
