@@ -8,7 +8,9 @@ public class Asteroid : MonoBehaviour
     [SerializeField] private GameObject explosionPrefab;
     [SerializeField] private List<GameObject> childAsteroidPrefabs;
     [SerializeField] private int hitPoints = 12;
-    
+
+    [SerializeField] int scoreValue = 100;
+
     private Quaternion _rotationAmount;
     private MovementBehaviour _movementBehaviour;
 
@@ -35,6 +37,8 @@ public class Asteroid : MonoBehaviour
             {
                 Instantiate(childAsteroidPrefab, transform.position, Quaternion.Euler(0, 0, Random.Range(-45, 45)));
             }
+
+            ScoreManager.scoreManager.EnemyDestroyed(scoreValue);
 
             Destroy(gameObject);
         }

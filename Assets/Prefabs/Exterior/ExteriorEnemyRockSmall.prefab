@@ -168,3 +168,4 @@ MonoBehaviour:
   explosionPrefab: {fileID: 0}
   childAsteroidPrefabs: []
   hitPoints: 2
+  scoreValue: 50

@@ -14,16 +14,14 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float shootDelay = 0.2f;
     [SerializeField] Quaternion shootDirection = Quaternion.identity;
 
+    [SerializeField] int scoreValue = 100;
+
     private MovementBehaviour _movementBehaviour;
 
     private float _shootTimer;
 
-    private int maxHitPoints = 2; // for scoring
-
     private void Start()
     {
-        maxHitPoints = hitPoints;
-
         _movementBehaviour = GetComponent<MovementBehaviour>();
         _movementBehaviour.direction = -transform.up;
 
@@ -57,7 +55,7 @@ public class Enemy : MonoBehaviour
 
     public void BlowUp()
     {
-        ScoreManager.scoreManager.EnemyDestroyed(maxHitPoints);
+        ScoreManager.scoreManager.EnemyDestroyed(scoreValue);
 
         if (explosionPrefab != null) Instantiate(explosionPrefab, transform.position, Quaternion.identity);
         if (resourcePickupPrefab != null && Random.value < dropChance) Instantiate(resourcePickupPrefab, transform.position, Quaternion.identity);

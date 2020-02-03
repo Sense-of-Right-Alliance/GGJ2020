@@ -40,13 +40,13 @@ public class ScoreManager : MonoBehaviour
 
     public void PlayerShipHit() { AddScore(-100); }
 
-    public void EnemyDestroyed(int hp) { AddScore(100 * hp); }
+    public void EnemyDestroyed(int scoreValue) { AddScore(scoreValue); }
 
     public void MainCannonCharged() { AddScore(500); }
 
     public void StationUsed() { AddScore(75); }
 
-    public void FireExtinguished() { AddScore(75); }
+    public void FireExtinguished() { AddScore(100); }
 
     private void AddScore(int amount)
     {
