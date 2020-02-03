@@ -13,10 +13,12 @@ public class InteriorPlayer : MonoBehaviour
 
     private GameObject heldResource;
     private List<GameObject> overResources = new List<GameObject>();
+    private AudioSource audioSource;
 
     private void Awake()
     {
         rigidbody2D = GetComponent<Rigidbody2D>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void Start()

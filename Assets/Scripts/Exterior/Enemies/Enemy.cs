@@ -14,16 +14,17 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float shootDelay = 0.2f;
     [SerializeField] Quaternion shootDirection = Quaternion.identity;
 
+    [SerializeField] int scoreValue = 100;
+
     private MovementBehaviour _movementBehaviour;
+    private AudioSource audioSource;
 
     private float _shootTimer;
-
-    private int maxHitPoints = 2; // for scoring
+    
 
     private void Awake()
     {
-        maxHitPoints = hitPoints;
-
+        audioSource = GetComponent<AudioSource>();
         _movementBehaviour = GetComponent<MovementBehaviour>();
     }
 
@@ -47,6 +48,7 @@ public class Enemy : MonoBehaviour
 
     private void Shoot()
     {
+        audioSource.Play();
         Instantiate(projectilePrefab, projectileSpawnTransform.position, transform.rotation * shootDirection);
     }
 
@@ -61,7 +63,7 @@ public class Enemy : MonoBehaviour
 
     public void BlowUp()
     {
-        ScoreManager.scoreManager.EnemyDestroyed(maxHitPoints);
+        ScoreManager.scoreManager.EnemyDestroyed(scoreValue);
 
         if (explosionPrefab != null) Instantiate(explosionPrefab, transform.position, Quaternion.identity);
         if (resourcePickupPrefab != null && Random.value < dropChance) Instantiate(resourcePickupPrefab, transform.position, Quaternion.identity);

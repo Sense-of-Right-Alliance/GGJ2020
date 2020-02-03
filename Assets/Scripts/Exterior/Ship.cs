@@ -44,12 +44,14 @@ public class Ship : MonoBehaviour
     private float fireRateBoostTimer = 0f;
 
     Rigidbody2D rigidbody2D;
+    AudioSource audioSource;
 
     List<float> spreadStacks = new List<float>();
 
     private void Awake()
     {
         rigidbody2D = GetComponent<Rigidbody2D>();
+        audioSource = GetComponent<AudioSource>();
 
         if (exteriorManager == null) exteriorManager = GameObject.FindObjectOfType<ExteriorManager>();
         if (interiorManager == null) interiorManager = GameObject.FindObjectOfType<InteriorManager>();
@@ -162,6 +164,8 @@ public class Ship : MonoBehaviour
         {
             if (fireTimer <= 0f)
             {
+                audioSource.Play();
+
                 fireTimer = 1f / (fireRate + fireRateBoost);
                 Instantiate(projectilePrefab, projectileSpawnTransform.position, Quaternion.identity);
 

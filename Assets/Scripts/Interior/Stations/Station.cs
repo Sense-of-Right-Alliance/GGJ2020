@@ -88,6 +88,9 @@ public class Station : MonoBehaviour
             resourceCount++;
             if (resourceCount >= resourceRequirement)
             {
+                AudioSource audioSource = collision.gameObject.GetComponent<AudioSource>();
+                if (audioSource) audioSource.Play();
+
                 ProcessResource(collision.gameObject.GetComponent<Resource>());
                 resourceCount = 0;
             }
