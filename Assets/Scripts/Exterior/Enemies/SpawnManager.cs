@@ -9,6 +9,8 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] GameObject enemySpeedsterPrefab;
     [SerializeField] GameObject enemyPlainJanePrefab;
     [SerializeField] GameObject enemyBigBoiPrefab;
+    [SerializeField] GameObject enemyCrabLeftPrefab;
+    [SerializeField] GameObject enemyCrabRightPrefab;
     [SerializeField] GameObject hugeAsteroidPrefab;
     [SerializeField] GameObject mediumAsteroidPrefab;
     [SerializeField] float spawnDelay = 0.5f; // seconds between each ship spawn in squadron
@@ -40,6 +42,8 @@ public class SpawnManager : MonoBehaviour
             { EnemyType.Speedster, enemySpeedsterPrefab },
             { EnemyType.PlainJane, enemyPlainJanePrefab },
             { EnemyType.BigBoi, enemyBigBoiPrefab },
+            { EnemyType.CrabLeft, enemyCrabLeftPrefab },
+            { EnemyType.CrabRight, enemyCrabLeftPrefab },
             { EnemyType.HugeAsteroid, hugeAsteroidPrefab },
             { EnemyType.MediumAsteroid, mediumAsteroidPrefab },
         };
@@ -49,6 +53,25 @@ public class SpawnManager : MonoBehaviour
     {
 
     }
+
+    private IEnumerator SpawnColumn(Vector2 reference, EnemyType enemyType, Quaternion rotation, string tagName)
+    {
+        Debug.Log("Spawning Random 'Formation'");
+        float radius = spawnWidth / 2.0f;
+
+        var prefab = _enemyPrefabs[enemyType];
+
+        for (int i = 0; i < _squadronSpawns[SpawnPattern.Column]; i++)
+        {
+            var spawnPos = reference;
+
+            var enemy = Instantiate(prefab, spawnPos, rotation);
+            enemy.tag = tagName;
+
+            yield return new WaitForSeconds(spawnDelay);
+        }
+    }
+
 
     private IEnumerator SpawnCenter(Vector2 reference, EnemyType enemyType, Quaternion rotation, string tagName)
     {

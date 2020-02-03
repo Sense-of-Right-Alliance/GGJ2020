@@ -12,6 +12,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] GameObject projectilePrefab;
     [SerializeField] Transform projectileSpawnTransform;
     [SerializeField] private float shootDelay = 0.2f;
+    [SerializeField] Quaternion shootDirection = Quaternion.identity;
 
     private MovementBehaviour _movementBehaviour;
 
@@ -42,7 +43,7 @@ public class Enemy : MonoBehaviour
 
     private void Shoot()
     {
-        Instantiate(projectilePrefab, projectileSpawnTransform.position, transform.rotation);
+        Instantiate(projectilePrefab, projectileSpawnTransform.position, transform.rotation * shootDirection);
     }
 
     public void TakeHit(int damage)
