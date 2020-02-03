@@ -14,6 +14,10 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] float spawnDelay = 0.5f; // seconds between each ship spawn in squadron
     [SerializeField] Transform enemyTopSpawnTransform;
     [SerializeField] Transform enemyBottomSpawnTransform;
+    [SerializeField] Transform enemyLeftSpawnTransform;
+    [SerializeField] Transform enemyRightSpawnTransform;
+    [SerializeField] Transform asteroidTopSpawnTransform;
+    [SerializeField] Transform asteroidBottomSpawnTransform;
     [SerializeField] float spawnWidth = 10f;
 
     private readonly Dictionary<SpawnPattern, int> _squadronSpawns = new Dictionary<SpawnPattern, int>
@@ -29,7 +33,7 @@ public class SpawnManager : MonoBehaviour
 
     private Dictionary<EnemyType, GameObject> _enemyPrefabs;
 
-    private void Start()
+    private void Awake()
     {
         _enemyPrefabs = new Dictionary<EnemyType, GameObject>
         {
@@ -130,7 +134,7 @@ public class SpawnManager : MonoBehaviour
     {
         Vector2 referenceVector;
         Quaternion rotation;
-        string tagName;
+        string tagName = "Enemy";
         switch (squadron.SpawnZone)
         {
             case SpawnZone.Bottom:
@@ -138,12 +142,27 @@ public class SpawnManager : MonoBehaviour
                 rotation = Quaternion.Euler(0, 0, 180f);
                 tagName = "AmbushEnemy";
                 break;
+            case SpawnZone.Left:
+                referenceVector = enemyLeftSpawnTransform.position;
+                rotation = Quaternion.Euler(0, 0, 270f);
+                break;
+            case SpawnZone.Right:
+                referenceVector = enemyBottomSpawnTransform.position;
+                rotation = Quaternion.Euler(0, 0, 90f);
+                break;
+            case SpawnZone.TopAsteroid:
+                referenceVector = asteroidTopSpawnTransform.position;
+                rotation = Quaternion.identity;
+                break;
+            case SpawnZone.BottomAsteroid:
+                referenceVector = asteroidBottomSpawnTransform.position;
+                rotation = Quaternion.Euler(0, 0, 180f);
+                break;
             case SpawnZone.Top:
             case SpawnZone.Unknown:
             default:
                 referenceVector = enemyTopSpawnTransform.position;
                 rotation = Quaternion.identity;
-                tagName = "Enemy";
                 break;
         }
 

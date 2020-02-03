@@ -8,4 +8,8 @@ public enum SpawnZone
     Unknown,
     Top,
     Bottom,
+    Left,
+    Right,
+    TopAsteroid,
+    BottomAsteroid,
 }
