@@ -20,11 +20,15 @@ public class Enemy : MonoBehaviour
 
     private int maxHitPoints = 2; // for scoring
 
-    private void Start()
+    private void Awake()
     {
         maxHitPoints = hitPoints;
 
         _movementBehaviour = GetComponent<MovementBehaviour>();
+    }
+
+    private void Start()
+    {
         _movementBehaviour.direction = -transform.up;
 
         _shootTimer = shootDelay;

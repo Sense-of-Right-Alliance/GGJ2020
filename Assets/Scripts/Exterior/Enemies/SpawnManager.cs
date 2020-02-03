@@ -43,7 +43,7 @@ public class SpawnManager : MonoBehaviour
             { EnemyType.PlainJane, enemyPlainJanePrefab },
             { EnemyType.BigBoi, enemyBigBoiPrefab },
             { EnemyType.CrabLeft, enemyCrabLeftPrefab },
-            { EnemyType.CrabRight, enemyCrabLeftPrefab },
+            { EnemyType.CrabRight, enemyCrabRightPrefab },
             { EnemyType.HugeAsteroid, hugeAsteroidPrefab },
             { EnemyType.MediumAsteroid, mediumAsteroidPrefab },
         };
@@ -56,8 +56,7 @@ public class SpawnManager : MonoBehaviour
 
     private IEnumerator SpawnColumn(Vector2 reference, EnemyType enemyType, Quaternion rotation, string tagName)
     {
-        Debug.Log("Spawning Random 'Formation'");
-        float radius = spawnWidth / 2.0f;
+        Debug.Log("Spawning Column Formation");
 
         var prefab = _enemyPrefabs[enemyType];
 
@@ -68,10 +67,9 @@ public class SpawnManager : MonoBehaviour
             var enemy = Instantiate(prefab, spawnPos, rotation);
             enemy.tag = tagName;
 
-            yield return new WaitForSeconds(spawnDelay);
+            yield return new WaitForSeconds(spawnDelay * 2.5f);
         }
     }
-
 
     private IEnumerator SpawnCenter(Vector2 reference, EnemyType enemyType, Quaternion rotation, string tagName)
     {
@@ -115,7 +113,7 @@ public class SpawnManager : MonoBehaviour
         float spacing = 0f;
         if (numberOfSpawns != 1)
         {
-            spacing = radius / (numberOfSpawns - 1);
+            spacing = spawnWidth / (numberOfSpawns - 1);
         }
 
         var spawnLocations = new List<List<Vector2>>(numberOfSpawns);
@@ -167,11 +165,11 @@ public class SpawnManager : MonoBehaviour
                 break;
             case SpawnZone.Left:
                 referenceVector = enemyLeftSpawnTransform.position;
-                rotation = Quaternion.Euler(0, 0, 270f);
+                rotation = Quaternion.Euler(0, 0, 90f);
                 break;
             case SpawnZone.Right:
-                referenceVector = enemyBottomSpawnTransform.position;
-                rotation = Quaternion.Euler(0, 0, 90f);
+                referenceVector = enemyRightSpawnTransform.position;
+                rotation = Quaternion.Euler(0, 0, 270f);
                 break;
             case SpawnZone.TopAsteroid:
                 referenceVector = asteroidTopSpawnTransform.position;
@@ -207,6 +205,9 @@ public class SpawnManager : MonoBehaviour
                 break;
             case SpawnPattern.FlyingVInverted:
                 StartCoroutine(SpawnFlyingV(referenceVector, squadron.EnemyType, rotation, tagName, true));
+                break;
+            case SpawnPattern.Column:
+                StartCoroutine(SpawnColumn(referenceVector, squadron.EnemyType, rotation, tagName));
                 break;
         }
     }
