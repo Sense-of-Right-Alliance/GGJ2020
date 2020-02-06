@@ -12,13 +12,6 @@ public class DurationStation : Station
 
     List<float> pipDurationStacks = new List<float>();
 
-    protected override void ProcessResource(Resource r)
-    {
-        //Debug.Log("Weapon SPREAD Station Processing!");
-
-        //Ship.AddWeaponSpread(r.Value * duration);
-    }
-
     protected override void InitPips()
     {
         resourcePips = new ResourcePip[maxStacks];
@@ -34,25 +27,18 @@ public class DurationStation : Station
         }
     }
 
-    protected override void HandleCollision(Collider2D collision)
+    protected override void IncreaseResources(InteriorResource r)
     {
-        if (Activated && collision.tag == "Interior Resource")
+        if (pipDurationStacks.Count < maxStacks)
         {
-            if (pipDurationStacks.Count < maxStacks)
+            ResourceCount++;
+            if (ResourceCount >= ResourceRequirement)
             {
-                ResourceCount++;
-                if (ResourceCount >= ResourceRequirement)
-                {
-                    ProcessResource(collision.gameObject.GetComponent<Resource>());
-                    pipDurationStacks.Add(duration);
-                    ResourceCount = 0;
-                }
+                ProcessResource(r);
+                pipDurationStacks.Add(duration);
+                ResourceCount = 0;
             }
-
-            Destroy(collision.gameObject);
         }
-
-        UpdateResourcePips();
     }
 
     private void Update()

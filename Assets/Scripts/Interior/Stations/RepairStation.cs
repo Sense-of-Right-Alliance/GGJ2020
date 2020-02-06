@@ -5,13 +5,10 @@ using System.Linq;
 
 public class RepairStation : Station
 {
-    protected override void ProcessResource(Resource r)
+    protected override void ProcessResource(InteriorResource r)
     {
-        base.ProcessResource(r);
-
-        //Debug.Log("Repair Station Processing!");
-
         Ship.RepairDamage(r.Value);
+        base.ProcessResource(r);
     }
 
     protected override void InitPips()

@@ -5,13 +5,10 @@ using System.Linq;
 
 public class ShieldStation : Station
 {
-    protected override void ProcessResource(Resource r)
+    protected override void ProcessResource(InteriorResource r)
     {
-        base.ProcessResource(r);
-        
-        //Debug.Log("Shields Station Processing!");
-
         Ship.AddShields(r.Value);
+        base.ProcessResource(r);
     }
 
     protected override void InitPips()
@@ -29,24 +26,17 @@ public class ShieldStation : Station
         }
     }
 
-    protected override void HandleCollision(Collider2D collision)
+    protected override void IncreaseResources(InteriorResource r)
     {
-        if (Activated && collision.tag == "Interior Resource")
+        if (Ship.Shields < Ship.MaxShields)
         {
-            if (Ship.Shields < Ship.MaxShields)
+            ResourceCount++;
+            if (ResourceCount >= ResourceRequirement)
             {
-                ResourceCount++;
-                if (ResourceCount >= ResourceRequirement)
-                {
-                    ProcessResource(collision.gameObject.GetComponent<Resource>());
-                    ResourceCount = 0;
-                }
+                ProcessResource(r);
+                ResourceCount = 0;
             }
-
-            Destroy(collision.gameObject);
         }
-
-        UpdateResourcePips();
     }
 
     public override void Deactivate()

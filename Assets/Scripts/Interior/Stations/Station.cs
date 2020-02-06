@@ -81,26 +81,40 @@ public class Station : MonoBehaviour
         HandleCollision(collision);
     }
 
+    private bool resourceOver = false;
+    private InteriorResource overResource;
     protected virtual void HandleCollision(Collider2D collision)
     {
-        if (activated && collision.tag == "Interior Resource")
+        if (collision.tag == "Interior Resource")
         {
-            resourceCount++;
-            if (resourceCount >= resourceRequirement)
+            overResource = collision.gameObject.GetComponent<InteriorResource>();
+            if (activated)
             {
-                AudioSource audioSource = collision.gameObject.GetComponent<AudioSource>();
-                if (audioSource) audioSource.Play();
-
-                ProcessResource(collision.gameObject.GetComponent<Resource>());
-                resourceCount = 0;
+                CollectResource(overResource);
             }
-            Destroy(collision.gameObject);
         }
 
         UpdateResourcePips();
     }
 
-    protected virtual void ProcessResource(Resource r)
+    private void CollectResource(InteriorResource r)
+    {
+        IncreaseResources(r);
+        r.Consume();
+        overResource = null;
+    }
+
+    protected virtual void IncreaseResources(InteriorResource r)
+    {
+        resourceCount++;
+        if (resourceCount >= resourceRequirement)
+        {
+            ProcessResource(r);
+            resourceCount = 0;
+        }
+    }
+
+    protected virtual void ProcessResource(InteriorResource r)
     {
         AddScore();
     }
@@ -118,5 +132,13 @@ public class Station : MonoBehaviour
     public virtual void Reactivate()
     {
         activated = true;
+    }
+
+    private void Update()
+    {
+        if (overResource != null && activated) // handle case when player puts out fire while holding resource
+        {
+            CollectResource(overResource);
+        }
     }
 }

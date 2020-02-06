@@ -132,5 +132,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 741f904f26a97e147a622a8f8e95a6a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthPoints: 1.5
+  healthPoints: 1
   smotheringFire: 0
