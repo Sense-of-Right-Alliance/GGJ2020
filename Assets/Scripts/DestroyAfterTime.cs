@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class DestoryAfterTime : MonoBehaviour
+public class DestroyAfterTime : MonoBehaviour
 {
     [SerializeField] float duration = 2f;
 

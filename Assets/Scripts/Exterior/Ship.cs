@@ -10,9 +10,9 @@ public class Ship : MonoBehaviour
     [SerializeField] int maxHitPoints = 5;
     public int MaxHitPoints { get { return maxHitPoints; } }
 
-    [SerializeField] float speed = 3f;
-    [SerializeField] float speedBoost = 0f;
-    [SerializeField] float maxSpeed = 60f;
+    [SerializeField] float speed = 50f;
+    [SerializeField] float speedBoostMult = 1f;
+    [SerializeField] float maxSpeed = 10000f;
 
     [SerializeField] float fireRate = 6f; // shots per second
     [SerializeField] float fireRateBoost = 0f;
@@ -37,7 +37,7 @@ public class Ship : MonoBehaviour
     private int currentHitPoints = 0;
     public int HitPoints { get { return currentHitPoints; } }
     private float speedBoostTimer = 0f;
-    private float crippledMovementSpeed = 0f;
+    private float crippledSpeedMult = 1f;
 
     private bool firingEnabled = true;
     private float fireTimer = 0f;
@@ -66,7 +66,7 @@ public class Ship : MonoBehaviour
     {
         UpdateDamageSprite();
         UpdateShieldsSprite();
-        speedBoost = 0;
+        speedBoostMult = 1;
         fireRateBoost = 0f;
     }
 
@@ -87,13 +87,13 @@ public class Ship : MonoBehaviour
 
     private void UpdateSpeedBoost()
     {
-        if (speedBoost > 0f)
+        if (speedBoostMult > 1f)
         {
             speedBoostTimer -= Time.deltaTime;
             if (speedBoostTimer <= 0f)
             {
                 speedBoostTimer = 0f;
-                speedBoost = 0f;
+                speedBoostMult = 1f;
             }
         }
     }
@@ -132,7 +132,7 @@ public class Ship : MonoBehaviour
     {
         velocity = new Vector2();
 
-        float boostedSpeed = Mathf.Max(0, Mathf.Min(speed + speedBoost - crippledMovementSpeed, maxSpeed));
+        float boostedSpeed = Mathf.Max(0, Mathf.Min((speed * speedBoostMult) * crippledSpeedMult, maxSpeed));
 
         if (Input.GetKey(KeyCode.LeftArrow))
         {
@@ -237,9 +237,9 @@ public class Ship : MonoBehaviour
         UpdateDamageSprite();
     }
 
-    public void BoostSpeed(float amount, float duration)
+    public void BoostSpeedMult(float amount, float duration)
     {
-        speedBoost += amount;
+        speedBoostMult = amount;
 
         speedBoostTimer += duration;
 
@@ -252,9 +252,9 @@ public class Ship : MonoBehaviour
         fireRateBoostTimer += duration;
     }
 
-    public void CrippleMovement(float amount)
+    public void CrippleMovementMult(float amount)
     {
-        crippledMovementSpeed = amount;
+        crippledSpeedMult = amount;
     }
 
     public void DisableFiring() { firingEnabled = false; }

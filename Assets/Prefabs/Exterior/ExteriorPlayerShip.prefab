@@ -508,9 +508,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   maxHitPoints: 5
-  speed: 20
-  speedBoost: 0
-  maxSpeed: 8
+  speed: 25
+  speedBoostMult: 1
+  maxSpeed: 100
   fireRate: 3
   fireRateBoost: 0
   projectilePrefab: {fileID: 2989912971476457516, guid: 85bde06338b7eac4da4e14c331c0bcf1,
@@ -585,7 +585,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 2
+  m_LinearDrag: 10
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
