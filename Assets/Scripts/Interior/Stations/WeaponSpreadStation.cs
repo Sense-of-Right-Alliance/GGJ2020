@@ -5,13 +5,10 @@ using System.Linq;
 
 public class WeaponSpreadStation : DurationStation
 {
-    protected override void ProcessResource(Resource r)
+    protected override void ProcessResource(InteriorResource r)
     {
-        base.ProcessResource(r);
-
-        //Debug.Log("Weapon SPREAD Station Processing!");
-
         Ship.AddWeaponSpread(r.Value * Duration);
+        base.ProcessResource(r);
     }
 
     public override void Deactivate()

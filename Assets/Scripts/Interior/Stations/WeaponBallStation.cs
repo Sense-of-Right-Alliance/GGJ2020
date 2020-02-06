@@ -5,31 +5,14 @@ using System.Linq;
 
 public class WeaponBallStation : Station
 {
-    protected override void ProcessResource(Resource r)
+    protected override void ProcessResource(InteriorResource r)
     {
-        base.ProcessResource(r);
-
-        //Debug.Log("Weapon Station Processing!");
-
         Ship.FireEnergyBall(r.Value);
+        base.ProcessResource(r);
     }
 
     protected override void AddScore()
     {
         ScoreManager.scoreManager.MainCannonCharged();
-    }
-
-    public override void Deactivate()
-    {
-        base.Deactivate();
-
-        //Ship.DisableFiring();
-    }
-
-    public override void Reactivate()
-    {
-        base.Reactivate();
-
-        //Ship.EnableFiring();
     }
 }

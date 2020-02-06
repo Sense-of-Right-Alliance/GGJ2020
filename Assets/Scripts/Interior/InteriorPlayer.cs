@@ -28,14 +28,17 @@ public class InteriorPlayer : MonoBehaviour
 
     private void Update()
     {
-        UpdateMovement();
-
         UpdatePickup();
     }
 
-    void UpdateMovement()
+    private void FixedUpdate()
     {
-        velocity = new Vector2(0,0); //*= 0.5f;
+        UpdateMovement();
+    }
+
+    private void UpdateMovement()
+    {
+        velocity = new Vector2(0,0);
 
         if (Input.GetKey(KeyCode.A))
         {
@@ -46,7 +49,7 @@ public class InteriorPlayer : MonoBehaviour
             velocity.x += speed;
         } else
         {
-            velocity.x = Input.GetAxis("Horizontal1") * speed;// * Time.deltaTime;
+            velocity.x = Input.GetAxis("Horizontal1") * speed;
         }
 
 
@@ -59,23 +62,21 @@ public class InteriorPlayer : MonoBehaviour
             velocity.y -= speed;
         } else
         {
-            velocity.y = Input.GetAxis("Vertical1") * speed;// * Time.deltaTime;
+            velocity.y = Input.GetAxis("Vertical1") * speed;
         }
 
         rigidbody2D.AddForce(velocity);
     }
 
-    void UpdatePickup()
+    private void UpdatePickup()
     {
         if (Input.GetKeyDown(KeyCode.G) || Input.GetButtonDown("A1"))
         {
             if (heldResource == null && overResources.Count > 0)
             {
-                //Debug.Log("Interior Player Picking Up Resource!");
                 PickupResource();
             } else
             {
-                //Debug.Log("Interior Player Dropping Resource!");
                 DropResource();
             }
         }
@@ -83,14 +84,17 @@ public class InteriorPlayer : MonoBehaviour
         if (heldResource != null)
         {
             Vector2 newPos = transform.position;
-            heldResource.transform.position = newPos;
+
+            if (heldResource.transform.parent != null) heldResource.transform.parent.position = newPos;
+            else heldResource.transform.position = newPos;
         }
     }
 
-    void PickupResource()
+    private void PickupResource()
     {
         if (heldResource == null)
         {
+            ///Debug.Log("Picked up resource!");
             heldResource = overResources[0];
             overResources.RemoveAt(0);
         }
@@ -100,6 +104,7 @@ public class InteriorPlayer : MonoBehaviour
     {
         if (heldResource != null)
         {
+            //Debug.Log("Dropped resource!");
             overResources.Add(heldResource);
             heldResource = null;
         }
@@ -122,9 +127,7 @@ public class InteriorPlayer : MonoBehaviour
 
     public void RandomPush()
     {
-        Vector2 v = new Vector2(Random.Range(-1f,1f) * 1500f, Random.Range(-1f, 1f) * 1500f);
-
-        //Debug.Log("pushing player " + v.ToString());
+        Vector2 v = new Vector2(Random.Range(-1f,1f) * 1300f, Random.Range(-1f, 1f) * 1300f);
 
         rigidbody2D.AddForce(v);
     }

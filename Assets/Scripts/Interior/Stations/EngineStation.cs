@@ -5,12 +5,10 @@ using System.Linq;
 
 public class EngineStation : DurationStation
 {
-    protected override void ProcessResource(Resource r)
+    protected override void ProcessResource(InteriorResource r)
     {
-        base.ProcessResource(r);
-
-        //Debug.Log("Engine Station Processing!");
         Ship.BoostSpeed(r.Value * 20f, r.Value * Duration);
+        base.ProcessResource(r);
     }
 
     public override void Deactivate()

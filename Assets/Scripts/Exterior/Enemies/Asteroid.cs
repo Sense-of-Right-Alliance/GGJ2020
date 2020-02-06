@@ -54,7 +54,7 @@ public class Asteroid : MonoBehaviour
         else if (collision.transform.CompareTag("Enemy") || collision.transform.CompareTag("AmbushEnemy"))
         {
             collision.gameObject.GetComponent<Enemy>().BlowUp();
-            TakeHit(1);
+            //TakeHit(1);
         }
     }
 }

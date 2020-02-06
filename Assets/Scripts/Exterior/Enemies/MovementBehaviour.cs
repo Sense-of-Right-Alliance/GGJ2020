@@ -20,7 +20,7 @@ public class MovementBehaviour : MonoBehaviour
         
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         UpdateMovement();
     }

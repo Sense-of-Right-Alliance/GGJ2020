@@ -5,6 +5,8 @@ using System.Linq;
 
 public class InteriorManager : MonoBehaviour
 {
+    public static InteriorManager interiorManager;
+
     [SerializeField] GameObject resourcePrefab;
     [SerializeField] Transform resourceSpawn;
     [SerializeField] GameObject flamePrefab;
@@ -19,8 +21,12 @@ public class InteriorManager : MonoBehaviour
     [SerializeField] GameObject interiorCameraQuad;
     [SerializeField] GameObject interiorShipMap;
 
+    List<GameObject> spawnedResources = new List<GameObject>();
+
     private void Awake()
     {
+        InteriorManager.interiorManager = this;
+
         if (interiorPlayer == null) interiorPlayer = GameObject.FindObjectOfType<InteriorPlayer>();
         if (interiorCamera == null) interiorCamera = GameObject.Find("InteriorCamera");
         if (interiorCameraQuad == null) interiorCameraQuad = GameObject.Find("InteriorCameraQuad");
@@ -47,7 +53,23 @@ public class InteriorManager : MonoBehaviour
     // Spawns a resource game object inside the ship, which the interior player can pickup and drop off at a station
     public void SpawnResource()
     {
-        GameObject.Instantiate<GameObject>(resourcePrefab, resourceSpawn.position, Quaternion.identity);
+        GameObject resource = GameObject.Instantiate<GameObject>(resourcePrefab, resourceSpawn.position, Quaternion.identity);
+
+        spawnedResources.Add(resource);
+    }
+
+    public void ConsumeResource(GameObject r)
+    {
+        if (r.transform.parent != null)
+        {
+            spawnedResources.Remove(r.transform.parent.gameObject);
+            Destroy(r.transform.parent.gameObject);
+        }
+        else
+        {
+            spawnedResources.Remove(r);
+            Destroy(r);
+        }
     }
 
     public void HandleShipDamage()
@@ -57,6 +79,11 @@ public class InteriorManager : MonoBehaviour
 
         interiorPlayer.DropResource();
         interiorPlayer.RandomPush();
+
+        for (int i = 0; i < spawnedResources.Count; i++)
+        {
+            spawnedResources[i].GetComponent<InteriorResourceContainer>().RandomPush();
+        }
 
         if (exteriorShip.Shields <= 0 && Random.value < flameChance && stations.Length > 0)
         {

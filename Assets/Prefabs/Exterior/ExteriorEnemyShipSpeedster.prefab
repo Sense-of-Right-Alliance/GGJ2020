@@ -175,7 +175,7 @@ MonoBehaviour:
   projectilePrefab: {fileID: 2989912971476457516, guid: be9a4ed381f0f3445a03f4ab1eadb393,
     type: 3}
   projectileSpawnTransform: {fileID: 9191688010904647974}
-  shootDelay: 1
+  shootDelay: 2
   shootDirection: {x: 0, y: 0, z: 0, w: 1}
   scoreValue: 125
 --- !u!50 &942606664080155765

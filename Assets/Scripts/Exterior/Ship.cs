@@ -76,8 +76,13 @@ public class Ship : MonoBehaviour
         UpdateSpeedBoost();
         UpdateFireRateBoost();
         UpdateWeaponSpread();
-        UpdateMovement();
+        
         if (firingEnabled) UpdateProjectile();
+    }
+
+    private void FixedUpdate()
+    {
+        UpdateMovement();
     }
 
     private void UpdateSpeedBoost()
@@ -123,19 +128,19 @@ public class Ship : MonoBehaviour
         }        
     }
 
-    void UpdateMovement()
+    private void UpdateMovement()
     {
-        velocity = new Vector2();//*= 0.5f;
+        velocity = new Vector2();
 
-        float boostedSpeed = Mathf.Max(0, Mathf.Min(speed + speedBoost - crippledMovementSpeed, maxSpeed));// * Time.deltaTime;
+        float boostedSpeed = Mathf.Max(0, Mathf.Min(speed + speedBoost - crippledMovementSpeed, maxSpeed));
 
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            velocity.x -= boostedSpeed;// * Time.deltaTime;
+            velocity.x -= boostedSpeed;
         }
         else if (Input.GetKey(KeyCode.RightArrow))
         {
-            velocity.x += boostedSpeed;// * Time.deltaTime;
+            velocity.x += boostedSpeed;
         } else
         {
             velocity.x = Input.GetAxis("Horizontal2") * boostedSpeed;
@@ -143,21 +148,21 @@ public class Ship : MonoBehaviour
 
         if (Input.GetKey(KeyCode.UpArrow))
         {
-            velocity.y += boostedSpeed;// * Time.deltaTime;
+            velocity.y += boostedSpeed;
         }
         else if (Input.GetKey(KeyCode.DownArrow))
         {
-            velocity.y -= boostedSpeed;// * Time.deltaTime;
+            velocity.y -= boostedSpeed;
         }
         else
         {
             velocity.y = Input.GetAxis("Vertical2") * boostedSpeed;
         }
 
-        rigidbody2D.AddForce(velocity);
+        rigidbody2D.AddForce(velocity);// * Time.deltaTime);
     }
 
-    void UpdateProjectile()
+    private void UpdateProjectile()
     {
         fireTimer -= Time.deltaTime;
         if (Input.GetKey(KeyCode.Space) || Input.GetButton("A2"))
@@ -289,7 +294,7 @@ public class Ship : MonoBehaviour
         else
         {
             shieldsRenderer.enabled = true;
-            shieldsRenderer.sprite = shieldsSprites[shields-1];
+            if (shields-1 < shieldsSprites.Length) shieldsRenderer.sprite = shieldsSprites[shields-1];
         }
     }
 

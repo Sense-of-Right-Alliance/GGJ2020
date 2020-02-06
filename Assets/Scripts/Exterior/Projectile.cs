@@ -34,19 +34,16 @@ public class Projectile : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        UpdateMovement();
         if (spin > 0f) UpdateSpin();
+    }
+
+    private void FixedUpdate()
+    {
+        UpdateMovement();
     }
 
     void UpdateMovement()
     {
-        /*
-        Vector2 newPos = transform.position;
-        newPos += direction * speed * Time.deltaTime;
-        //newPos.y += speed * Time.deltaTime;
-        transform.position = newPos;
-        */
-
         rigidbody2D.AddForce(direction * speed);
     }
 
