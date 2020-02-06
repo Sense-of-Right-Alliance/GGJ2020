@@ -7,7 +7,7 @@ public class EngineStation : DurationStation
 {
     protected override void ProcessResource(InteriorResource r)
     {
-        Ship.BoostSpeed(r.Value * 20f, r.Value * Duration);
+        Ship.BoostSpeedMult(r.Value * 2.5f, r.Value * Duration);
         base.ProcessResource(r);
     }
 
@@ -15,13 +15,13 @@ public class EngineStation : DurationStation
     {
         base.Deactivate();
 
-        Ship.CrippleMovement(15f);
+        Ship.CrippleMovementMult(0.5f);
     }
 
     public override void Reactivate()
     {
         base.Reactivate();
 
-        Ship.CrippleMovement(0f);
+        Ship.CrippleMovementMult(1f);
     }
 }
