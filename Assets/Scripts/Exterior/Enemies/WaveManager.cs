@@ -9,6 +9,10 @@ public class WaveManager : MonoBehaviour
     [SerializeField] private int waveNumber;
     public int WaveNumber => waveNumber;
 
+    [SerializeField] MissionWavesObject missionWaves; // if set, will override the define Waves variable below.
+
+    public string MissionName { get { return missionWaves.name; } }
+
     private SpawnManager _spawnManager;
 
     private List<Wave> Waves = new List<Wave>
@@ -99,6 +103,16 @@ public class WaveManager : MonoBehaviour
     private void Awake()
     {
         _spawnManager = GetComponent<SpawnManager>();
+
+        if (missionWaves != null)
+        {
+            ReadMissionWavesObject();
+        }
+    }
+
+    private void ReadMissionWavesObject()
+    {
+        Waves = missionWaves.waves.ToList();
     }
 
     private void Update()
@@ -117,8 +131,10 @@ public class WaveManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("Wave " + waveNumber + " is not defined in WaveManager, so one will be generated randomly.");
             wave = GenerateRandomWave();
+            ExteriorManager.exteriorManager.HandleMissionWavesComplete();
+
+            //Debug.Log("Wave " + waveNumber + " is not defined in WaveManager, so one will be generated randomly.");
         }
 
         foreach (var waveEvent in wave.WaveEvents)

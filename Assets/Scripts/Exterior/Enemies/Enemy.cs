@@ -2,9 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.Events;
+
+[System.Serializable]
+public class UnityGameObjectEvent : UnityEvent<GameObject>
+{
+
+}
 
 public class Enemy : MonoBehaviour
 {
+    public UnityGameObjectEvent EnemyDestroyedOrRemovedEvent;
+
     [SerializeField] GameObject explosionPrefab;
     [SerializeField] int hitPoints = 2;
     [SerializeField] GameObject resourcePickupPrefab;
@@ -26,6 +35,8 @@ public class Enemy : MonoBehaviour
     {
         audioSource = GetComponent<AudioSource>();
         _movementBehaviour = GetComponent<MovementBehaviour>();
+
+        if (EnemyDestroyedOrRemovedEvent == null) EnemyDestroyedOrRemovedEvent = new UnityGameObjectEvent();
     }
 
     private void Start()
@@ -61,12 +72,14 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public void BlowUp()
+    public void BlowUp(bool canDropResource = true)
     {
+        EnemyDestroyedOrRemovedEvent.Invoke(gameObject);
+
         ScoreManager.scoreManager.EnemyDestroyed(scoreValue);
 
         if (explosionPrefab != null) Instantiate(explosionPrefab, transform.position, Quaternion.identity);
-        if (resourcePickupPrefab != null && Random.value < dropChance) Instantiate(resourcePickupPrefab, transform.position, Quaternion.identity);
+        if (canDropResource && resourcePickupPrefab != null && Random.value < dropChance) Instantiate(resourcePickupPrefab, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }
 

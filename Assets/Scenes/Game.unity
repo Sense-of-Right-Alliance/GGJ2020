@@ -4610,6 +4610,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waveNumber: 0
+  missionWaves: {fileID: 11400000, guid: 5ba5951b0678e424c8b6c7da5676eea9, type: 2}
 --- !u!1 &2037027500
 GameObject:
   m_ObjectHideFlags: 0

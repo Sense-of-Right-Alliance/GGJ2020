@@ -6,12 +6,22 @@ using UnityEngine;
 
 public class ExteriorManager : MonoBehaviour
 {
+    public static ExteriorManager exteriorManager; // Singletoooooooonnnnnnn!
+
     private WaveManager _waveManager;
+    private SpawnManager _spawnManager;
+
+    private void Awake()
+    {
+        ExteriorManager.exteriorManager = this;
+    }
 
     private void Start()
     {
         _waveManager = GetComponent<WaveManager>();
         _waveManager.StartWaves();
+
+        _spawnManager = GetComponent<SpawnManager>();
     }
 
     private void Update()
@@ -32,5 +42,19 @@ public class ExteriorManager : MonoBehaviour
         }
 
         SceneManager.LoadScene(0);
+    }
+
+    public void HandleMissionWavesComplete()
+    {
+        Debug.Log("ExteriorManager -> Mission Waves Completed!");
+        CheckEndMession();
+    }
+
+    public void CheckEndMession()
+    {
+        if (_spawnManager.NumEnemies <= 0)
+        {
+            SceneManager.LoadScene(0);
+        }
     }
 }

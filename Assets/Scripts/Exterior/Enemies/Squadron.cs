@@ -1,19 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
+[Serializable]
 public class Squadron
 {
-    public SpawnPattern SpawnPattern { get; }
+    [SerializeField] SpawnPattern _pattern;
+    public SpawnPattern SpawnPattern { get { return _pattern; } }
 
-    public SpawnZone SpawnZone { get; }
+    [SerializeField] SpawnZone _zone;
+    public SpawnZone SpawnZone { get { return _zone; } }
 
-    public EnemyType EnemyType { get; }
+    [SerializeField] EnemyType _enemyType;
+    public EnemyType EnemyType { get { return _enemyType; } }
 
     public Squadron(EnemyType enemyType, SpawnPattern spawnPattern, SpawnZone spawnZone = SpawnZone.Top)
     {
-        EnemyType = enemyType;
-        SpawnPattern = spawnPattern;
-        SpawnZone = spawnZone;
+        _enemyType = enemyType;
+        _pattern = spawnPattern;
+        _zone = spawnZone;
     }
 }

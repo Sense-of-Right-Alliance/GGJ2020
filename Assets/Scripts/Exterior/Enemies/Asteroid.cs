@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.Events;
 
 public class Asteroid : MonoBehaviour
 {
+    public UnityGameObjectEvent EnemyDestroyedOrRemovedEvent;
+
     [SerializeField] private GameObject explosionPrefab;
     [SerializeField] private List<GameObject> childAsteroidPrefabs;
     [SerializeField] private int hitPoints = 12;
@@ -13,6 +16,11 @@ public class Asteroid : MonoBehaviour
 
     private Quaternion _rotationAmount;
     private MovementBehaviour _movementBehaviour;
+
+    private void Awake()
+    {
+        if (EnemyDestroyedOrRemovedEvent == null) EnemyDestroyedOrRemovedEvent = new UnityGameObjectEvent();
+    }
 
     private void Start()
     {
@@ -38,6 +46,7 @@ public class Asteroid : MonoBehaviour
                 Instantiate(childAsteroidPrefab, transform.position, Quaternion.Euler(0, 0, Random.Range(-45, 45)));
             }
 
+            EnemyDestroyedOrRemovedEvent.Invoke(gameObject);
             ScoreManager.scoreManager.EnemyDestroyed(scoreValue);
 
             Destroy(gameObject);

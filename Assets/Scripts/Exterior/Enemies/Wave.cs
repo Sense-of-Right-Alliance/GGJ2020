@@ -1,13 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
+[Serializable]
 public class Wave
 {
-    public List<WaveEvent> WaveEvents { get; }
+    [SerializeField] List<WaveEvent> _waveEvents;
+
+    public List<WaveEvent> WaveEvents { get { return _waveEvents; } }
 
     public Wave(List<WaveEvent> waveEvents)
     {
-        WaveEvents = waveEvents;
+        _waveEvents = waveEvents;
     }
 }
