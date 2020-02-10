@@ -3,11 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class WaveManager : MonoBehaviour
 {
     [SerializeField] private int waveNumber;
     public int WaveNumber => waveNumber;
+
+    [SerializeField] MissionWavesObject missionWaves; // if set, will override the define Waves variable below.
+
+    [SerializeField] bool randomWavesAfterScripted = false;
+
+    public UnityEvent WavesCompletedEvent;
+    public string MissionName { get { return missionWaves.name; } }
+    public bool WavesCompleted { get { return waveNumber >= Waves.Count; } }
 
     private SpawnManager _spawnManager;
 
@@ -92,13 +101,47 @@ public class WaveManager : MonoBehaviour
             WaveEvent.SpawnSquadron(new Squadron(EnemyType.HugeAsteroid, SpawnPattern.Center, SpawnZone.TopAsteroid)),
             WaveEvent.ShortDelay(),
             WaveEvent.SpawnSquadron(new Squadron(EnemyType.BigBoi, SpawnPattern.FlyingVInverted)),
+        }),
+        new Wave(new List<WaveEvent>
+        {
+            WaveEvent.ShortDelay(),
+            WaveEvent.SpawnSquadron(new Squadron(EnemyType.HomingCorvet, SpawnPattern.Center)),
+            WaveEvent.ShortDelay(),
+            WaveEvent.SpawnSquadron(new Squadron(EnemyType.PlainJane, SpawnPattern.Column)),
+            WaveEvent.ShortDelay(),
+            WaveEvent.SpawnSquadron(new Squadron(EnemyType.HomingCorvet, SpawnPattern.FlyingV)),
+            WaveEvent.ShortDelay(),
+            WaveEvent.SpawnSquadron(new Squadron(EnemyType.HomingCorvet, SpawnPattern.Center)),
+        }),
+        new Wave(new List<WaveEvent>
+        {
+            WaveEvent.ShortDelay(),
+            WaveEvent.SpawnSquadron(new Squadron(EnemyType.NovaSaucer, SpawnPattern.Center)),
+            WaveEvent.ShortDelay(),
+            WaveEvent.SpawnSquadron(new Squadron(EnemyType.BigBoi, SpawnPattern.Column)),
+            WaveEvent.ShortDelay(),
+            WaveEvent.SpawnSquadron(new Squadron(EnemyType.NovaSaucer, SpawnPattern.Column)),
+            WaveEvent.ShortDelay(),
+            WaveEvent.SpawnSquadron(new Squadron(EnemyType.PlainJane, SpawnPattern.FlyingV)),
         })
-        
+
     };
 
     private void Awake()
     {
         _spawnManager = GetComponent<SpawnManager>();
+
+        if (missionWaves != null)
+        {
+            ReadMissionWavesObject();
+        }
+
+        if (WavesCompletedEvent == null) WavesCompletedEvent = new UnityEvent();
+    }
+
+    private void ReadMissionWavesObject()
+    {
+        Waves = missionWaves.waves.ToList();
     }
 
     private void Update()
@@ -117,25 +160,30 @@ public class WaveManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("Wave " + waveNumber + " is not defined in WaveManager, so one will be generated randomly.");
+            WavesCompletedEvent.Invoke();
+
+            if (randomWavesAfterScripted) Debug.Log("Wave " + waveNumber + " is not defined in WaveManager, so one will be generated randomly.");
             wave = GenerateRandomWave();
         }
 
-        foreach (var waveEvent in wave.WaveEvents)
+        if (waveNumber <= Waves.Count || randomWavesAfterScripted) // will end co-routine loop if out of waves and toggle not set
         {
-            if (waveEvent.Squadron != null)
+            foreach (var waveEvent in wave.WaveEvents)
             {
-                _spawnManager.Spawn(waveEvent.Squadron);
+                if (waveEvent.Squadron != null)
+                {
+                    _spawnManager.Spawn(waveEvent.Squadron);
+                }
+
+                if (waveEvent.Duration > 0)
+                {
+                    yield return new WaitForSeconds(waveEvent.Duration);
+                }
             }
 
-            if (waveEvent.Duration > 0)
-            {
-                yield return new WaitForSeconds(waveEvent.Duration);
-            }
+            yield return new WaitForSeconds(2f);
+            yield return StartCoroutine(ProcessWave());
         }
-
-        yield return new WaitForSeconds(2f);
-        yield return StartCoroutine(ProcessWave());
     }
 
     public void StartWaves()

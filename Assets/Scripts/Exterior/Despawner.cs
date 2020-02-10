@@ -23,7 +23,9 @@ public class Despawner : MonoBehaviour
         {
             if (collision.transform.CompareTag(targetTags[i]))
             {
-                Destroy(collision.gameObject);
+                if (collision.gameObject.GetComponent<Asteroid>()) collision.gameObject.GetComponent<Asteroid>().Remove();
+                else if (collision.gameObject.GetComponent<Enemy>()) collision.gameObject.GetComponent<Enemy>().Remove();
+                else Destroy(collision.gameObject);
             }
         }
     }

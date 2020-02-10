@@ -1,18 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
+[Serializable]
 public class WaveEvent
 {
-    public float Duration { get; private set; }
+    [SerializeField] float _duration = 0f;
+    public float Duration { get { return _duration; } private set { _duration = value; } }
 
-    public Squadron Squadron { get; private set; }
+    [SerializeField] Squadron _squadron;
+    public Squadron Squadron { get { return _squadron; } private set { _squadron = value; } }
 
     private static WaveEvent Delay(float duration)
     {
         return new WaveEvent
         {
-            Duration = duration
+            _duration = duration
         };
     }
 
@@ -26,7 +30,7 @@ public class WaveEvent
     {
         return new WaveEvent
         {
-            Squadron = squadron
+            _squadron = squadron
         };
     }
 }

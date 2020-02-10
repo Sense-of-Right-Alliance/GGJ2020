@@ -4595,9 +4595,6 @@ MonoBehaviour:
     type: 3}
   mediumAsteroidPrefab: {fileID: 4303212633405705334, guid: e9bec8fcaf78864488a2e8e0562a568f,
     type: 3}
-  homingCorvettePrefab: {fileID: 4927587125060077755, guid: a42f0b3eefc76c546a9635818d6a760f,
-    type: 3}
-  novaSaucerPrefab: {fileID: 0}
   spawnDelay: 0.3
   enemyTopSpawnTransform: {fileID: 688071271}
   enemyBottomSpawnTransform: {fileID: 1169332290}
@@ -4622,7 +4619,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waveNumber: 0
-  missionWaves: {fileID: 0}
+  missionWaves: {fileID: 11400000, guid: 1e13e0b5dd0cd7a4b8e06af299f81843, type: 2}
   randomWavesAfterScripted: 0
   WavesCompletedEvent:
     m_PersistentCalls:

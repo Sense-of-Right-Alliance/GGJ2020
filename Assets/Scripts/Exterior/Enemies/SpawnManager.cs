@@ -13,6 +13,8 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] GameObject enemyCrabRightPrefab;
     [SerializeField] GameObject hugeAsteroidPrefab;
     [SerializeField] GameObject mediumAsteroidPrefab;
+    [SerializeField] GameObject homingCorvettePrefab;
+    [SerializeField] GameObject novaSaucerPrefab;
     [SerializeField] float spawnDelay = 0.5f; // seconds between each ship spawn in squadron
     [SerializeField] Transform enemyTopSpawnTransform;
     [SerializeField] Transform enemyBottomSpawnTransform;
@@ -21,6 +23,9 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] Transform asteroidTopSpawnTransform;
     [SerializeField] Transform asteroidBottomSpawnTransform;
     [SerializeField] float spawnWidth = 10f;
+
+    public UnityGameObjectEvent EnemyDestroyedOrRemovedEvent; // event for managers to listen to, like Exterior for tracking game end
+    public int NumEnemies { get { return _enemySpawns.Count; } }
 
     private readonly Dictionary<SpawnPattern, int> _squadronSpawns = new Dictionary<SpawnPattern, int>
     {
@@ -34,6 +39,7 @@ public class SpawnManager : MonoBehaviour
     };
 
     private Dictionary<EnemyType, GameObject> _enemyPrefabs;
+    private List<GameObject> _enemySpawns = new List<GameObject>();
 
     private void Awake()
     {
@@ -46,12 +52,44 @@ public class SpawnManager : MonoBehaviour
             { EnemyType.CrabRight, enemyCrabRightPrefab },
             { EnemyType.HugeAsteroid, hugeAsteroidPrefab },
             { EnemyType.MediumAsteroid, mediumAsteroidPrefab },
+            { EnemyType.HomingCorvet, homingCorvettePrefab },
+            { EnemyType.NovaSaucer, novaSaucerPrefab },
         };
+
+        if (EnemyDestroyedOrRemovedEvent == null) EnemyDestroyedOrRemovedEvent = new UnityGameObjectEvent();
     }
 
     private void Update()
     {
 
+    }
+
+    private void OnEnemyDestroyedOrRemoved(GameObject enemy)
+    {
+        _enemySpawns.Remove(enemy);
+
+        Enemy eComp = enemy.GetComponent<Enemy>();
+        Asteroid aComp = enemy.GetComponent<Asteroid>();
+
+        if (eComp) eComp.EnemyDestroyedOrRemovedEvent.RemoveListener(OnEnemyDestroyedOrRemoved);
+        else if (aComp) aComp.EnemyDestroyedOrRemovedEvent.RemoveListener(OnEnemyDestroyedOrRemoved);
+
+        Debug.Log("Removed! Num Spawns = " + _enemySpawns.Count);
+        EnemyDestroyedOrRemovedEvent.Invoke(enemy);
+    }
+
+    private void SpawnEnemy(GameObject prefab, Vector2 spawnPos, Quaternion rotation, string tagName)
+    {
+        var enemy = Instantiate(prefab, spawnPos, rotation);
+        enemy.tag = tagName;
+        _enemySpawns.Add(enemy);
+
+        Enemy eComp = enemy.GetComponent<Enemy>();
+        Asteroid aComp = enemy.GetComponent<Asteroid>();
+        if (eComp) eComp.EnemyDestroyedOrRemovedEvent.AddListener(OnEnemyDestroyedOrRemoved);
+        else if (aComp) aComp.EnemyDestroyedOrRemovedEvent.AddListener(OnEnemyDestroyedOrRemoved);
+
+        //Debug.Log("Spawned! Num Spawns = " + _enemySpawns.Count);
     }
 
     private IEnumerator SpawnColumn(Vector2 reference, EnemyType enemyType, Quaternion rotation, string tagName)
@@ -64,8 +102,7 @@ public class SpawnManager : MonoBehaviour
         {
             var spawnPos = reference;
 
-            var enemy = Instantiate(prefab, spawnPos, rotation);
-            enemy.tag = tagName;
+            SpawnEnemy(prefab, spawnPos, rotation, tagName);
 
             yield return new WaitForSeconds(spawnDelay * 2.5f);
         }
@@ -78,8 +115,7 @@ public class SpawnManager : MonoBehaviour
 
         for (int i = 0; i < _squadronSpawns[SpawnPattern.Center]; i++)
         {
-            var enemy = Instantiate(prefab, reference, rotation);
-            enemy.tag = tagName;
+            SpawnEnemy(prefab, reference, rotation, tagName);
 
             yield return new WaitForSeconds(spawnDelay);
         }
@@ -97,8 +133,7 @@ public class SpawnManager : MonoBehaviour
             var spawnPos = reference;
             spawnPos.x += UnityEngine.Random.Range(-radius, radius);
 
-            var enemy = Instantiate(prefab, spawnPos, rotation);
-            enemy.tag = tagName;
+            SpawnEnemy(prefab, spawnPos, rotation, tagName);
 
             yield return new WaitForSeconds(spawnDelay);
         }
@@ -143,8 +178,7 @@ public class SpawnManager : MonoBehaviour
             for (int j = 0; j < spawnLocations[i].Count; j++)
             {
                 var spawnPos = spawnLocations[i][j];
-                var enemy = Instantiate(prefab, spawnPos, rotation);
-                enemy.tag = tagName;
+                SpawnEnemy(prefab, spawnPos, rotation, tagName);
             }
 
             yield return new WaitForSeconds(spawnDelay);
