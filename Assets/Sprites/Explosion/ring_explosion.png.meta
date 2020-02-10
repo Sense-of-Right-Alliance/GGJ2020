@@ -1,0 +1,550 @@
+fileFormatVersion: 2
+guid: 328b0441432b7c844b63fc88a8c6953a
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -247300928598890333
+    second: ring_explosion_0
+  - first:
+      213: -1554984807227030585
+    second: ring_explosion_1
+  - first:
+      213: 7790948796791517087
+    second: ring_explosion_2
+  - first:
+      213: -6795035017712523534
+    second: ring_explosion_3
+  - first:
+      213: 3795802370204106528
+    second: ring_explosion_4
+  - first:
+      213: -5704957571405481250
+    second: ring_explosion_5
+  - first:
+      213: 4208838549389847749
+    second: ring_explosion_6
+  - first:
+      213: -7895358989378852352
+    second: ring_explosion_7
+  - first:
+      213: -5894712197784668210
+    second: ring_explosion_8
+  - first:
+      213: -8988653174824344347
+    second: ring_explosion_9
+  - first:
+      213: -8535788804149718831
+    second: ring_explosion_10
+  - first:
+      213: 5508989320408906665
+    second: ring_explosion_11
+  - first:
+      213: -4732863588638815984
+    second: ring_explosion_12
+  - first:
+      213: 2573592254690487757
+    second: ring_explosion_13
+  - first:
+      213: 1967853367864217864
+    second: ring_explosion_14
+  - first:
+      213: 702224541223351068
+    second: ring_explosion_15
+  - first:
+      213: 2145480029471649737
+    second: ring_explosion_16
+  - first:
+      213: -5921667257222224137
+    second: ring_explosion_17
+  - first:
+      213: -6305678356693919732
+    second: ring_explosion_18
+  - first:
+      213: 190351825568979700
+    second: ring_explosion_19
+  - first:
+      213: 7528855555837737861
+    second: ring_explosion_20
+  - first:
+      213: 5167280917952124101
+    second: ring_explosion_21
+  - first:
+      213: 2794405347704253273
+    second: ring_explosion_22
+  - first:
+      213: 3794398957339100670
+    second: ring_explosion_23
+  - first:
+      213: 1914847799641794408
+    second: ring_explosion_24
+  - first:
+      213: 7648543540037990874
+    second: ring_explosion_25
+  - first:
+      213: -3110648967978932627
+    second: ring_explosion_26
+  - first:
+      213: 8768828416171437824
+    second: ring_explosion_27
+  - first:
+      213: 1332045377649156506
+    second: ring_explosion_28
+  - first:
+      213: -2863030175170558953
+    second: ring_explosion_29
+  - first:
+      213: 5767984113687716854
+    second: ring_explosion_30
+  - first:
+      213: -2959446885065298255
+    second: ring_explosion_31
+  - first:
+      213: 7523728271254952344
+    second: ring_explosion_32
+  - first:
+      213: 8211788904120101291
+    second: ring_explosion_33
+  - first:
+      213: 5946100273909252210
+    second: ring_explosion_34
+  - first:
+      213: -6517190794473465505
+    second: ring_explosion_35
+  - first:
+      213: -6852393795060228897
+    second: ring_explosion_36
+  - first:
+      213: -5629229744862453849
+    second: ring_explosion_37
+  - first:
+      213: 7306066536528923036
+    second: ring_explosion_38
+  - first:
+      213: -357872808478423632
+    second: ring_explosion_39
+  - first:
+      213: 8543641219018969392
+    second: ring_explosion_40
+  - first:
+      213: 7803342248275446094
+    second: ring_explosion_41
+  - first:
+      213: 4970100779196936800
+    second: ring_explosion_42
+  - first:
+      213: 5936822445031363574
+    second: ring_explosion_43
+  - first:
+      213: -6716401901642366136
+    second: ring_explosion_44
+  - first:
+      213: 5251782224723788501
+    second: ring_explosion_45
+  - first:
+      213: -3676286599650423346
+    second: ring_explosion_46
+  - first:
+      213: 1050003291825777188
+    second: ring_explosion_47
+  - first:
+      213: 301589960611306436
+    second: ring_explosion_48
+  - first:
+      213: -6052694740224328010
+    second: ring_explosion_49
+  - first:
+      213: -197722250708158794
+    second: ring_explosion_50
+  - first:
+      213: 4587516161359815841
+    second: ring_explosion_51
+  - first:
+      213: 4505874280592800566
+    second: ring_explosion_52
+  - first:
+      213: -4312394990401209681
+    second: ring_explosion_53
+  - first:
+      213: -2809247192266269206
+    second: ring_explosion_54
+  - first:
+      213: -6563730753526449287
+    second: ring_explosion_55
+  - first:
+      213: 5154481152082543986
+    second: ring_explosion_56
+  - first:
+      213: 8408288926598872561
+    second: ring_explosion_57
+  - first:
+      213: -1869133058746578675
+    second: ring_explosion_58
+  - first:
+      213: 7418541488772134515
+    second: ring_explosion_59
+  - first:
+      213: 3390085723125520144
+    second: ring_explosion_60
+  externalObjects: {}
+  serializedVersion: 10
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: ring_explosion_0
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 97
+        width: 104
+        height: 97
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3a82d3e9d19619cf0800000000000000
+      internalID: -247300928598890333
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ring_explosion_1
+      rect:
+        serializedVersion: 2
+        x: 107
+        y: 93
+        width: 104
+        height: 97
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7c38a167e859b6ae0800000000000000
+      internalID: -1554984807227030585
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ring_explosion_2
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 93
+        width: 104
+        height: 97
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f9fe30807a20f1c60800000000000000
+      internalID: 7790948796791517087
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ring_explosion_3
+      rect:
+        serializedVersion: 2
+        x: 309
+        y: 97
+        width: 103.833336
+        height: 97
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2f6a7ec27af23b1a0800000000000000
+      internalID: -6795035017712523534
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ring_explosion_4
+      rect:
+        serializedVersion: 2
+        x: 412
+        y: 93
+        width: 104
+        height: 97
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 02ff99905266da430800000000000000
+      internalID: 3795802370204106528
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ring_explosion_5
+      rect:
+        serializedVersion: 2
+        x: 507
+        y: 93
+        width: 104
+        height: 97
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eda73b1a05be3d0b0800000000000000
+      internalID: -5704957571405481250
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ring_explosion_6
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 0
+        width: 104
+        height: 97
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5cc2a5d7c5cc86a30800000000000000
+      internalID: 4208838549389847749
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ring_explosion_7
+      rect:
+        serializedVersion: 2
+        x: 111
+        y: 0
+        width: 104
+        height: 97
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 00ae2ef94dc0e6290800000000000000
+      internalID: -7895358989378852352
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ring_explosion_8
+      rect:
+        serializedVersion: 2
+        x: 214
+        y: 0
+        width: 104
+        height: 97
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ec7f1e5dc76c13ea0800000000000000
+      internalID: -5894712197784668210
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ring_explosion_9
+      rect:
+        serializedVersion: 2
+        x: 309
+        y: 0
+        width: 103.833336
+        height: 97
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5e46869bf83e14380800000000000000
+      internalID: -8988653174824344347
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ring_explosion_10
+      rect:
+        serializedVersion: 2
+        x: 412
+        y: 0
+        width: 103.833336
+        height: 97
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1d056e2ae49ca8980800000000000000
+      internalID: -8535788804149718831
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ring_explosion_11
+      rect:
+        serializedVersion: 2
+        x: 515
+        y: 0
+        width: 103.833336
+        height: 97
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9abb46a599cd37c40800000000000000
+      internalID: 5508989320408906665
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

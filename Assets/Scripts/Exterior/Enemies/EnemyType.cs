@@ -14,4 +14,6 @@ public enum EnemyType
     CrabRight,
     HugeAsteroid,
     MediumAsteroid,
+    HomingCorvet,
+    NovaSaucer,
 }

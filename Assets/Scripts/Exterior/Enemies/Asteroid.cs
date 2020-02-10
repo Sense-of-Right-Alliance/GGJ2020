@@ -45,12 +45,16 @@ public class Asteroid : MonoBehaviour
             {
                 Instantiate(childAsteroidPrefab, transform.position, Quaternion.Euler(0, 0, Random.Range(-45, 45)));
             }
-
-            EnemyDestroyedOrRemovedEvent.Invoke(gameObject);
+            
             ScoreManager.scoreManager.EnemyDestroyed(scoreValue);
-
-            Destroy(gameObject);
+            Remove();
         }
+    }
+
+    public void Remove()
+    {
+        EnemyDestroyedOrRemovedEvent.Invoke(gameObject);
+        Destroy(gameObject);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

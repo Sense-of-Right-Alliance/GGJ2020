@@ -1,52 +1,35 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
+using System.Linq;
 
-public class MovementBehaviour : MonoBehaviour
+public class EnemyProjectileHoming : EnemyProjectile
 {
-    [SerializeField] float speed = 3f;
-    [SerializeField] float homingSpeed = 0f;
-    [SerializeField] float homingRadius = 5f;
+    [SerializeField] float targetingRadius = 5f;
+    [SerializeField] float rotateSpeed = 1f;
+    Transform target;   
 
-    public Vector2 direction = Vector2.down;
-
-    private Rigidbody2D _rigidbody2D;
-
-    Transform target;
-
-    private void Awake()
+    protected override void UpdatePosition()
     {
-        _rigidbody2D = GetComponent<Rigidbody2D>();
-    }
+        Vector3 endRay = transform.position;
+        endRay.x += targetingRadius;
+        Debug.DrawLine(transform.position, endRay);
 
-    private void Start()
-    {
-        
-    }
-
-    private void FixedUpdate()
-    {
-        UpdateMovement();
-
-        if (homingSpeed > 0f)
+        if (target == null)
         {
-            Vector3 endRay = transform.position;
-            endRay.x += homingRadius;
-            Debug.DrawLine(transform.position, endRay);
-            if (target == null) AcquireTarget();
-            else UpdateTargetVector();
+            AcquireTarget();
         }
-    }
+        else
+        {
+            UpdateTargetVector();
+        }
 
-    private void UpdateMovement()
-    {
-        _rigidbody2D.AddForce(speed * direction.normalized);
+        base.UpdatePosition();
     }
 
     private void AcquireTarget()
     {
-        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, homingRadius);
+        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, targetingRadius);
         int i = 0;
         while (i < hitColliders.Length)
         {
@@ -66,10 +49,10 @@ public class MovementBehaviour : MonoBehaviour
         Vector2 targetDirection = target.position - transform.position;
 
         // The step size is equal to speed times frame time.
-        float singleStep = homingSpeed * Time.deltaTime;
-
+        float singleStep = rotateSpeed * Time.deltaTime;
+        
         // Rotate the forward vector towards the target direction by one step
-        Vector2 newDirection = Vector3.RotateTowards(direction, targetDirection, singleStep, 0.0f);
+        Vector2 newDirection = Vector3.RotateTowards(_direction, targetDirection, singleStep, 0.0f);
 
         // Draw a ray pointing at our target in
         Debug.DrawRay(transform.position, newDirection, Color.red);
@@ -80,6 +63,6 @@ public class MovementBehaviour : MonoBehaviour
         // Calculate a rotation a step closer to the target and applies rotation to this object
         //transform.rotation = Quaternion.LookRotation(newDirection);
 
-        direction = newDirection;
+        _direction = newDirection;
     }
 }

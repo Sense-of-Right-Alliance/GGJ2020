@@ -48,12 +48,15 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
-        _shootTimer -= Time.deltaTime;
-
-        if (_shootTimer <= 0f)
+        if (projectilePrefab != null)
         {
-            Shoot();
-            _shootTimer = shootDelay;
+            _shootTimer -= Time.deltaTime;
+
+            if (_shootTimer <= 0f)
+            {
+                Shoot();
+                _shootTimer = shootDelay;
+            }
         }
     }
 
@@ -74,12 +77,16 @@ public class Enemy : MonoBehaviour
 
     public void BlowUp(bool canDropResource = true)
     {
-        EnemyDestroyedOrRemovedEvent.Invoke(gameObject);
-
         ScoreManager.scoreManager.EnemyDestroyed(scoreValue);
 
         if (explosionPrefab != null) Instantiate(explosionPrefab, transform.position, Quaternion.identity);
         if (canDropResource && resourcePickupPrefab != null && Random.value < dropChance) Instantiate(resourcePickupPrefab, transform.position, Quaternion.identity);
+        Remove();
+    }
+
+    public void Remove()
+    {
+        EnemyDestroyedOrRemovedEvent.Invoke(gameObject);
         Destroy(gameObject);
     }
 

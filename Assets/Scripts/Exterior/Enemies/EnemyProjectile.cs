@@ -6,11 +6,11 @@ public class EnemyProjectile : MonoBehaviour
 {
     [SerializeField] GameObject explosionPrefab;
 
-    [SerializeField] private float speed = 10f;
-    [SerializeField] private int damage = 1;
-    [SerializeField] private float wobbleAmount = 0f;
+    [SerializeField] protected float speed = 10f;
+    [SerializeField] protected int damage = 1;
+    [SerializeField] protected float wobbleAmount = 0f;
 
-    private Vector2 _direction;
+    protected Vector2 _direction;
 
     // Start is called before the first frame update
     private void Start()
@@ -20,6 +20,11 @@ public class EnemyProjectile : MonoBehaviour
 
     // Update is called once per frame
     private void Update()
+    {
+        UpdatePosition();
+    }
+
+    protected virtual void UpdatePosition()
     {
         Vector3 newPos = transform.position;
 

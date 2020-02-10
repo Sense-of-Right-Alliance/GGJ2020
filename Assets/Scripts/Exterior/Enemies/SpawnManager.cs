@@ -13,6 +13,8 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] GameObject enemyCrabRightPrefab;
     [SerializeField] GameObject hugeAsteroidPrefab;
     [SerializeField] GameObject mediumAsteroidPrefab;
+    [SerializeField] GameObject homingCorvettePrefab;
+    [SerializeField] GameObject novaSaucerPrefab;
     [SerializeField] float spawnDelay = 0.5f; // seconds between each ship spawn in squadron
     [SerializeField] Transform enemyTopSpawnTransform;
     [SerializeField] Transform enemyBottomSpawnTransform;
@@ -21,6 +23,9 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] Transform asteroidTopSpawnTransform;
     [SerializeField] Transform asteroidBottomSpawnTransform;
     [SerializeField] float spawnWidth = 10f;
+
+    public UnityGameObjectEvent EnemyDestroyedOrRemovedEvent; // event for managers to listen to, like Exterior for tracking game end
+    public int NumEnemies { get { return _enemySpawns.Count; } }
 
     private readonly Dictionary<SpawnPattern, int> _squadronSpawns = new Dictionary<SpawnPattern, int>
     {
@@ -34,10 +39,7 @@ public class SpawnManager : MonoBehaviour
     };
 
     private Dictionary<EnemyType, GameObject> _enemyPrefabs;
-
     private List<GameObject> _enemySpawns = new List<GameObject>();
-
-    public int NumEnemies { get { return _enemySpawns.Count; } }
 
     private void Awake()
     {
@@ -50,7 +52,11 @@ public class SpawnManager : MonoBehaviour
             { EnemyType.CrabRight, enemyCrabRightPrefab },
             { EnemyType.HugeAsteroid, hugeAsteroidPrefab },
             { EnemyType.MediumAsteroid, mediumAsteroidPrefab },
+            { EnemyType.HomingCorvet, homingCorvettePrefab },
+            { EnemyType.NovaSaucer, novaSaucerPrefab },
         };
+
+        if (EnemyDestroyedOrRemovedEvent == null) EnemyDestroyedOrRemovedEvent = new UnityGameObjectEvent();
     }
 
     private void Update()
@@ -69,6 +75,7 @@ public class SpawnManager : MonoBehaviour
         else if (aComp) aComp.EnemyDestroyedOrRemovedEvent.RemoveListener(OnEnemyDestroyedOrRemoved);
 
         Debug.Log("Removed! Num Spawns = " + _enemySpawns.Count);
+        EnemyDestroyedOrRemovedEvent.Invoke(enemy);
     }
 
     private void SpawnEnemy(GameObject prefab, Vector2 spawnPos, Quaternion rotation, string tagName)
@@ -82,7 +89,7 @@ public class SpawnManager : MonoBehaviour
         if (eComp) eComp.EnemyDestroyedOrRemovedEvent.AddListener(OnEnemyDestroyedOrRemoved);
         else if (aComp) aComp.EnemyDestroyedOrRemovedEvent.AddListener(OnEnemyDestroyedOrRemoved);
 
-        Debug.Log("Spawned! Num Spawns = " + _enemySpawns.Count);
+        //Debug.Log("Spawned! Num Spawns = " + _enemySpawns.Count);
     }
 
     private IEnumerator SpawnColumn(Vector2 reference, EnemyType enemyType, Quaternion rotation, string tagName)
