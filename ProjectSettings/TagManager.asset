@@ -13,6 +13,7 @@ TagManager:
   - Asteroid
   - Enemy Projectile
   - Despawner
+  - Launch Pad
   layers:
   - Default
   - TransparentFX
@@ -34,7 +35,7 @@ TagManager:
   - Asteroid
   - Despawner
   - ResourceContainer
-  - 
+  - Launch Pad
   - 
   - 
   - 

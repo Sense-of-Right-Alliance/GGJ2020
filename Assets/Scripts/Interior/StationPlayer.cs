@@ -2,12 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-using System;
 
-[Serializable]
-public enum PlayerID { Player1, Player2 }
-
-public class InteriorPlayer : MonoBehaviour
+public class StationPlayer : MonoBehaviour
 {
     [SerializeField] float speed = 5f;
 
@@ -29,7 +25,7 @@ public class InteriorPlayer : MonoBehaviour
 
     private void Start()
     {
-        
+
     }
 
     private void Update()
@@ -39,12 +35,12 @@ public class InteriorPlayer : MonoBehaviour
 
     private void FixedUpdate()
     {
-        UpdateMovement();
+        if (!ready) UpdateMovement();
     }
 
     private void UpdateMovement()
     {
-        velocity = new Vector2(0,0);
+        velocity = new Vector2(0, 0);
 
         if ((playerID == PlayerID.Player2 && Input.GetKey(KeyCode.LeftArrow))
             || (playerID == PlayerID.Player1 && Input.GetKey(KeyCode.A)))
@@ -55,7 +51,8 @@ public class InteriorPlayer : MonoBehaviour
             || (playerID == PlayerID.Player1 && Input.GetKey(KeyCode.D)))
         {
             velocity.x += speed;
-        } else
+        }
+        else
         {
             velocity.x = (playerID == PlayerID.Player1 ? Input.GetAxis("Horizontal1") : Input.GetAxis("Horizontal2")) * speed;
         }
@@ -70,13 +67,16 @@ public class InteriorPlayer : MonoBehaviour
             || (playerID == PlayerID.Player1 && Input.GetKey(KeyCode.S)))
         {
             velocity.y -= speed;
-        } else
+        }
+        else
         {
             velocity.y = (playerID == PlayerID.Player1 ? Input.GetAxis("Vertical1") : Input.GetAxis("Vertical2")) * speed;
         }
 
         rigidbody2D.AddForce(velocity);
     }
+
+    private bool ready = false;
 
     private void UpdatePickup()
     {
@@ -86,9 +86,21 @@ public class InteriorPlayer : MonoBehaviour
             if (heldResource == null && overResources.Count > 0)
             {
                 PickupResource();
-            } else
+            }
+            else
             {
                 DropResource();
+            }
+
+            if (!ready && overPad)
+            {
+                ready = true;
+                overPad.Ready(playerID);
+            }
+            else if (ready && overPad)
+            {
+                ready = false;
+                overPad.Unready();
             }
         }
 
@@ -121,11 +133,17 @@ public class InteriorPlayer : MonoBehaviour
         }
     }
 
+    private LaunchPad overPad = null;
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Interior Resource")
         {
             overResources.Add(collision.gameObject);
+        }
+        else if (collision.tag == "Launch Pad")
+        {
+            overPad = collision.gameObject.GetComponent<LaunchPad>();
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
@@ -134,11 +152,15 @@ public class InteriorPlayer : MonoBehaviour
         {
             overResources.Remove(collision.gameObject);
         }
+        else if (collision.tag == "Launch Pad")
+        {
+            overPad = null;
+        }
     }
 
     public void RandomPush()
     {
-        Vector2 v = new Vector2(UnityEngine.Random.Range(-1f,1f) * 1300f, UnityEngine.Random.Range(-1f, 1f) * 1300f);
+        Vector2 v = new Vector2(UnityEngine.Random.Range(-1f, 1f) * 1300f, UnityEngine.Random.Range(-1f, 1f) * 1300f);
 
         rigidbody2D.AddForce(v);
     }

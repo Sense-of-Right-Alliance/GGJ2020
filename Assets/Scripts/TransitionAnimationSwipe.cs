@@ -17,11 +17,14 @@ public class TransitionAnimationSwipe : SceneTransitionAnimation
     private float _startY = -700f;
     private float _endY = 0f;
 
-    public TransitionAnimationSwipe(Canvas canvas, GameObject swipePrefab, float duration)
+    private bool _transitionOn = true;
+
+    public TransitionAnimationSwipe(Canvas canvas, GameObject swipePrefab, float duration, bool on)
     {
         _canvas = canvas;
         _swipePrefab = swipePrefab;
         _duration = duration;
+        _transitionOn = on;
     }
 
     public override void PlayAnimation(SceneTransitionAnimator.CallbackFunction callbackFunction)
@@ -32,6 +35,13 @@ public class TransitionAnimationSwipe : SceneTransitionAnimation
         swipe.transform.SetParent(_canvas.transform);
 
         r = swipe.GetComponent<RectTransform>();
+
+        if (_transitionOn)
+        {
+            float tmp = _startY;
+            _startY = _endY;
+            _endY = tmp;
+        }
 
         Vector3 p = r.position;
         p.y = _startY;
@@ -45,7 +55,7 @@ public class TransitionAnimationSwipe : SceneTransitionAnimation
         _t += deltaTime;
 
         Vector3 p = r.position;
-        p.y = Mathf.Lerp(_startY, _endY, Mathf.Pow(_t,3f));// (700f / _duration) * deltaTime;
+        p.y = Mathf.Lerp(_startY, _endY, Mathf.Pow(_t,2f));// (700f / _duration) * deltaTime;
         r.position = p;
 
         if (_t >= 1f)

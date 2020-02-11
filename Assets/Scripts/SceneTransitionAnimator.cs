@@ -10,6 +10,8 @@ public class SceneTransitionAnimator : MonoBehaviour
 
     [SerializeField] Canvas canvas;
 
+    [SerializeField] bool transitionOn = true;
+
     public delegate void CallbackFunction(); // declare delegate type
 
     public CallbackFunction _callbackFunction; // to store the function
@@ -19,6 +21,17 @@ public class SceneTransitionAnimator : MonoBehaviour
     private void Awake()
     {
         if (canvas == null) canvas = GameObject.FindObjectOfType<Canvas>();
+    }
+
+    private void Start()
+    {
+        if (transitionOn)
+        {
+            _animationList = new List<SceneTransitionAnimation>();
+            _animationList.Add(new TransitionAnimationSwipe(canvas, transitionSwipePrefab, 1f, true));
+
+            StartAnimation();
+        }
     }
 
     private int animationIndex = -1;
@@ -41,8 +54,28 @@ public class SceneTransitionAnimator : MonoBehaviour
             Debug.Log("SceneTransitionAnimator -> Animation complete!");
             // animation complete! Make callback
             animationIndex = -1;
-            _callbackFunction();
+            if (_callbackFunction != null) _callbackFunction();
         }
+    }
+
+    public void PlayStartGameTransition(CallbackFunction callbackFunction)
+    {
+        _callbackFunction = callbackFunction;
+
+        _animationList = new List<SceneTransitionAnimation>();
+        _animationList.Add(new TransitionAnimationSwipe(canvas, transitionSwipePrefab, 1f, false));
+
+        StartAnimation();
+    }
+
+    public void PlayLeaveStationTransition(CallbackFunction callbackFunction)
+    {
+        _callbackFunction = callbackFunction;
+
+        _animationList = new List<SceneTransitionAnimation>();
+        _animationList.Add(new TransitionAnimationSwipe(canvas, transitionSwipePrefab, 1f, false));
+
+        StartAnimation();
     }
 
     public void PlayMissionFailTransition(CallbackFunction callbackFunction)
@@ -51,7 +84,7 @@ public class SceneTransitionAnimator : MonoBehaviour
 
         _animationList = new List<SceneTransitionAnimation>();
         _animationList.Add(new TransitionAnimationWait(1f));
-        _animationList.Add(new TransitionAnimationSwipe(canvas, transitionSwipePrefab, 1f));
+        _animationList.Add(new TransitionAnimationSwipe(canvas, transitionSwipePrefab, 1f, false));
 
         StartAnimation();
     }
@@ -62,7 +95,7 @@ public class SceneTransitionAnimator : MonoBehaviour
 
         _animationList = new List<SceneTransitionAnimation>();
         _animationList.Add(new TransitionAnimationWait(1f));
-        _animationList.Add(new TransitionAnimationSwipe(canvas, transitionSwipePrefab, 1f));
+        _animationList.Add(new TransitionAnimationSwipe(canvas, transitionSwipePrefab, 1f, false));
 
         StartAnimation();
     }

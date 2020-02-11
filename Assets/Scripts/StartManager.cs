@@ -100,7 +100,13 @@ public class StartManager : MonoBehaviour
 
         if (logoDone && gorillaDone && orangutanDone)
         {
-            SceneManager.LoadScene(1);
+            state = 2;
+            GetComponent<SceneTransitionAnimator>().PlayStartGameTransition(LoadScene);
         }
+    }
+
+    private void LoadScene()
+    {
+        SceneManager.LoadScene(1);
     }
 }
