@@ -40,7 +40,7 @@ public class TransitionAnimationSwipe : SceneTransitionAnimation
         {
             float tmp = _startY;
             _startY = _endY;
-            _endY = tmp;
+            _endY = -1f*tmp;
         }
 
         Vector3 p = r.position;
@@ -52,7 +52,7 @@ public class TransitionAnimationSwipe : SceneTransitionAnimation
 
     public override void Update(float deltaTime)
     {
-        _t += deltaTime;
+        _t += 2f * deltaTime;
 
         Vector3 p = r.position;
         p.y = Mathf.Lerp(_startY, _endY, Mathf.Pow(_t,2f));// (700f / _duration) * deltaTime;
@@ -60,6 +60,7 @@ public class TransitionAnimationSwipe : SceneTransitionAnimation
 
         if (_t >= 1f)
         {
+            GameObject.Destroy(swipe);
             animating = false;
             _callbackFunction();
         }

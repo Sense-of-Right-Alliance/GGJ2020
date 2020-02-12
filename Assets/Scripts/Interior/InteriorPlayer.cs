@@ -4,8 +4,7 @@ using UnityEngine;
 using System.Linq;
 using System;
 
-[Serializable]
-public enum PlayerID { Player1, Player2 }
+
 
 public class InteriorPlayer : MonoBehaviour
 {
@@ -29,7 +28,9 @@ public class InteriorPlayer : MonoBehaviour
 
     private void Start()
     {
-        
+        int savedPlayerID = PlayerPrefs.GetInt("Engineer");
+        if (savedPlayerID == 0) playerID = PlayerID.Player1;
+        else playerID = PlayerID.Player2;
     }
 
     private void Update()

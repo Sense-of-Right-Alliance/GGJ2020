@@ -25,6 +25,7 @@ public class StationManager : MonoBehaviour
         {
             if (readyPads[0].SceneID == readyPads[1].SceneID)
             {
+                Debug.Log("Role Strings = " + readyPads[0].Role.ToString() + " and " + readyPads[1].Role.ToString());
                 PlayerPrefs.SetInt(readyPads[0].Role.ToString(), (int)readyPads[0].ReadyID); // TODO read this on mission scenes
                 PlayerPrefs.SetInt(readyPads[1].Role.ToString(), (int)readyPads[1].ReadyID);
 
