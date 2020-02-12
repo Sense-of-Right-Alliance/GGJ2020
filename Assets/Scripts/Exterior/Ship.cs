@@ -34,6 +34,8 @@ public class Ship : MonoBehaviour
 
     [SerializeField] Vector2 velocity = Vector2.zero;
 
+    [SerializeField] PlayerID playerID = PlayerID.Player2;
+
     private int currentHitPoints = 0;
     public int HitPoints { get { return currentHitPoints; } }
     private float speedBoostTimer = 0f;
@@ -68,6 +70,10 @@ public class Ship : MonoBehaviour
         UpdateShieldsSprite();
         speedBoostMult = 1;
         fireRateBoost = 0f;
+
+        int savedPlayerID = PlayerPrefs.GetInt("Pilot");
+        if (savedPlayerID == 0) playerID = PlayerID.Player1;
+        else playerID = PlayerID.Player2;
     }
 
     // Update is called once per frame
@@ -134,38 +140,45 @@ public class Ship : MonoBehaviour
 
         float boostedSpeed = Mathf.Max(0, Mathf.Min((speed * speedBoostMult) * crippledSpeedMult, maxSpeed));
 
-        if (Input.GetKey(KeyCode.LeftArrow))
+        if ((playerID == PlayerID.Player2 && Input.GetKey(KeyCode.LeftArrow))
+            || (playerID == PlayerID.Player1 && Input.GetKey(KeyCode.A)))
         {
             velocity.x -= boostedSpeed;
         }
-        else if (Input.GetKey(KeyCode.RightArrow))
+        else if ((playerID == PlayerID.Player2 && Input.GetKey(KeyCode.RightArrow))
+            || (playerID == PlayerID.Player1 && Input.GetKey(KeyCode.D)))
         {
             velocity.x += boostedSpeed;
-        } else
+        }
+        else
         {
-            velocity.x = Input.GetAxis("Horizontal2") * boostedSpeed;
+            velocity.x = (playerID == PlayerID.Player1 ? Input.GetAxis("Horizontal1") : Input.GetAxis("Horizontal2")) * boostedSpeed;
         }
 
-        if (Input.GetKey(KeyCode.UpArrow))
+
+        if ((playerID == PlayerID.Player2 && Input.GetKey(KeyCode.UpArrow))
+            || (playerID == PlayerID.Player1 && Input.GetKey(KeyCode.W)))
         {
             velocity.y += boostedSpeed;
         }
-        else if (Input.GetKey(KeyCode.DownArrow))
+        else if ((playerID == PlayerID.Player2 && Input.GetKey(KeyCode.DownArrow))
+            || (playerID == PlayerID.Player1 && Input.GetKey(KeyCode.S)))
         {
             velocity.y -= boostedSpeed;
         }
         else
         {
-            velocity.y = Input.GetAxis("Vertical2") * boostedSpeed;
+            velocity.y = (playerID == PlayerID.Player1 ? Input.GetAxis("Vertical1") : Input.GetAxis("Vertical2")) * boostedSpeed;
         }
 
-        rigidbody2D.AddForce(velocity);// * Time.deltaTime);
+        rigidbody2D.AddForce(velocity);
     }
 
     private void UpdateProjectile()
     {
         fireTimer -= Time.deltaTime;
-        if (Input.GetKey(KeyCode.Space) || Input.GetButton("A2"))
+        if ((playerID == PlayerID.Player1 && (Input.GetKey(KeyCode.G) || Input.GetButton("A1")))
+            || (playerID == PlayerID.Player2 && (Input.GetKey(KeyCode.Space) || Input.GetButton("A2"))))
         {
             if (fireTimer <= 0f)
             {
