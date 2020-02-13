@@ -48,7 +48,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.15
+  m_Radius: 0.1
 --- !u!114 &924037186
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -172,7 +172,7 @@ GameObject:
   - component: {fileID: 4660719601325771403}
   - component: {fileID: 2025084384}
   m_Layer: 19
-  m_Name: InteriorResourceBAD
+  m_Name: InteriorResource
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

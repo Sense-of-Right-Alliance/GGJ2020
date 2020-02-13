@@ -31,10 +31,16 @@ public class TransitionAnimationSwipe : SceneTransitionAnimation
     {
         base.PlayAnimation(callbackFunction);
 
-        swipe = GameObject.Instantiate(_swipePrefab);
+        swipe = GameObject.Instantiate(_swipePrefab, new Vector3(0, 0, 0), Quaternion.identity);
         swipe.transform.SetParent(_canvas.transform);
-
+        
         r = swipe.GetComponent<RectTransform>();
+        //r.position = new Vector3(0, 0, 0);
+        RectTransform cr = _canvas.GetComponent<RectTransform>();
+        
+        _startY = -cr.rect.height * 2;
+
+        // TODO: x is getting set to -400 for some reason. Fix it!
 
         if (_transitionOn)
         {
