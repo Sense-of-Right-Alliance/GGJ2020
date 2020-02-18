@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using System.Linq;
 
 public class TransitionAnimationSwipe : SceneTransitionAnimation
 {
     private Canvas _canvas;
-    private GameObject _swipePrefab;
+    //private GameObject _swipePrefab;
     private float _duration;
 
     private GameObject swipe;
@@ -19,10 +20,11 @@ public class TransitionAnimationSwipe : SceneTransitionAnimation
 
     private bool _transitionOn = true;
 
-    public TransitionAnimationSwipe(Canvas canvas, GameObject swipePrefab, float duration, bool on)
+    public TransitionAnimationSwipe(Canvas canvas, GameObject swipeObject, float duration, bool on)
     {
         _canvas = canvas;
-        _swipePrefab = swipePrefab;
+        //_swipePrefab = swipePrefab;
+        swipe = swipeObject;
         _duration = duration;
         _transitionOn = on;
     }
@@ -30,28 +32,24 @@ public class TransitionAnimationSwipe : SceneTransitionAnimation
     public override void PlayAnimation(SceneTransitionAnimator.CallbackFunction callbackFunction)
     {
         base.PlayAnimation(callbackFunction);
-
-        swipe = GameObject.Instantiate(_swipePrefab, new Vector3(0, 0, 0), Quaternion.identity);
-        swipe.transform.SetParent(_canvas.transform);
         
         r = swipe.GetComponent<RectTransform>();
-        //r.position = new Vector3(0, 0, 0);
+        swipe.GetComponent<Image>().fillOrigin = 0;
         RectTransform cr = _canvas.GetComponent<RectTransform>();
-        
-        _startY = -cr.rect.height * 2;
 
-        // TODO: x is getting set to -400 for some reason. Fix it!
+        _startY = 0f;
+        _endY = 1f;
 
         if (_transitionOn)
         {
+            swipe.GetComponent<Image>().fillOrigin = 1;
+            
             float tmp = _startY;
             _startY = _endY;
             _endY = -1f*tmp;
         }
 
-        Vector3 p = r.position;
-        p.y = _startY;
-        r.position = p;
+        swipe.GetComponent<Image>().fillAmount = _startY;
 
         _t = 0f;
     }
@@ -60,13 +58,10 @@ public class TransitionAnimationSwipe : SceneTransitionAnimation
     {
         _t += 2f * deltaTime;
 
-        Vector3 p = r.position;
-        p.y = Mathf.Lerp(_startY, _endY, Mathf.Pow(_t,2f));// (700f / _duration) * deltaTime;
-        r.position = p;
+        swipe.GetComponent<Image>().fillAmount = Mathf.Lerp(_startY, _endY, Mathf.Pow(_t, 2f));
 
         if (_t >= 1f)
         {
-            GameObject.Destroy(swipe);
             animating = false;
             _callbackFunction();
         }

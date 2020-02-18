@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class SceneTransitionAnimator : MonoBehaviour
 {
     [SerializeField] GameObject transitionSwipePrefab;
+    [SerializeField] GameObject transitionSwipeObject;
 
     [SerializeField] Canvas canvas;
 
@@ -28,7 +29,7 @@ public class SceneTransitionAnimator : MonoBehaviour
         if (transitionOn)
         {
             _animationList = new List<SceneTransitionAnimation>();
-            _animationList.Add(new TransitionAnimationSwipe(canvas, transitionSwipePrefab, 1f, true));
+            _animationList.Add(new TransitionAnimationSwipe(canvas, transitionSwipeObject/*transitionSwipePrefab*/, 1f, true));
 
             StartAnimation();
         }
@@ -63,7 +64,7 @@ public class SceneTransitionAnimator : MonoBehaviour
         _callbackFunction = callbackFunction;
 
         _animationList = new List<SceneTransitionAnimation>();
-        _animationList.Add(new TransitionAnimationSwipe(canvas, transitionSwipePrefab, 1f, false));
+        _animationList.Add(new TransitionAnimationSwipe(canvas, transitionSwipeObject/*transitionSwipePrefab*/, 1f, false));
 
         StartAnimation();
     }
@@ -73,7 +74,7 @@ public class SceneTransitionAnimator : MonoBehaviour
         _callbackFunction = callbackFunction;
 
         _animationList = new List<SceneTransitionAnimation>();
-        _animationList.Add(new TransitionAnimationSwipe(canvas, transitionSwipePrefab, 1f, false));
+        _animationList.Add(new TransitionAnimationSwipe(canvas, transitionSwipeObject/*transitionSwipePrefab*/, 1f, false));
 
         StartAnimation();
     }
@@ -84,7 +85,7 @@ public class SceneTransitionAnimator : MonoBehaviour
 
         _animationList = new List<SceneTransitionAnimation>();
         _animationList.Add(new TransitionAnimationWait(1f));
-        _animationList.Add(new TransitionAnimationSwipe(canvas, transitionSwipePrefab, 1f, false));
+        _animationList.Add(new TransitionAnimationSwipe(canvas, transitionSwipeObject/*transitionSwipePrefab*/, 1f, false));
 
         StartAnimation();
     }
@@ -95,7 +96,7 @@ public class SceneTransitionAnimator : MonoBehaviour
 
         _animationList = new List<SceneTransitionAnimation>();
         _animationList.Add(new TransitionAnimationWait(1f));
-        _animationList.Add(new TransitionAnimationSwipe(canvas, transitionSwipePrefab, 1f, false));
+        _animationList.Add(new TransitionAnimationSwipe(canvas, transitionSwipeObject/*transitionSwipePrefab*/, 1f, false));
 
         StartAnimation();
     }
