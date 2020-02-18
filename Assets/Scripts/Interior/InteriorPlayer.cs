@@ -28,9 +28,9 @@ public class InteriorPlayer : MonoBehaviour
 
     private void Start()
     {
-        int savedPlayerID = PlayerPrefs.GetInt("Engineer");
+        int savedPlayerID = PlayerPrefs.GetInt("Engineer",-1);
         if (savedPlayerID == 0) playerID = PlayerID.Player1;
-        else playerID = PlayerID.Player2;
+        else if (savedPlayerID == 1) playerID = PlayerID.Player2;
     }
 
     private void Update()

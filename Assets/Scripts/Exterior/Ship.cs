@@ -71,9 +71,9 @@ public class Ship : MonoBehaviour
         speedBoostMult = 1;
         fireRateBoost = 0f;
 
-        int savedPlayerID = PlayerPrefs.GetInt("Pilot");
+        int savedPlayerID = PlayerPrefs.GetInt("Pilot",-1);
         if (savedPlayerID == 0) playerID = PlayerID.Player1;
-        else playerID = PlayerID.Player2;
+        else if (savedPlayerID == 1) playerID = PlayerID.Player2;
     }
 
     // Update is called once per frame
