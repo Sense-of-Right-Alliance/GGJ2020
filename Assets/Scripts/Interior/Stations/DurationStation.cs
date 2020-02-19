@@ -41,7 +41,7 @@ public class DurationStation : Station
         }
     }
 
-    private void Update()
+    protected override void StationUpdate()
     {
         UpdateDurationPips();
     }

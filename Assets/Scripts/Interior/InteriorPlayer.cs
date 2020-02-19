@@ -109,6 +109,7 @@ public class InteriorPlayer : MonoBehaviour
             ///Debug.Log("Picked up resource!");
             heldResource = overResources[0];
             overResources.RemoveAt(0);
+            heldResource.GetComponent<InteriorResource>().Hold(this);
         }
     }
 
@@ -118,6 +119,7 @@ public class InteriorPlayer : MonoBehaviour
         {
             //Debug.Log("Dropped resource!");
             overResources.Add(heldResource);
+            heldResource.GetComponent<InteriorResource>().Drop();
             heldResource = null;
         }
     }
