@@ -29,8 +29,6 @@ public class Station : MonoBehaviour
 
     private void Start()
     {
-        activated = true;
-
         Ship.shipHitEvent.AddListener(HandleShipHit);
 
         InitPips();
@@ -87,8 +85,9 @@ public class Station : MonoBehaviour
     {
         if (collision.tag == "Interior Resource")
         {
+            Debug.Log("Station: Collided with resource");
             overResource = collision.gameObject.GetComponent<InteriorResource>();
-            if (activated)
+            if (activated && !overResource.IsHeld)
             {
                 CollectResource(overResource);
             }
@@ -136,9 +135,17 @@ public class Station : MonoBehaviour
 
     private void Update()
     {
-        if (overResource != null && activated) // handle case when player puts out fire while holding resource
+        if (overResource != null && activated && !overResource.IsHeld) // handle case when player puts out fire while holding resource
         {
+            Debug.Log("Station: Found dropped resource!");
             CollectResource(overResource);
         }
+
+        StationUpdate();
+    }
+
+    protected virtual void StationUpdate()
+    {
+        // Cause Update cannot be inherited...
     }
 }

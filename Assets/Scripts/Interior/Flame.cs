@@ -11,9 +11,9 @@ public class Flame : MonoBehaviour
 
     float startingHealth = 1f;
 
-    Station station;
+    [SerializeField] Station station;
 
-    bool ignited = false;
+    [SerializeField] bool ignited = false;
 
     private void Start()
     {
