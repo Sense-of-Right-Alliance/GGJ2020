@@ -16,9 +16,11 @@ public class InteriorPlayer : MonoBehaviour
 
     Rigidbody2D rigidbody2D;
 
-    private GameObject heldResource;
-    private List<GameObject> overResources = new List<GameObject>();
+    private GameObject heldItem;
+    private List<GameObject> overItems = new List<GameObject>();
     private AudioSource audioSource;
+
+    private Vector2 moveDir = Vector2.up;
 
     private void Awake()
     {
@@ -77,6 +79,8 @@ public class InteriorPlayer : MonoBehaviour
         }
 
         rigidbody2D.AddForce(velocity);
+        
+        if (rigidbody2D.velocity.magnitude > 0.1) moveDir = rigidbody2D.velocity.normalized;
     }
 
     private void UpdatePickup()
@@ -84,58 +88,74 @@ public class InteriorPlayer : MonoBehaviour
         if ((playerID == PlayerID.Player1 && (Input.GetKeyDown(KeyCode.G) || Input.GetButtonDown("A1")))
             || (playerID == PlayerID.Player2 && (Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("A2"))))
         {
-            if (heldResource == null && overResources.Count > 0)
+            if (heldItem == null && overItems.Count > 0)
             {
-                PickupResource();
+                PickupItem();
             } else
             {
-                DropResource();
+                DropItem();
             }
         }
 
-        if (heldResource != null)
+        if (heldItem != null)
         {
             Vector2 newPos = transform.position;
+            newPos += moveDir * heldItem.transform.parent.GetComponent<SpriteRenderer>().bounds.size.x;
 
-            if (heldResource.transform.parent != null) heldResource.transform.parent.position = newPos;
-            else heldResource.transform.position = newPos;
+            //Debug.Log("interiorplayer move dir = " + moveDir.ToString() + " sprite width = " + heldResource.transform.parent.GetComponent<SpriteRenderer>().bounds.size.x / 2f);
+
+            if (heldItem.transform.parent != null) heldItem.transform.parent.position = newPos;
+            else heldItem.transform.position = newPos;
+
+            heldItem.transform.LookAt(transform.position + new Vector3(moveDir.x, moveDir.y, transform.position.z));
+
+            if (heldItem.tag == "Tool") heldItem.GetComponent<Tool>().SetOn(((playerID == PlayerID.Player1 && (Input.GetKey(KeyCode.R) || Input.GetButton("B1")))
+             || (playerID == PlayerID.Player2 && (Input.GetKey(KeyCode.B) || Input.GetButton("B2")))));
+
+            /*
+            if ((playerID == PlayerID.Player1 && (Input.GetKeyDown(KeyCode.R) || Input.GetButton("B1")))
+             || (playerID == PlayerID.Player2 && (Input.GetKeyDown(KeyCode.B) || Input.GetButton("B2"))))
+            {
+                if (heldItem.tag == "Tool") heldItem.GetComponent<Tool>().SetOn(true);// ToggleOn();
+            }
+            */
         }
     }
 
-    private void PickupResource()
+    private void PickupItem()
     {
-        if (heldResource == null)
+        if (heldItem == null)
         {
             ///Debug.Log("Picked up resource!");
-            heldResource = overResources[0];
-            overResources.RemoveAt(0);
-            heldResource.GetComponent<InteriorResource>().Hold(this);
+            heldItem = overItems[0];
+            overItems.RemoveAt(0);
+            if (heldItem.tag == "Interior Resource") heldItem.GetComponent<InteriorResource>().Hold(this);
         }
     }
 
-    public void DropResource()
+    public void DropItem()
     {
-        if (heldResource != null)
+        if (heldItem != null)
         {
             //Debug.Log("Dropped resource!");
-            overResources.Add(heldResource);
-            heldResource.GetComponent<InteriorResource>().Drop();
-            heldResource = null;
+            overItems.Add(heldItem);
+            if (heldItem.tag == "Interior Resource") heldItem.GetComponent<InteriorResource>().Drop();
+            heldItem = null;
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Interior Resource")
+        if (collision.tag == "Interior Resource" || collision.tag == "Tool")
         {
-            overResources.Add(collision.gameObject);
+            overItems.Add(collision.gameObject);
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.tag == "Interior Resource")
+        if (collision.tag == "Interior Resource" || collision.tag == "Tool")
         {
-            overResources.Remove(collision.gameObject);
+            overItems.Remove(collision.gameObject);
         }
     }
 

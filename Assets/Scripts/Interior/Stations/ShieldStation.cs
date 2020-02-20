@@ -8,6 +8,7 @@ public class ShieldStation : Station
     protected override void ProcessResource(InteriorResource r)
     {
         Ship.AddShields(r.Value);
+        UpdateResourcePips();
         base.ProcessResource(r);
     }
 

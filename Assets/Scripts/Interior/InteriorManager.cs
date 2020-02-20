@@ -77,7 +77,7 @@ public class InteriorManager : MonoBehaviour
         interiorCameraQuad.GetComponent<CameraShake>().Shake(0.3f,0.005f);
         interiorShipMap.GetComponent<CameraShake>().Shake(0.3f, 0.005f);
 
-        interiorPlayer.DropResource();
+        interiorPlayer.DropItem();
         interiorPlayer.RandomPush();
 
         for (int i = 0; i < spawnedResources.Count; i++)

@@ -31,30 +31,35 @@ public class Flame : MonoBehaviour
     {
         if (ignited == true && smotheringFire == true)
         {
-            healthPoints -= Time.deltaTime;
+            Reduce(Time.deltaTime);
+        }
+    }
 
-            float percent = (healthPoints / startingHealth) * 0.7f + 0.3f;
-            Vector2 newScale = transform.localScale;
-            newScale.x = percent;
-            newScale.y = percent;
+    public void Reduce(float amount)
+    {
+        healthPoints -= amount;
 
-            transform.localScale = newScale;
+        float percent = (healthPoints / startingHealth) * 0.7f + 0.3f;
+        Vector2 newScale = transform.localScale;
+        newScale.x = percent;
+        newScale.y = percent;
 
-            if (healthPoints <= 0f)
-            {
-                Extinguish();
-            }
+        transform.localScale = newScale;
+
+        if (healthPoints <= 0f)
+        {
+            Extinguish();
         }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        smotheringFire = true;
+        //smotheringFire = true;
     }
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        smotheringFire = false;
+        //smotheringFire = false;
     }
 
     private void Extinguish()

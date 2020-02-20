@@ -79,6 +79,15 @@ public class Station : MonoBehaviour
         HandleCollision(collision);
     }
 
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.tag == "Interior Resource" && overResource == collision.gameObject.GetComponent<InteriorResource>())
+        {
+            overResource = null;
+            Debug.Log("Station: resource over removed");
+        }
+    }
+
     private bool resourceOver = false;
     private InteriorResource overResource;
     protected virtual void HandleCollision(Collider2D collision)
