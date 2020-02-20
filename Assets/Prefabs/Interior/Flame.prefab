@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 4493216524806061773}
   - component: {fileID: 4493216524806061760}
   - component: {fileID: 4493216524806061761}
-  m_Layer: 0
+  m_Layer: 21
   m_Name: Flame
-  m_TagString: Untagged
+  m_TagString: Flame
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -72,7 +72,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1797689083
   m_SortingLayer: 8
-  m_SortingOrder: 0
+  m_SortingOrder: 3
   m_Sprite: {fileID: -5369105112135600194, guid: ceaae2ea6c16d7e4ba77445108556cc2,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -134,3 +134,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthPoints: 1
   smotheringFire: 0
+  station: {fileID: 0}
+  ignited: 0
