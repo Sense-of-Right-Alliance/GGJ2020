@@ -129,7 +129,7 @@ public class InteriorPlayer : MonoBehaviour
             ///Debug.Log("Picked up resource!");
             heldItem = overItems[0];
             overItems.RemoveAt(0);
-            if (heldItem.tag == "Interior Resource") heldItem.GetComponent<InteriorResource>().Hold(this);
+            heldItem.GetComponent<PickupItem>().Pickup(this);
         }
     }
 
@@ -139,16 +139,17 @@ public class InteriorPlayer : MonoBehaviour
         {
             //Debug.Log("Dropped resource!");
             overItems.Add(heldItem);
-            if (heldItem.tag == "Interior Resource") heldItem.GetComponent<InteriorResource>().Drop();
+            heldItem.GetComponent<PickupItem>().Drop();
             heldItem = null;
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Interior Resource" || collision.tag == "Tool")
+        if ((collision.tag == "Interior Resource" || collision.tag == "Tool") && !overItems.Contains(collision.gameObject))
         {
             overItems.Add(collision.gameObject);
+            Debug.Log("Interior Player over item " + collision.tag.ToString() + " over items count = " + overItems.Count.ToString());
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
@@ -156,6 +157,7 @@ public class InteriorPlayer : MonoBehaviour
         if (collision.tag == "Interior Resource" || collision.tag == "Tool")
         {
             overItems.Remove(collision.gameObject);
+            Debug.Log("Interior Player no longer over item " + collision.tag.ToString() + " over items count = " + overItems.Count.ToString());
         }
     }
 

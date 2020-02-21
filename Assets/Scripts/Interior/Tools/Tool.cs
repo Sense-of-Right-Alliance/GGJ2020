@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class Tool : MonoBehaviour
+public class Tool : PickupItem
 {
     protected bool on = false;
 
@@ -38,12 +38,7 @@ public class Tool : MonoBehaviour
         }
     }
 
-    public virtual void Pickup()
-    {
-        
-    }
-
-    public virtual void Drop()
+    public override void Drop()
     {
         if (on) on = false;
     }
