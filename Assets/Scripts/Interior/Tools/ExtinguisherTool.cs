@@ -12,20 +12,15 @@ public class ExtinguisherTool : Tool
 
     ParticleSystem ps;
 
-    protected override void Init()
-    {
-        base.Init();
-
-        UpdateParticles();
-    }
-
     protected override void UpdateTool()
     {
         if (on)
         {
-            Vector2 center = transform.parent.position + transform.parent.up * distance/2f;
-            Debug.DrawLine(transform.parent.position, transform.parent.position + (transform.parent.up * distance));
-            Debug.DrawLine(center, center + (Vector2)(transform.parent.right * spread/2f));
+            Transform t = transform.parent != null ? transform.parent : transform;
+
+            Vector2 center = t.position + t.up * distance/2f;
+            Debug.DrawLine(t.position, t.position + (t.up * distance));
+            Debug.DrawLine(center, center + (Vector2)(t.right * spread/2f));
             Collider2D[] hitColliders = Physics2D.OverlapCapsuleAll(center, new Vector2(distance, spread), CapsuleDirection2D.Vertical, 0); //OverlapCircleAll(transform.position, targetingRadius);
             int i = 0;
             while (i < hitColliders.Length)
@@ -34,7 +29,7 @@ public class ExtinguisherTool : Tool
                 {
                     //don't extinguish past wall
                     bool hitWall = false;
-                    RaycastHit2D[] hit = Physics2D.LinecastAll(transform.position, hitColliders[i].transform.position);
+                    RaycastHit2D[] hit = Physics2D.LinecastAll(t.position, hitColliders[i].transform.position);
                     for (int j = 0; j < hit.Length; j++)
                     { 
                         if (hit[j].transform.tag == "Wall")
@@ -55,25 +50,18 @@ public class ExtinguisherTool : Tool
         }
     }
 
-    public override void ToggleOn()
+    protected override void UpdateVisuals()
     {
-        base.ToggleOn();
-
-        UpdateParticles();
-    }
-
-    protected void UpdateParticles()
-    {
-        if (ps == null) ps = transform.parent.GetComponentInChildren<ParticleSystem>();
+        if (ps == null) ps = GetComponent<ParticleSystem>();
+        if (ps == null && transform.parent != null) ps = transform.parent.GetComponentInChildren<ParticleSystem>();
+        if (ps == null && transform.parent != null) ps = transform.parent.GetComponent<ParticleSystem>();
 
         if (ps.isPlaying && !on)
         {
-            Debug.Log("Extinguisher Particles Stop!");
             ps.Stop();
         }
         else if (!ps.isPlaying && on)
         {
-            Debug.Log("Extinguisher Particles Playing!");
             ps.Play();
         }
     }

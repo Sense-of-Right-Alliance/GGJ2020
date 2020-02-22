@@ -14,7 +14,7 @@ public class Tool : PickupItem
 
     protected virtual void Init()
     {
-
+        UpdateVisuals();
     }
 
     protected override void UpdatePickupItem()
@@ -31,7 +31,9 @@ public class Tool : PickupItem
     {
         on = !on;
 
-        Debug.Log("Tool toggled to " + on.ToString());
+        UpdateVisuals();
+
+        //Debug.Log("Tool toggled to " + on.ToString());
     }
 
     public virtual void SetOn(bool on)
@@ -46,6 +48,13 @@ public class Tool : PickupItem
     {
         base.Drop();
 
+        UpdateVisuals();
+
         if (on) on = false;
+    }
+
+    protected virtual void UpdateVisuals()
+    {
+
     }
 }
