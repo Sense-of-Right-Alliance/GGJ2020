@@ -80,9 +80,11 @@ public class InteriorManager : MonoBehaviour
         interiorPlayer.DropItem();
         interiorPlayer.RandomPush();
 
-        for (int i = 0; i < spawnedResources.Count; i++)
+        // Push anything that can be pushed! Really shake things up.
+        Pushable[] pushables = GameObject.FindObjectsOfType<Pushable>();
+        for (int i = 0; i < pushables.Length; i++)
         {
-            spawnedResources[i].GetComponent<InteriorResourceContainer>().RandomPush();
+            pushables[i].RandomPush();
         }
 
         if (exteriorShip.Shields <= 0 && Random.value < flameChance && stations.Length > 0)

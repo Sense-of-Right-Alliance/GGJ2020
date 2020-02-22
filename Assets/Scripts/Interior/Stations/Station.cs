@@ -32,6 +32,8 @@ public class Station : MonoBehaviour
         Ship.shipHitEvent.AddListener(HandleShipHit);
 
         InitPips();
+
+        if (!activated) Deactivate();
     }
 
     protected virtual void InitPips()

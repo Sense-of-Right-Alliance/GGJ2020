@@ -9,10 +9,15 @@ public class Tool : PickupItem
 
     private void Start()
     {
-        
+        Init();
     }
 
-    private void Update()
+    protected virtual void Init()
+    {
+
+    }
+
+    protected override void UpdatePickupItem()
     {
         UpdateTool();
     }
@@ -33,13 +38,14 @@ public class Tool : PickupItem
     {
         if (this.on != on)
         {
-            Debug.Log("Toggling On to " + on);
-            this.on = on;
+            ToggleOn();
         }
     }
 
     public override void Drop()
     {
+        base.Drop();
+
         if (on) on = false;
     }
 }

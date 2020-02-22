@@ -13,10 +13,11 @@ public class WaveManager : MonoBehaviour
     [SerializeField] MissionWavesObject missionWaves; // if set, will override the define Waves variable below.
 
     [SerializeField] bool randomWavesAfterScripted = false;
+    [SerializeField] EnemyType endlessSingleEnemyWave = EnemyType.Unknown; // for debugging
 
     public UnityEvent WavesCompletedEvent;
     public string MissionName { get { return missionWaves.name; } }
-    public bool WavesCompleted { get { return waveNumber >= Waves.Count; } }
+    public bool WavesCompleted { get { return (waveNumber >= Waves.Count && endlessSingleEnemyWave == EnemyType.Unknown); } }
 
     private SpawnManager _spawnManager;
 
@@ -136,6 +137,16 @@ public class WaveManager : MonoBehaviour
             ReadMissionWavesObject();
         }
 
+        if (endlessSingleEnemyWave != EnemyType.Unknown)
+        {
+            Waves = new List<Wave>{
+            new Wave(new List<WaveEvent>
+            {
+                WaveEvent.ShortDelay(),
+                WaveEvent.SpawnSquadron(new Squadron(endlessSingleEnemyWave, SpawnPattern.Center)),
+            }) };
+        }
+
         if (WavesCompletedEvent == null) WavesCompletedEvent = new UnityEvent();
     }
 
@@ -158,6 +169,14 @@ public class WaveManager : MonoBehaviour
         {
             wave = Waves[waveNumber - 1];
         }
+        else if (endlessSingleEnemyWave != EnemyType.Unknown)
+        {
+            wave = new Wave(new List<WaveEvent>
+                {
+                    WaveEvent.LongDelay(),
+                    WaveEvent.SpawnSquadron(new Squadron(endlessSingleEnemyWave, SpawnPattern.Center)),
+                });
+        }
         else
         {
             WavesCompletedEvent.Invoke();
@@ -166,7 +185,7 @@ public class WaveManager : MonoBehaviour
             wave = GenerateRandomWave();
         }
 
-        if (waveNumber <= Waves.Count || randomWavesAfterScripted) // will end co-routine loop if out of waves and toggle not set
+        if (waveNumber <= Waves.Count || randomWavesAfterScripted || endlessSingleEnemyWave != EnemyType.Unknown) // will end co-routine loop if out of waves and toggle not set
         {
             foreach (var waveEvent in wave.WaveEvents)
             {

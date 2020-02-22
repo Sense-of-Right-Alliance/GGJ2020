@@ -10,29 +10,71 @@ public class ExtinguisherTool : Tool
     [SerializeField] float spread = 1f;
     [SerializeField] float effectiveness = 1f;
 
+    ParticleSystem ps;
+
+    protected override void Init()
+    {
+        base.Init();
+
+        UpdateParticles();
+    }
+
     protected override void UpdateTool()
     {
-        //Debug.Log("Extinguisher updating!");
         if (on)
         {
-            //Debug.Log("Extinguisher FIRING!");
-            // Physics2D.OverlapCapsuleAll
-            //float angle = Vector2.Angle(transform.up, m_MySecondVector);
-            Vector2 start = transform.position;// + transform.up;
-            Debug.DrawLine(start, transform.position + (transform.right * distance/2f));
-            //Debug.DrawLine(start, transform.position + (transform.right * spread/2f));
-            Collider2D[] hitColliders = Physics2D.OverlapCapsuleAll(start, new Vector2(distance, spread), CapsuleDirection2D.Vertical, 0); //OverlapCircleAll(transform.position, targetingRadius);
+            Vector2 center = transform.parent.position + transform.parent.up * distance/2f;
+            Debug.DrawLine(transform.parent.position, transform.parent.position + (transform.parent.up * distance));
+            Debug.DrawLine(center, center + (Vector2)(transform.parent.right * spread/2f));
+            Collider2D[] hitColliders = Physics2D.OverlapCapsuleAll(center, new Vector2(distance, spread), CapsuleDirection2D.Vertical, 0); //OverlapCircleAll(transform.position, targetingRadius);
             int i = 0;
             while (i < hitColliders.Length)
             {
                 if (hitColliders[i].tag == "Flame")
                 {
-                    //Debug.Log("Target Acquired!");
-                    Flame f = hitColliders[i].GetComponent<Flame>();
-                    f.Reduce(effectiveness * Time.deltaTime);
+                    //don't extinguish past wall
+                    bool hitWall = false;
+                    RaycastHit2D[] hit = Physics2D.LinecastAll(transform.position, hitColliders[i].transform.position);
+                    for (int j = 0; j < hit.Length; j++)
+                    { 
+                        if (hit[j].transform.tag == "Wall")
+                        {
+                            hitWall = true;
+                            break;
+                        }
+                    }
+
+                    if (!hitWall)
+                    {
+                        Flame f = hitColliders[i].GetComponent<Flame>();
+                        f.Reduce(effectiveness * Time.deltaTime);
+                    }
                 }
                 i++;
             }
+        }
+    }
+
+    public override void ToggleOn()
+    {
+        base.ToggleOn();
+
+        UpdateParticles();
+    }
+
+    protected void UpdateParticles()
+    {
+        if (ps == null) ps = transform.parent.GetComponentInChildren<ParticleSystem>();
+
+        if (ps.isPlaying && !on)
+        {
+            Debug.Log("Extinguisher Particles Stop!");
+            ps.Stop();
+        }
+        else if (!ps.isPlaying && on)
+        {
+            Debug.Log("Extinguisher Particles Playing!");
+            ps.Play();
         }
     }
 }

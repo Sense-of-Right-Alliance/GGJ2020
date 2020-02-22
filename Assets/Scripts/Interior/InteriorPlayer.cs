@@ -21,6 +21,7 @@ public class InteriorPlayer : MonoBehaviour
     private AudioSource audioSource;
 
     private Vector2 moveDir = Vector2.up;
+    public Vector2 LookDirection { get { return moveDir; } }
 
     private void Awake()
     {
@@ -99,16 +100,6 @@ public class InteriorPlayer : MonoBehaviour
 
         if (heldItem != null)
         {
-            Vector2 newPos = transform.position;
-            newPos += moveDir * heldItem.transform.parent.GetComponent<SpriteRenderer>().bounds.size.x;
-
-            //Debug.Log("interiorplayer move dir = " + moveDir.ToString() + " sprite width = " + heldResource.transform.parent.GetComponent<SpriteRenderer>().bounds.size.x / 2f);
-
-            if (heldItem.transform.parent != null) heldItem.transform.parent.position = newPos;
-            else heldItem.transform.position = newPos;
-
-            heldItem.transform.LookAt(transform.position + new Vector3(moveDir.x, moveDir.y, transform.position.z));
-
             if (heldItem.tag == "Tool") heldItem.GetComponent<Tool>().SetOn(((playerID == PlayerID.Player1 && (Input.GetKey(KeyCode.R) || Input.GetButton("B1")))
              || (playerID == PlayerID.Player2 && (Input.GetKey(KeyCode.B) || Input.GetButton("B2")))));
 
@@ -146,10 +137,10 @@ public class InteriorPlayer : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if ((collision.tag == "Interior Resource" || collision.tag == "Tool") && !overItems.Contains(collision.gameObject))
+        if ((collision.tag == "Interior Resource" || collision.tag == "Tool") && !overItems.Contains(collision.gameObject) && heldItem != collision.gameObject)
         {
             overItems.Add(collision.gameObject);
-            Debug.Log("Interior Player over item " + collision.tag.ToString() + " over items count = " + overItems.Count.ToString());
+            //Debug.Log("Interior Player over item " + collision.tag.ToString() + " over items count = " + overItems.Count.ToString());
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
@@ -157,7 +148,7 @@ public class InteriorPlayer : MonoBehaviour
         if (collision.tag == "Interior Resource" || collision.tag == "Tool")
         {
             overItems.Remove(collision.gameObject);
-            Debug.Log("Interior Player no longer over item " + collision.tag.ToString() + " over items count = " + overItems.Count.ToString());
+            //Debug.Log("Interior Player no longer over item " + collision.tag.ToString() + " over items count = " + overItems.Count.ToString());
         }
     }
 
