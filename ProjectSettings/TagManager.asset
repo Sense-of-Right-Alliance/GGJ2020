@@ -17,6 +17,10 @@ TagManager:
   - Tool
   - Flame
   - Wall
+  - Debris
+  - Breach
+  - SteamVent
+  - ToolStation
   layers:
   - Default
   - TransparentFX
@@ -41,7 +45,7 @@ TagManager:
   - Launch Pad
   - InteriorFlame
   - InteriorTool
-  - 
+  - InteriorUI
   - 
   - 
   - 

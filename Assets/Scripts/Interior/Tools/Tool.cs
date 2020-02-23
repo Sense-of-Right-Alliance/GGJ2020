@@ -61,6 +61,6 @@ public class Tool : PickupItem
     private void OnEnable()
     {
         UpdateVisuals();
-        Debug.Log("PrintOnEnable: script was enabled");
+        //Debug.Log("PrintOnEnable: script was enabled");
     }
 }

@@ -12,9 +12,11 @@ GameObject:
   - component: {fileID: 2429165245395130003}
   - component: {fileID: 2429165245395130221}
   - component: {fileID: 1695399703716941888}
+  - component: {fileID: -3937253750427226924}
+  - component: {fileID: -5023464682803019989}
   m_Layer: 13
   m_Name: DebrisLarge
-  m_TagString: Wall
+  m_TagString: Debris
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -136,3 +138,39 @@ PolygonCollider2D:
       - {x: 0.445, y: -0.07}
       - {x: 0.445, y: 0.049999997}
       - {x: 0.315, y: 0.29}
+--- !u!50 &-3937253750427226924
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2429165245395130220}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 500
+  m_LinearDrag: 5
+  m_AngularDrag: 5
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 1
+  m_Constraints: 0
+--- !u!114 &-5023464682803019989
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2429165245395130220}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 561e55db05f56f04d866548873dfeb7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ProblemDestroyedOrRemovedEvent:
+    m_PersistentCalls:
+      m_Calls: []

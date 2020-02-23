@@ -39,6 +39,8 @@ public class Weldable : MonoBehaviour
 
     protected void CompleteWeld()
     {
+        GetComponent<InteriorProblem>().HandleDestroyedOrRemoved();
+
         if (explosionPrefab != null) Instantiate(explosionPrefab, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }

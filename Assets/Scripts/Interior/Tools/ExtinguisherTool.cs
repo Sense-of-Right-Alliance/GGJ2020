@@ -32,7 +32,7 @@ public class ExtinguisherTool : Tool
                     RaycastHit2D[] hit = Physics2D.LinecastAll(t.position, hitColliders[i].transform.position);
                     for (int j = 0; j < hit.Length; j++)
                     { 
-                        if (hit[j].transform.tag == "Wall")
+                        if (hit[j].transform.tag == "Wall" || hit[j].transform.tag == "Debris")
                         {
                             hitWall = true;
                             break;

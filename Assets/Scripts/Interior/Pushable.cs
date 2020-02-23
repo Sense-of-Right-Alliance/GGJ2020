@@ -11,7 +11,14 @@ public class Pushable : MonoBehaviour
 
     private void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
+       
+    }
+
+    private Rigidbody2D GetRigidbody2D()
+    {
+        if (rb == null) rb = GetComponent<Rigidbody2D>();
+
+        return rb;
     }
 
     private void Update()
@@ -23,11 +30,11 @@ public class Pushable : MonoBehaviour
     {
         Vector2 v = new Vector2(Random.Range(-1f, 1f) * basePushForce * forceMult, Random.Range(-1f, 1f) * basePushForce * forceMult);
 
-        rb.AddForce(v);
+        if (enabled) GetRigidbody2D().AddForce(v);
     }
 
     public void PushInDir(Vector2 dir, float force)
     {
-        rb.AddForce(dir * force);
+        if (enabled) GetRigidbody2D().AddForce(dir * force);
     }
 }
