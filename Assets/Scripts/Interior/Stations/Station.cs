@@ -84,6 +84,7 @@ public class Station : MonoBehaviour
         
     }
 
+    /*
     private void OnTriggerEnter2D(Collider2D collision)
     {
         HandleCollision(collision);
@@ -114,12 +115,15 @@ public class Station : MonoBehaviour
 
         UpdateResourcePips();
     }
+    */
 
     protected void CollectResource(InteriorResource r)
     {
         IncreaseResources(r);
         r.Consume();
-        overResource = null;
+        //overResource = null;
+
+        UpdateResourcePips();
     }
 
     protected virtual void IncreaseResources(InteriorResource r)
@@ -154,13 +158,31 @@ public class Station : MonoBehaviour
 
     private void Update()
     {
+        /*
         if (overResource != null && activated && !overResource.IsHeld && TryCollectResource(overResource)) // handle case when player puts out fire while holding resource
         {
             //Debug.Log("Station: Found dropped resource!");
             CollectResource(overResource);
         }
+        */
 
         StationUpdate();
+    }
+
+    // Interior Player will call this when it interacts with a station while holding a PickupItem
+    public virtual void TryProcessItem(PickupItem item)
+    {
+        if (Activated)
+        {
+            InteriorResource ir = item.GetComponent<InteriorResource>();
+            if (ir == null) ir = item.GetComponentInChildren<InteriorResource>();
+            if (ir == null && item.transform.parent != null) ir = item.transform.parent.GetComponent<InteriorResource>();
+
+            if (ir != null && TryCollectResource(ir))
+            {
+                CollectResource(ir);
+            }
+        }
     }
 
     protected virtual bool TryCollectResource(InteriorResource r)

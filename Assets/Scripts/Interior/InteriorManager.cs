@@ -29,8 +29,7 @@ public class InteriorManager : MonoBehaviour
     [SerializeField] GameObject interiorCameraQuad;
     [SerializeField] GameObject interiorShipMap;
 
-    [SerializeField] GameObject sirenFilter;
-    [SerializeField] GameObject sirenLights;
+    [SerializeField] Siren siren;
 
     List<GameObject> spawnedResources = new List<GameObject>();
 
@@ -94,7 +93,6 @@ public class InteriorManager : MonoBehaviour
 
     private void Update()
     {
-        // TODO: clear breach locations!
         UpdateSiren();
     }
 
@@ -102,45 +100,13 @@ public class InteriorManager : MonoBehaviour
     {
         if (numBreaches > 0 || numFlames > 0)
         {
-            if (!sirenOnRedAlert)
-            {
-                sirenOnRedAlert = true;
-                sirenOnYellowAlert = false;
-                TurnOnSiren(Color.red);
-            }
+            if (siren.Alert != Siren.AlertState.Red) siren.SetAlert(Siren.AlertState.Red);
         }
         else if (numDebris > 0 || numVents > 0)
         {
-            if (!sirenOnYellowAlert)
-            {
-                sirenOnRedAlert = false;
-                sirenOnYellowAlert = true;
-                TurnOnSiren(Color.yellow);
-            }
+            if (siren.Alert != Siren.AlertState.Yellow) siren.SetAlert(Siren.AlertState.Yellow);
         }
-        else if (sirenOnRedAlert || sirenOnYellowAlert)
-        {
-            TurnOffSiren();
-        }
-    }
-
-    private bool sirenOnRedAlert = false;
-    private bool sirenOnYellowAlert = false;
-    private void TurnOnSiren(Color c)
-    {
-        sirenFilter.SetActive(true);
-        sirenLights.SetActive(true);
-
-        sirenFilter.GetComponent<SpriteRenderer>().color = c;
-        sirenLights.GetComponent<SpriteRenderer>().color = c;
-    }
-
-    private void TurnOffSiren()
-    {
-        sirenOnRedAlert = false;
-        sirenOnYellowAlert = false;
-        sirenFilter.SetActive(false);
-        sirenLights.SetActive(false);
+        else if (siren.Alert != Siren.AlertState.None) siren.SetAlert(Siren.AlertState.None);
     }
 
     // Spawns a resource game object inside the ship, which the interior player can pickup and drop off at a station
@@ -153,7 +119,9 @@ public class InteriorManager : MonoBehaviour
 
     public void ReclaimJettisonedObject(GameObject reclaimedObject)
     {
-        reclaimedObject.transform.position = resourceSpawn.position;
+        Transform t = reclaimedObject.transform;
+
+        t.position = resourceSpawn.position;
         reclaimedObject.SetActive(true);
     }
 
@@ -173,15 +141,13 @@ public class InteriorManager : MonoBehaviour
 
     public void HandleShipDamage()
     {
+        // Shake things up
         interiorCameraQuad.GetComponent<CameraShake>().Shake(0.3f,0.005f);
         interiorShipMap.GetComponent<CameraShake>().Shake(0.3f, 0.005f);
 
+        // Rough up the player
         interiorPlayer.DropItem();
         interiorPlayer.RandomPush();
-
-        CheckSpawnSteamVents();
-        CheckSpawnDebris();
-        CheckSpawnHullBreach();
 
         // Push anything that can be pushed! Really shake things up.
         Pushable[] pushables = GameObject.FindObjectsOfType<Pushable>();
@@ -190,7 +156,24 @@ public class InteriorManager : MonoBehaviour
             pushables[i].RandomPush();
         }
 
-        if (exteriorShip.Shields <= 0 && Random.value < flameChance && stations.Length > 0)
+        // ---- Spawn Problems for Intrior Player ---- //
+
+        // Problems that can occur when shields are up
+        CheckSpawnSteamVents();
+
+        // Problems that can only occur when shields are down
+        if (exteriorShip.Shields <= 0)
+        {
+            CheckSpawnFlame();
+            CheckSpawnDebris();
+            CheckSpawnHullBreach();
+        }
+    }
+
+    // Flames only happen on stations and prevent them from functioning
+    private void CheckSpawnFlame()
+    {
+        if (Random.value < flameChance && stations.Length > 0)
         {
             Station igniteStation = stations[Random.Range(0, stations.Length)];
             if (flamePrefab != null)
@@ -207,12 +190,12 @@ public class InteriorManager : MonoBehaviour
 
     private void CheckSpawnHullBreach()
     {
-        int numVents = 0;
+        int numBreaches = 0;
         float r = Random.value;
-        if (r > 0.8f) numVents = 0;
-        else numVents = 1;
+        if (r > 0.2f) numBreaches = 0;
+        else numBreaches = 1;
 
-        SpawnHullBreach(numVents);
+        SpawnHullBreach(numBreaches);
     }
 
     private void SpawnHullBreach(int amount)

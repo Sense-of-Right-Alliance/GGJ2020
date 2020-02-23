@@ -127,10 +127,17 @@ public class InteriorPlayer : MonoBehaviour
     {
         if (heldItem == null)
         {
-            ///Debug.Log("Picked up resource!");
+            //Debug.Log("Picked up resource!");
+
             heldItem = overItems[0];
             overItems.RemoveAt(0);
-            heldItem.GetComponent<PickupItem>().Pickup(this);
+            while ((heldItem == null || heldItem.activeSelf) && overItems.Count > 0)
+            {
+                heldItem = overItems[0];
+                overItems.RemoveAt(0);
+            }
+            
+            if (heldItem != null && heldItem.activeSelf) heldItem.GetComponent<PickupItem>().Pickup(this);
         }
     }
 
@@ -139,19 +146,21 @@ public class InteriorPlayer : MonoBehaviour
         if (heldItem != null)
         {
             //Debug.Log("Dropped resource!");
-            bool secured = false;
-            if (overToolStation != null)
+            if (overStation != null)
             {
-                secured = overToolStation.TrySecureObject(heldItem);
+                overStation.TryProcessItem(heldItem.GetComponent<PickupItem>());
             }
-            
-            overItems.Add(heldItem);
-            heldItem.GetComponent<PickupItem>().Drop();
-            heldItem = null;
+
+            if (heldItem != null) // wasn't consumed. So just drop it
+            {
+                overItems.Add(heldItem);
+                heldItem.GetComponent<PickupItem>().Drop();
+                heldItem = null;
+            }
         }
     }
 
-    private ToolStation overToolStation;
+    private Station overStation;
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if ((collision.tag == "Interior Resource" || collision.tag == "Tool") && !overItems.Contains(collision.gameObject) && heldItem != collision.gameObject)
@@ -161,8 +170,8 @@ public class InteriorPlayer : MonoBehaviour
         }
         else
         {
-            ToolStation ts = collision.GetComponent<ToolStation>();
-            if (ts != null) overToolStation = ts;
+            Station station = collision.GetComponent<Station>();
+            if (station != null) overStation = station;
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
@@ -173,8 +182,8 @@ public class InteriorPlayer : MonoBehaviour
             //Debug.Log("Interior Player no longer over item " + collision.tag.ToString() + " over items count = " + overItems.Count.ToString());
         } else
         {
-            ToolStation ts = collision.GetComponent<ToolStation>();
-            if (ts != null && ts == overToolStation) overToolStation = null;
+            Station station = collision.GetComponent<Station>();
+            if (station != null && station == overStation) overStation = null;
         }
     }
 
