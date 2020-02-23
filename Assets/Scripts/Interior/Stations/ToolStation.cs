@@ -17,7 +17,7 @@ public class ToolStation : Station
         }
     }
 
-    public bool TrySecureObject(GameObject obj, bool force=false)
+    public bool TrySecureObject(GameObject obj, bool force = false)
     {
         PickupItem item = obj.GetComponent<PickupItem>();
         if (item == null) item = obj.GetComponentInChildren<PickupItem>();
@@ -38,7 +38,7 @@ public class ToolStation : Station
         PickupItem p = securedObject.GetComponent<PickupItem>();
         if (p == null && securedObject.transform.parent != null) p = securedObject.transform.parent.gameObject.GetComponent<PickupItem>();
         if (p == null) p = securedObject.GetComponentInChildren<PickupItem>();
-        
+
         p.SetSecured(this);
 
         Transform t = securedObject.transform;
@@ -64,5 +64,15 @@ public class ToolStation : Station
     protected override bool TryCollectResource(InteriorResource r)
     {
         return securedObject == null;
+    }
+
+    public override void TryProcessItem(PickupItem item)
+    {
+        base.TryProcessItem(item);
+
+        if (Activated)
+        {
+            TrySecureObject(item.gameObject);
+        }
     }
 }

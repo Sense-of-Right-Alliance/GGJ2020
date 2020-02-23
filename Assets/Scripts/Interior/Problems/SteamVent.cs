@@ -44,7 +44,7 @@ public class SteamVent : MonoBehaviour
                     InteriorPlayer p = hitColliders[i].GetComponent<InteriorPlayer>();
 
                     float pDist = ((Vector2)hitColliders[i].transform.position - (Vector2)t.position).magnitude;
-                    if (pDist < distance / 2f) p.DropItem();
+                    if (pDist < distance / 0.6f) p.DropItem();
                     // TODO: Scale push with how close they're to the vent
                     p.PushInDir(dir, push);
                 }

@@ -299,6 +299,7 @@ public class Ship : MonoBehaviour
     public int MaxShields { get { return shieldsSprites.Length; } }
 
     private bool shieldsEnabled = true;
+    public bool ShieldsEnabled { get { return shieldsEnabled; } }
     public void AddShields(int amount)
     {
         shields = Mathf.Min(shields +amount, shieldsSprites.Length);

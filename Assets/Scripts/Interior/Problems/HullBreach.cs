@@ -57,7 +57,24 @@ public class HullBreach : MonoBehaviour
             }
             i++;
         }
+
+        for (int j = 0; j < heldItemsTouching.Count; j++)
+        {
+            if (!heldItemsTouching[j].IsHeld)
+            {
+                Vector3 dir = (transform.position - heldItemsTouching[j].transform.position).normalized;
+
+                GameObject jObj = heldItemsTouching[j].gameObject;
+                if (jObj.transform.parent != null && jObj.transform.parent.GetComponent<Pushable>() != null) jObj = jObj.transform.parent.gameObject;
+
+                ExteriorManager.exteriorManager.GetSpawnManager().JettisonObject(jObj, dir);
+
+                heldItemsTouching.Remove(heldItemsTouching[j]);
+            }
+        }
     }
+
+    private List<PickupItem> heldItemsTouching = new List<PickupItem>();
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -77,8 +94,35 @@ public class HullBreach : MonoBehaviour
             Pushable p = collision.gameObject.GetComponent<Pushable>();
             if (p != null)
             {
-                dir = (transform.position - p.transform.position).normalized;
-                ExteriorManager.exteriorManager.GetSpawnManager().JettisonObject(collision.gameObject, dir);
+                PickupItem pi = collision.gameObject.GetComponent<PickupItem>();
+                if (pi == null) pi = collision.gameObject.GetComponentInChildren<PickupItem>();
+                if (pi == null && collision.gameObject.transform.parent != null) pi = collision.gameObject.transform.parent.GetComponent<PickupItem>();
+
+                if (pi != null && pi.IsHeld) // don't jettison held items. Wait until the player is jettisoned haha!
+                {
+                    heldItemsTouching.Add(pi);
+                }
+                else
+                {
+                    dir = (transform.position - p.transform.position).normalized;
+                    ExteriorManager.exteriorManager.GetSpawnManager().JettisonObject(collision.gameObject, dir);
+                }
+            }
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        Pushable p = collision.gameObject.GetComponent<Pushable>();
+        if (p != null)
+        {
+            PickupItem pi = collision.gameObject.GetComponent<PickupItem>();
+            if (pi == null) pi = collision.gameObject.GetComponentInChildren<PickupItem>();
+            if (pi == null && collision.gameObject.transform.parent != null) pi = collision.gameObject.transform.parent.GetComponent<PickupItem>();
+
+            if (pi != null && heldItemsTouching.Contains(pi))
+            {
+                heldItemsTouching.Remove(pi);
             }
         }
     }

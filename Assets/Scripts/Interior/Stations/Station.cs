@@ -12,6 +12,10 @@ public class Station : MonoBehaviour
 
     [SerializeField] GameObject resourcePipPrefab;
 
+    [SerializeField] AudioClip addResourceSFX;
+    [SerializeField] AudioClip doEffectSFX;
+    [SerializeField] AudioClip disableSFX;
+
     protected ResourcePip[] resourcePips;
 
     protected bool Activated { get { return activated; } }
@@ -22,9 +26,17 @@ public class Station : MonoBehaviour
 
     protected GameObject ResourcePipPrefab { get { return resourcePipPrefab; } }
 
+    private AudioSource aSource;
+
     private void Awake()
     {
         if (exteriorShip == null) exteriorShip = GameObject.Find("ExteriorShip").GetComponent<Ship>();
+
+        aSource = GetComponent<AudioSource>();
+
+        if (addResourceSFX == null) addResourceSFX = Resources.Load("phaserUp4") as AudioClip;
+        if (doEffectSFX == null) doEffectSFX = Resources.Load("powerUp1") as AudioClip;
+        if (disableSFX == null) disableSFX = Resources.Load("phaserDown3") as AudioClip;
     }
 
     private void Start()
@@ -84,6 +96,7 @@ public class Station : MonoBehaviour
         
     }
 
+    /*
     private void OnTriggerEnter2D(Collider2D collision)
     {
         HandleCollision(collision);
@@ -114,12 +127,15 @@ public class Station : MonoBehaviour
 
         UpdateResourcePips();
     }
+    */
 
     protected void CollectResource(InteriorResource r)
     {
         IncreaseResources(r);
         r.Consume();
-        overResource = null;
+        //overResource = null;
+
+        UpdateResourcePips();
     }
 
     protected virtual void IncreaseResources(InteriorResource r)
@@ -129,6 +145,12 @@ public class Station : MonoBehaviour
         {
             ProcessResource(r);
             resourceCount = 0;
+
+            aSource.PlayOneShot(doEffectSFX, 0.5f);
+        }
+        else
+        {
+            aSource.PlayOneShot(addResourceSFX, 0.5f);
         }
     }
 
@@ -145,6 +167,8 @@ public class Station : MonoBehaviour
     public virtual void Deactivate()
     {
         activated = false;
+
+        aSource.PlayOneShot(disableSFX, 0.2f);
     }
 
     public virtual void Reactivate()
@@ -154,13 +178,31 @@ public class Station : MonoBehaviour
 
     private void Update()
     {
+        /*
         if (overResource != null && activated && !overResource.IsHeld && TryCollectResource(overResource)) // handle case when player puts out fire while holding resource
         {
             //Debug.Log("Station: Found dropped resource!");
             CollectResource(overResource);
         }
+        */
 
         StationUpdate();
+    }
+
+    // Interior Player will call this when it interacts with a station while holding a PickupItem
+    public virtual void TryProcessItem(PickupItem item)
+    {
+        if (Activated)
+        {
+            InteriorResource ir = item.GetComponent<InteriorResource>();
+            if (ir == null) ir = item.GetComponentInChildren<InteriorResource>();
+            if (ir == null && item.transform.parent != null) ir = item.transform.parent.GetComponent<InteriorResource>();
+
+            if (ir != null && TryCollectResource(ir))
+            {
+                CollectResource(ir);
+            }
+        }
     }
 
     protected virtual bool TryCollectResource(InteriorResource r)
