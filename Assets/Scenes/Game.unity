@@ -1049,6 +1049,36 @@ Transform:
   m_Father: {fileID: 1319963084}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &199719690
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 199719691}
+  m_Layer: 0
+  m_Name: SteamVentLocation4
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &199719691
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 199719690}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.98, y: -2.44, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1641571281}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &251912151
 GameObject:
   m_ObjectHideFlags: 0
@@ -1353,6 +1383,7 @@ Transform:
   - {fileID: 736944282}
   - {fileID: 759190939}
   - {fileID: 2064972756}
+  - {fileID: 1641571281}
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1794,12 +1825,12 @@ PrefabInstance:
     - target: {fileID: 4660719601325771399, guid: 5fce5f9d81cb36d4e8d04d1f8ea7e08e,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.462
+      value: -5.49
       objectReference: {fileID: 0}
     - target: {fileID: 4660719601325771399, guid: 5fce5f9d81cb36d4e8d04d1f8ea7e08e,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.703
+      value: -0.93
       objectReference: {fileID: 0}
     - target: {fileID: 4660719601325771399, guid: 5fce5f9d81cb36d4e8d04d1f8ea7e08e,
         type: 3}
@@ -2088,6 +2119,36 @@ Transform:
   m_Father: {fileID: 1319963084}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &699579400
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 699579401}
+  m_Layer: 0
+  m_Name: SteamVentLocation1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &699579401
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 699579400}
+  m_LocalRotation: {x: -0, y: -0, z: 0.71278757, w: 0.7013801}
+  m_LocalPosition: {x: -2.15, y: 0.21, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1641571281}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90.924}
 --- !u!1 &705944338
 GameObject:
   m_ObjectHideFlags: 0
@@ -2565,6 +2626,13 @@ MonoBehaviour:
   - {fileID: 1458975196}
   - {fileID: 1937835870}
   - {fileID: 1398045685}
+  hullBreachPrefab: {fileID: 9200481869142132727, guid: 5f54873562601b34c9f8c2b535bc115e,
+    type: 3}
+  hullBreachLocations:
+  - {fileID: 699579401}
+  - {fileID: 1023312352}
+  - {fileID: 1457616523}
+  - {fileID: 199719691}
   flameChance: 0.6
   exteriorShip: {fileID: 0}
   interiorPlayer: {fileID: 0}
@@ -3259,6 +3327,36 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1023312351
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1023312352}
+  m_Layer: 0
+  m_Name: SteamVentLocation2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1023312352
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1023312351}
+  m_LocalRotation: {x: -0, y: -0, z: 0.9179687, w: -0.39665294}
+  m_LocalPosition: {x: -4.56, y: 1.72, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1641571281}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 226.73799}
 --- !u!1 &1081940275
 GameObject:
   m_ObjectHideFlags: 0
@@ -4180,6 +4278,36 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1457616522
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1457616523}
+  m_Layer: 0
+  m_Name: SteamVentLocation3
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1457616523
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1457616522}
+  m_LocalRotation: {x: -0, y: -0, z: -0.92546433, w: 0.3788348}
+  m_LocalPosition: {x: -6.39, y: -0.36, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1641571281}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -135.477}
 --- !u!1 &1458975195
 GameObject:
   m_ObjectHideFlags: 0
@@ -4344,12 +4472,12 @@ PrefabInstance:
     - target: {fileID: 4660719601325771399, guid: 5fce5f9d81cb36d4e8d04d1f8ea7e08e,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.498
+      value: -5.82
       objectReference: {fileID: 0}
     - target: {fileID: 4660719601325771399, guid: 5fce5f9d81cb36d4e8d04d1f8ea7e08e,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.904
+      value: -0.78
       objectReference: {fileID: 0}
     - target: {fileID: 4660719601325771399, guid: 5fce5f9d81cb36d4e8d04d1f8ea7e08e,
         type: 3}
@@ -4590,6 +4718,40 @@ Transform:
   m_Father: {fileID: 2064972756}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 51.742}
+--- !u!1 &1641571280
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1641571281}
+  m_Layer: 0
+  m_Name: HullBreachLocations
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1641571281
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1641571280}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 699579401}
+  - {fileID: 1023312352}
+  - {fileID: 1457616523}
+  - {fileID: 199719691}
+  m_Father: {fileID: 331577374}
+  m_RootOrder: 15
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1674711978
 GameObject:
   m_ObjectHideFlags: 0
@@ -5440,6 +5602,8 @@ MonoBehaviour:
   asteroidTopSpawnTransform: {fileID: 25880699}
   asteroidBottomSpawnTransform: {fileID: 1567927461}
   spawnWidth: 10
+  resourcePrefab: {fileID: 1346024567363085296, guid: 363461cbd48a8bd44b2475ac184559d6,
+    type: 3}
   EnemyDestroyedOrRemovedEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -5485,13 +5649,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1937835869}
-  m_LocalRotation: {x: -0, y: -0, z: -0.91039, w: 0.41375124}
-  m_LocalPosition: {x: -6.37, y: -0.44, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: 0.7113241, w: 0.7028642}
+  m_LocalPosition: {x: -6.39, y: -1.27, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 759190939}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -131.119}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90.685005}
 --- !u!1 &2037027500
 GameObject:
   m_ObjectHideFlags: 0

@@ -23,6 +23,7 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] Transform asteroidTopSpawnTransform;
     [SerializeField] Transform asteroidBottomSpawnTransform;
     [SerializeField] float spawnWidth = 10f;
+    [SerializeField] GameObject resourcePrefab;
 
     public UnityGameObjectEvent EnemyDestroyedOrRemovedEvent; // event for managers to listen to, like Exterior for tracking game end
     public int NumEnemies { get { return _enemySpawns.Count; } }
@@ -40,6 +41,17 @@ public class SpawnManager : MonoBehaviour
 
     private Dictionary<EnemyType, GameObject> _enemyPrefabs;
     private List<GameObject> _enemySpawns = new List<GameObject>();
+
+    private GameObject playerShip;
+    private GameObject GetPlayerShip()
+    {
+        if (playerShip == null)
+        {
+            playerShip = GameObject.FindObjectOfType<Ship>().gameObject;
+        }
+
+        return playerShip;
+    }
 
     private void Awake()
     {
@@ -74,13 +86,14 @@ public class SpawnManager : MonoBehaviour
         if (eComp) eComp.EnemyDestroyedOrRemovedEvent.RemoveListener(OnEnemyDestroyedOrRemoved);
         else if (aComp) aComp.EnemyDestroyedOrRemovedEvent.RemoveListener(OnEnemyDestroyedOrRemoved);
 
-        Debug.Log("Removed! Num Spawns = " + _enemySpawns.Count);
+        //Debug.Log("Removed! Num Spawns = " + _enemySpawns.Count);
         EnemyDestroyedOrRemovedEvent.Invoke(enemy);
     }
 
     private void SpawnEnemy(GameObject prefab, Vector2 spawnPos, Quaternion rotation, string tagName)
     {
         var enemy = Instantiate(prefab, spawnPos, rotation);
+        if (transform.parent != null) enemy.transform.SetParent(transform.parent);
         enemy.tag = tagName;
         _enemySpawns.Add(enemy);
 
@@ -244,5 +257,31 @@ public class SpawnManager : MonoBehaviour
                 StartCoroutine(SpawnColumn(referenceVector, squadron.EnemyType, rotation, tagName));
                 break;
         }
+    }
+
+    public void JettisonObject(GameObject interiorObject, Vector3 dir)
+    {
+        // just get left or right
+        if (dir.x < 0) dir = new Vector3(-1, 0, 0);
+        if (dir.x > 0) dir = new Vector3(1, 0, 0);
+        
+        GameObject playerShip = GetPlayerShip();
+
+        if (playerShip != null)
+        {
+            interiorObject.SetActive(false);
+
+            GameObject r = SpawnResource(playerShip.transform.position + dir * 0.5f);
+            r.GetComponent<ExternalResourcePickup>().DelayCollisionUntilExit();
+            r.AddComponent<JettisonedObject>();
+            r.GetComponent<JettisonedObject>().SetInteriorObject(interiorObject);
+        }
+    }
+
+    public GameObject SpawnResource(Vector3 pos)
+    {
+        GameObject r = Instantiate(resourcePrefab, pos, Quaternion.identity);
+
+        return r;
     }
 }

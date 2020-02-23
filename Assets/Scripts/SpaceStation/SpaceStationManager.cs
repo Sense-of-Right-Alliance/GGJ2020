@@ -4,9 +4,9 @@ using UnityEngine;
 using System.Linq;
 using UnityEngine.SceneManagement;
 
-public class StationManager : MonoBehaviour
+public class SpaceStationManager : MonoBehaviour
 {
-    public static StationManager stationManager;
+    public static SpaceStationManager stationManager;
 
     private List<LaunchPad> readyPads = new List<LaunchPad>();
 
@@ -14,7 +14,7 @@ public class StationManager : MonoBehaviour
 
     private void Awake()
     {
-        StationManager.stationManager = this;
+        SpaceStationManager.stationManager = this;
     }
 
     public void PadReady(LaunchPad pad)

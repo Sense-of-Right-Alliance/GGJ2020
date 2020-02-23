@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class SteamVent : MonoBehaviour
+public class HullBreach : MonoBehaviour
 {
     [SerializeField] float distance = 1f;
     [SerializeField] float spread = 1f;
@@ -18,9 +18,7 @@ public class SteamVent : MonoBehaviour
         Debug.DrawLine(center, center + (Vector2)(t.right * spread / 2f));
         Collider2D[] hitColliders = Physics2D.OverlapCapsuleAll(center, new Vector2(spread, distance), CapsuleDirection2D.Vertical, 0); //OverlapCircleAll(transform.position, targetingRadius);
 
-        Vector2 dir = ((t.position + (t.up * distance)) - t.position).normalized;
-
-        //Debug.Log("pos = " + t.position.ToString() + " up *dist = " + (t.up * distance).ToString() + " normalized dir = " + dir.ToString());
+        Vector2 dir = (t.position - (t.position + (t.up * distance))).normalized;
 
         int i = 0;
         while (i < hitColliders.Length)
@@ -42,9 +40,6 @@ public class SteamVent : MonoBehaviour
                 if (hitColliders[i].tag == "Player")
                 {
                     InteriorPlayer p = hitColliders[i].GetComponent<InteriorPlayer>();
-
-                    float pDist = ((Vector2)hitColliders[i].transform.position - (Vector2)t.position).magnitude;
-                    if (pDist < distance / 2f) p.DropItem();
                     // TODO: Scale push with how close they're to the vent
                     p.PushInDir(dir, push);
                 }
@@ -53,13 +48,36 @@ public class SteamVent : MonoBehaviour
                     Pushable p = hitColliders[i].GetComponent<Pushable>();
                     if (p != null)
                     {
-                        float pDist = ((Vector2)hitColliders[i].transform.position - (Vector2)t.position).magnitude;
                         // TODO: Scale push with how close they're to the vent
                         p.PushInDir(dir, push);
                     }
                 }
             }
             i++;
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        Vector2 dir;
+
+        if (collision.gameObject.tag == "Player")
+        {
+            InteriorPlayer p = collision.gameObject.GetComponent<InteriorPlayer>();
+            p.DropItem();
+
+            dir = (p.transform.position - transform.position).normalized;
+            
+            ExteriorManager.exteriorManager.GetSpawnManager().JettisonObject(collision.gameObject, dir);
+        }
+        else
+        {
+            Pushable p = collision.gameObject.GetComponent<Pushable>();
+            if (p != null)
+            {
+                dir = (p.transform.position - transform.position).normalized;
+                ExteriorManager.exteriorManager.GetSpawnManager().JettisonObject(collision.gameObject, dir);
+            }
         }
     }
 }

@@ -37,7 +37,7 @@ public class LaunchPad : MonoBehaviour
         Debug.Log("LaunchPad " + role.ToString() + " -> Player " + id.ToString());
         readyID = id;
 
-        StationManager.stationManager.PadReady(this);
+        SpaceStationManager.stationManager.PadReady(this);
 
         _spriteRenderer.color = Color.white;
     }
@@ -47,7 +47,7 @@ public class LaunchPad : MonoBehaviour
         Debug.Log("LaunchPad " + role.ToString() + " Unready");
         readyID = null;
 
-        StationManager.stationManager.PadUnready(this);
+        SpaceStationManager.stationManager.PadUnready(this);
 
         _spriteRenderer.color = Color.grey;
     }
