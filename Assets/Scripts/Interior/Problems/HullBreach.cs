@@ -62,7 +62,6 @@ public class HullBreach : MonoBehaviour
         {
             if (!heldItemsTouching[j].IsHeld)
             {
-                Debug.Log("BREACH: Jettisoning previously held item!");
                 Vector3 dir = (transform.position - heldItemsTouching[j].transform.position).normalized;
 
                 GameObject jObj = heldItemsTouching[j].gameObject;
@@ -83,8 +82,6 @@ public class HullBreach : MonoBehaviour
 
         if (collision.gameObject.tag == "Player")
         {
-            Debug.Log("BREACH: Jettisoning player!");
-
             InteriorPlayer p = collision.gameObject.GetComponent<InteriorPlayer>();
             p.DropItem();
 
@@ -107,7 +104,6 @@ public class HullBreach : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("BREACH: Jettisoning item!");
                     dir = (transform.position - p.transform.position).normalized;
                     ExteriorManager.exteriorManager.GetSpawnManager().JettisonObject(collision.gameObject, dir);
                 }
@@ -126,7 +122,6 @@ public class HullBreach : MonoBehaviour
 
             if (pi != null && heldItemsTouching.Contains(pi))
             {
-                Debug.Log("BREACH: Held item no longer touching breach!");
                 heldItemsTouching.Remove(pi);
             }
         }

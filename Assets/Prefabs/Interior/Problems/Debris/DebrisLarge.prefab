@@ -98,7 +98,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 4
-  explosionPrefab: {fileID: 235347168054186532, guid: 096546276d9a9d549ad67e5cc88926c4,
+  explosionPrefab: {fileID: 235347168054186532, guid: 549890d2772e97f46bb0b2c3e99da315,
     type: 3}
 --- !u!60 &1695399703716941888
 PolygonCollider2D:

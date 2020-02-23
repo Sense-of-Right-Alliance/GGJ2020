@@ -99,6 +99,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 100
   velocity: {x: 0, y: 0}
+  playerID: 0
 --- !u!58 &4133146544276248400
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -146,7 +147,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 6038f9e6cf9f0b6439b795cbf001c388, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 6159c494e84bc304686a24058290f350, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.834
   m_Pitch: 1

@@ -7,8 +7,12 @@ public class Tool : PickupItem
 {
     protected bool on = false;
 
+    private AudioSource aSource;
+
     private void Start()
     {
+        aSource = GetComponent<AudioSource>();
+
         Init();
     }
 
@@ -30,6 +34,9 @@ public class Tool : PickupItem
     public virtual void ToggleOn()
     {
         on = !on;
+
+        if (on) aSource.Play();
+        else aSource.Stop();
 
         UpdateVisuals();
 

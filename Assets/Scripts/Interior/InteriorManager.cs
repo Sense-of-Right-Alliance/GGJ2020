@@ -31,6 +31,10 @@ public class InteriorManager : MonoBehaviour
 
     [SerializeField] Siren siren;
 
+    [SerializeField] AudioClip[] hullHitSounds;
+    [SerializeField] AudioClip[] shieldHitSounds;
+    [SerializeField] AudioClip loadItemSfX;
+
     List<GameObject> spawnedResources = new List<GameObject>();
 
     private GameObject[] occupiedDebrisLocations;
@@ -41,6 +45,8 @@ public class InteriorManager : MonoBehaviour
     private int numVents = 0;
     private int numBreaches = 0;
     private int numFlames = 0;
+
+    private AudioSource aSource;
 
     private void Awake()
     {
@@ -56,6 +62,8 @@ public class InteriorManager : MonoBehaviour
         if (interiorShipMap == null) interiorShipMap = GameObject.Find("ShipInteriorMap");
 
         if (exteriorShip == null) exteriorShip = GameObject.Find("ExteriorShip").GetComponent<Ship>();
+
+        aSource = GetComponent<AudioSource>();
     }
 
     private void Start()
@@ -115,6 +123,8 @@ public class InteriorManager : MonoBehaviour
         GameObject resource = GameObject.Instantiate<GameObject>(resourcePrefab, resourceSpawn.position, Quaternion.identity);
         if (transform.parent != null) resource.transform.SetParent(transform.parent);
         spawnedResources.Add(resource);
+
+        aSource.PlayOneShot(loadItemSfX, 0.5f);
     }
 
     public void ReclaimJettisonedObject(GameObject reclaimedObject)
@@ -123,6 +133,8 @@ public class InteriorManager : MonoBehaviour
 
         t.position = resourceSpawn.position;
         reclaimedObject.SetActive(true);
+
+        aSource.PlayOneShot(loadItemSfX, 0.5f);
     }
 
     public void ConsumeResource(GameObject r)
@@ -162,11 +174,17 @@ public class InteriorManager : MonoBehaviour
         CheckSpawnSteamVents();
 
         // Problems that can only occur when shields are down
-        if (exteriorShip.Shields <= 0)
+        if (exteriorShip.Shields <= 0 || !exteriorShip.ShieldsEnabled)
         {
+            aSource.PlayOneShot(hullHitSounds[Random.Range(0, hullHitSounds.Length)], 0.5f);
+
             CheckSpawnFlame();
             CheckSpawnDebris();
             CheckSpawnHullBreach();
+        }
+        else
+        {
+            aSource.PlayOneShot(shieldHitSounds[Random.Range(0, shieldHitSounds.Length)], 0.5f);
         }
     }
 

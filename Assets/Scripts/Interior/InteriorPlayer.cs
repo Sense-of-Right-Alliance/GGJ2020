@@ -92,9 +92,11 @@ public class InteriorPlayer : MonoBehaviour
         {
             if (heldItem == null && overItems.Count > 0)
             {
+                audioSource.Play();
                 PickupItem();
             } else
             {
+                audioSource.Play();
                 DropItem();
             }
         }
@@ -109,14 +111,6 @@ public class InteriorPlayer : MonoBehaviour
         if (heldItem != null)
         {
             if (heldItem.tag == "Tool") heldItem.GetComponent<Tool>().SetOn(buttonDown);
-
-            /*
-            if ((playerID == PlayerID.Player1 && (Input.GetKeyDown(KeyCode.R) || Input.GetButton("B1")))
-             || (playerID == PlayerID.Player2 && (Input.GetKeyDown(KeyCode.B) || Input.GetButton("B2"))))
-            {
-                if (heldItem.tag == "Tool") heldItem.GetComponent<Tool>().SetOn(true);// ToggleOn();
-            }
-            */
         } else
         {
             pushing = buttonDown;

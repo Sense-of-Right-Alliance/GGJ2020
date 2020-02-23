@@ -12,6 +12,10 @@ public class Station : MonoBehaviour
 
     [SerializeField] GameObject resourcePipPrefab;
 
+    [SerializeField] AudioClip addResourceSFX;
+    [SerializeField] AudioClip doEffectSFX;
+    [SerializeField] AudioClip disableSFX;
+
     protected ResourcePip[] resourcePips;
 
     protected bool Activated { get { return activated; } }
@@ -22,9 +26,17 @@ public class Station : MonoBehaviour
 
     protected GameObject ResourcePipPrefab { get { return resourcePipPrefab; } }
 
+    private AudioSource aSource;
+
     private void Awake()
     {
         if (exteriorShip == null) exteriorShip = GameObject.Find("ExteriorShip").GetComponent<Ship>();
+
+        aSource = GetComponent<AudioSource>();
+
+        if (addResourceSFX == null) addResourceSFX = Resources.Load("phaserUp4") as AudioClip;
+        if (doEffectSFX == null) doEffectSFX = Resources.Load("powerUp1") as AudioClip;
+        if (disableSFX == null) disableSFX = Resources.Load("phaserDown3") as AudioClip;
     }
 
     private void Start()
@@ -133,6 +145,12 @@ public class Station : MonoBehaviour
         {
             ProcessResource(r);
             resourceCount = 0;
+
+            aSource.PlayOneShot(doEffectSFX, 0.5f);
+        }
+        else
+        {
+            aSource.PlayOneShot(addResourceSFX, 0.5f);
         }
     }
 
@@ -149,6 +167,8 @@ public class Station : MonoBehaviour
     public virtual void Deactivate()
     {
         activated = false;
+
+        aSource.PlayOneShot(disableSFX, 0.2f);
     }
 
     public virtual void Reactivate()
