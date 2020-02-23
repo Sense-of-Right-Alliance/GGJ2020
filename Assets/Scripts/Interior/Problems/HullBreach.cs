@@ -18,7 +18,7 @@ public class HullBreach : MonoBehaviour
         Debug.DrawLine(center, center + (Vector2)(t.right * spread / 2f));
         Collider2D[] hitColliders = Physics2D.OverlapCapsuleAll(center, new Vector2(spread, distance), CapsuleDirection2D.Vertical, 0); //OverlapCircleAll(transform.position, targetingRadius);
 
-        Vector2 dir = (t.position - (t.position + (t.up * distance))).normalized;
+        Vector2 breachDir = (t.position - (t.position + (t.up * distance))).normalized;
 
         int i = 0;
         while (i < hitColliders.Length)
@@ -28,7 +28,7 @@ public class HullBreach : MonoBehaviour
             RaycastHit2D[] hit = Physics2D.LinecastAll(t.position, hitColliders[i].transform.position);
             for (int j = 0; j < hit.Length; j++)
             {
-                if (hit[j].transform.tag == "Wall")
+                if (hit[j].transform.tag == "Wall" || hit[j].transform.tag == "Debris")
                 {
                     hitWall = true;
                     break;
@@ -40,6 +40,7 @@ public class HullBreach : MonoBehaviour
                 if (hitColliders[i].tag == "Player")
                 {
                     InteriorPlayer p = hitColliders[i].GetComponent<InteriorPlayer>();
+                    Vector3 dir = (t.position - hitColliders[i].transform.position).normalized;
                     // TODO: Scale push with how close they're to the vent
                     p.PushInDir(dir, push);
                 }
@@ -48,6 +49,7 @@ public class HullBreach : MonoBehaviour
                     Pushable p = hitColliders[i].GetComponent<Pushable>();
                     if (p != null)
                     {
+                        Vector3 dir = (t.position - hitColliders[i].transform.position).normalized;
                         // TODO: Scale push with how close they're to the vent
                         p.PushInDir(dir, push);
                     }
@@ -66,7 +68,7 @@ public class HullBreach : MonoBehaviour
             InteriorPlayer p = collision.gameObject.GetComponent<InteriorPlayer>();
             p.DropItem();
 
-            dir = (p.transform.position - transform.position).normalized;
+            dir = (transform.position - p.transform.position).normalized;
             
             ExteriorManager.exteriorManager.GetSpawnManager().JettisonObject(collision.gameObject, dir);
         }
@@ -75,7 +77,7 @@ public class HullBreach : MonoBehaviour
             Pushable p = collision.gameObject.GetComponent<Pushable>();
             if (p != null)
             {
-                dir = (p.transform.position - transform.position).normalized;
+                dir = (transform.position - p.transform.position).normalized;
                 ExteriorManager.exteriorManager.GetSpawnManager().JettisonObject(collision.gameObject, dir);
             }
         }

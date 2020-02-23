@@ -17,6 +17,23 @@ public class PickupItem : MonoBehaviour
         
     }
 
+    private ToolStation securingStation;
+    public void SetSecured(ToolStation station)
+    {
+        securingStation = station;
+
+        Pushable p = GetComponent<Pushable>();
+        if (p == null && transform.parent != null) p = transform.parent.gameObject.GetComponent<Pushable>();
+
+        p.enabled = station == null;
+    }
+
+    public void UnsecureItem()
+    {
+        if (securingStation != null) securingStation.ReleaseObject();
+        SetSecured(null);
+    }
+
     protected SpriteRenderer sr;
     protected SpriteRenderer GetSpriteRenderer()
     {
@@ -62,6 +79,8 @@ public class PickupItem : MonoBehaviour
     {
         isHeld = true;
         this.holder = holder;
+
+        UnsecureItem();
     }
 
     public virtual void Drop()

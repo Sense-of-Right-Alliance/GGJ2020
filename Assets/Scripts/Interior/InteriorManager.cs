@@ -29,15 +29,27 @@ public class InteriorManager : MonoBehaviour
     [SerializeField] GameObject interiorCameraQuad;
     [SerializeField] GameObject interiorShipMap;
 
+    [SerializeField] GameObject sirenFilter;
+    [SerializeField] GameObject sirenLights;
+
     List<GameObject> spawnedResources = new List<GameObject>();
 
-    private List<int> occupiedDebrisLocations = new List<int>();
-    private List<int> occupiedSteamLocations = new List<int>();
-    private List<int> occupiedHullBreachLocations = new List<int>();
+    private GameObject[] occupiedDebrisLocations;
+    private GameObject[] occupiedSteamLocations;
+    private GameObject[] occupiedHullBreachLocations;
+
+    private int numDebris = 0;
+    private int numVents = 0;
+    private int numBreaches = 0;
+    private int numFlames = 0;
 
     private void Awake()
     {
         InteriorManager.interiorManager = this;
+
+        occupiedDebrisLocations = new GameObject[debrisLocations.Length];
+        occupiedSteamLocations = new GameObject[steamVentLocations.Length];
+        occupiedHullBreachLocations = new GameObject[hullBreachLocations.Length];
 
         if (interiorPlayer == null) interiorPlayer = GameObject.FindObjectOfType<InteriorPlayer>();
         if (interiorCamera == null) interiorCamera = GameObject.Find("InteriorCamera");
@@ -49,17 +61,86 @@ public class InteriorManager : MonoBehaviour
 
     private void Start()
     {
-        
+        GameObject[] debris = GameObject.FindGameObjectsWithTag("Debris");
+        for (int i = 0; i < debris.Length; i++)
+        {
+            debris[i].GetComponent<InteriorProblem>().ProblemDestroyedOrRemovedEvent.AddListener(OnDebrisDestroyed);
+        }
+        numDebris = debris.Length;
+
+        GameObject[] vents = GameObject.FindGameObjectsWithTag("SteamVent");
+        for (int i = 0; i < vents.Length; i++)
+        {
+            vents[i].GetComponent<InteriorProblem>().ProblemDestroyedOrRemovedEvent.AddListener(OnSteamVentDestroyed);
+        }
+        numVents = vents.Length;
+
+        GameObject[] breaches = GameObject.FindGameObjectsWithTag("Breach");
+        for (int i = 0; i < breaches.Length; i++)
+        {
+            breaches[i].GetComponent<InteriorProblem>().ProblemDestroyedOrRemovedEvent.AddListener(OnHullBreachDestroyed);
+        }
+        numBreaches = breaches.Length;
+
+        GameObject[] flames = GameObject.FindGameObjectsWithTag("Flame");
+        for (int i = 0; i < flames.Length; i++)
+        {
+            flames[i].GetComponent<InteriorProblem>().ProblemDestroyedOrRemovedEvent.AddListener(OnFlameDestroyed);
+        }
+        numFlames = flames.Length;
+
+        UpdateSiren();
     }
 
     private void Update()
     {
-        /*
-        if (Input.GetKeyDown(KeyCode.R)) // Debug!
+        // TODO: clear breach locations!
+        UpdateSiren();
+    }
+
+    private void UpdateSiren()
+    {
+        if (numBreaches > 0 || numFlames > 0)
         {
-            SpawnResource();
+            if (!sirenOnRedAlert)
+            {
+                sirenOnRedAlert = true;
+                sirenOnYellowAlert = false;
+                TurnOnSiren(Color.red);
+            }
         }
-        */
+        else if (numDebris > 0 || numVents > 0)
+        {
+            if (!sirenOnYellowAlert)
+            {
+                sirenOnRedAlert = false;
+                sirenOnYellowAlert = true;
+                TurnOnSiren(Color.yellow);
+            }
+        }
+        else if (sirenOnRedAlert || sirenOnYellowAlert)
+        {
+            TurnOffSiren();
+        }
+    }
+
+    private bool sirenOnRedAlert = false;
+    private bool sirenOnYellowAlert = false;
+    private void TurnOnSiren(Color c)
+    {
+        sirenFilter.SetActive(true);
+        sirenLights.SetActive(true);
+
+        sirenFilter.GetComponent<SpriteRenderer>().color = c;
+        sirenLights.GetComponent<SpriteRenderer>().color = c;
+    }
+
+    private void TurnOffSiren()
+    {
+        sirenOnRedAlert = false;
+        sirenOnYellowAlert = false;
+        sirenFilter.SetActive(false);
+        sirenLights.SetActive(false);
     }
 
     // Spawns a resource game object inside the ship, which the interior player can pickup and drop off at a station
@@ -117,6 +198,9 @@ public class InteriorManager : MonoBehaviour
                 GameObject flame = GameObject.Instantiate<GameObject>(flamePrefab, igniteStation.gameObject.transform.position, Quaternion.identity);
                 if (transform.parent != null) flame.transform.SetParent(transform.parent);
                 flame.GetComponent<Flame>().Ignite(igniteStation);
+
+                flame.GetComponent<InteriorProblem>().ProblemDestroyedOrRemovedEvent.AddListener(OnFlameDestroyed);
+                numFlames++;
             }
         }
     }
@@ -136,7 +220,7 @@ public class InteriorManager : MonoBehaviour
         List<int> availableBreachLocations = new List<int>();
         for (int i = 0; i < hullBreachLocations.Length; i++)
         {
-            if (!occupiedHullBreachLocations.Contains(i))
+            if (occupiedHullBreachLocations[i] == null)
             {
                 availableBreachLocations.Add(i);
             }
@@ -144,17 +228,21 @@ public class InteriorManager : MonoBehaviour
 
         for (int i = 0; i < amount; i++)
         {
-            if (occupiedHullBreachLocations.Count == hullBreachLocations.Length)
+            if (availableBreachLocations.Count == 0)
             {
-                Debug.Log("InteriorManager: All steam vent locaitons occupied!");
+                Debug.Log("InteriorManager: All breach locaitons occupied!");
                 break;
             }
 
             int index = availableBreachLocations[Random.Range(0, availableBreachLocations.Count)];
-            occupiedHullBreachLocations.Add(index);
+            
             Transform t = hullBreachLocations[index];
             GameObject hullBreach = Instantiate(hullBreachPrefab, t.position, t.rotation);
             if (transform.parent != null) hullBreach.transform.SetParent(transform.parent);
+
+            hullBreach.GetComponent<InteriorProblem>().ProblemDestroyedOrRemovedEvent.AddListener(OnHullBreachDestroyed);
+            occupiedHullBreachLocations[index] = hullBreach;
+            numBreaches++;
         }
     }
 
@@ -174,7 +262,7 @@ public class InteriorManager : MonoBehaviour
         List<int> availableSteamLocations = new List<int>();
         for (int i = 0; i < steamVentLocations.Length; i++)
         {
-            if (!occupiedSteamLocations.Contains(i))
+            if (occupiedSteamLocations[i] == null)
             {
                 availableSteamLocations.Add(i);
             }
@@ -182,17 +270,21 @@ public class InteriorManager : MonoBehaviour
 
         for (int i = 0; i < amount; i++)
         {
-            if (occupiedSteamLocations.Count == steamVentLocations.Length)
+            if (availableSteamLocations.Count == 0)
             {
                 Debug.Log("InteriorManager: All steam vent locaitons occupied!");
                 break;
             }
 
             int index = availableSteamLocations[Random.Range(0, availableSteamLocations.Count)];
-            occupiedSteamLocations.Add(index);
+            
             Transform t = steamVentLocations[index];
             GameObject steamVent = Instantiate(steamVentPrefab, t.position, t.rotation);
             if (transform.parent != null) steamVent.transform.SetParent(transform.parent);
+
+            steamVent.GetComponent<InteriorProblem>().ProblemDestroyedOrRemovedEvent.AddListener(OnSteamVentDestroyed);
+            occupiedSteamLocations[index] = steamVent;
+            numVents++;
         }
     }
 
@@ -212,7 +304,7 @@ public class InteriorManager : MonoBehaviour
         List<int> availableDebrisLocations = new List<int>();
         for (int i = 0; i < debrisLocations.Length; i++)
         {
-            if (!occupiedDebrisLocations.Contains(i))
+            if (occupiedDebrisLocations[i] == null)
             {
                 availableDebrisLocations.Add(i);
             }
@@ -220,17 +312,67 @@ public class InteriorManager : MonoBehaviour
 
         for (int i = 0; i < amount; i++)
         {
-            if (occupiedDebrisLocations.Count == debrisLocations.Length)
+            if (availableDebrisLocations.Count == 0)
             {
                 Debug.Log("InteriorManager: All debris locaitons occupied!");
                 break;
             }
 
             int index = availableDebrisLocations[Random.Range(0, availableDebrisLocations.Count)];
-            occupiedDebrisLocations.Add(index);
+            
             Transform t = debrisLocations[index];
             GameObject debris = Instantiate(debrisPrefabs[Random.Range(0, debrisPrefabs.Length)], t.position, t.rotation);
             if (transform.parent != null) debris.transform.SetParent(transform.parent);
+
+            debris.GetComponent<InteriorProblem>().ProblemDestroyedOrRemovedEvent.AddListener(OnDebrisDestroyed);
+            occupiedDebrisLocations[index] = debris;
+
+            numDebris++;
         }
+    }
+
+    private void OnDebrisDestroyed(GameObject gameObject)
+    {
+        numDebris--;
+
+        for (int i = 0; i < occupiedDebrisLocations.Length; i++)
+        {
+            if (occupiedDebrisLocations[i] == gameObject)
+            {
+                occupiedDebrisLocations[i] = null;
+                break;
+            }
+        }
+    }
+
+    private void OnSteamVentDestroyed(GameObject gameObject)
+    {
+        numVents--;
+        for (int i = 0; i < occupiedSteamLocations.Length; i++)
+        {
+            if (occupiedSteamLocations[i] == gameObject)
+            {
+                occupiedSteamLocations[i] = null;
+                break;
+            }
+        }
+    }
+
+    private void OnHullBreachDestroyed(GameObject gameObject)
+    {
+        numBreaches--;
+        for (int i = 0; i < occupiedHullBreachLocations.Length; i++)
+        {
+            if (occupiedHullBreachLocations[i] == gameObject)
+            {
+                occupiedHullBreachLocations[i] = null;
+                break;
+            }
+        }
+    }
+
+    private void OnFlameDestroyed(GameObject gameObject)
+    {
+        numFlames--;
     }
 }

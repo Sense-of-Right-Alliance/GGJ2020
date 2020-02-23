@@ -15,9 +15,10 @@ GameObject:
   - component: {fileID: 2052850305090860204}
   - component: {fileID: 4166267193701828192}
   - component: {fileID: 4166267193701828186}
+  - component: {fileID: 5074454631064439471}
   m_Layer: 13
   m_Name: Steam
-  m_TagString: Untagged
+  m_TagString: SteamVent
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4853,3 +4854,18 @@ MonoBehaviour:
   distance: 1
   spread: 0.5
   push: 20
+--- !u!114 &5074454631064439471
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 241874445072127825}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 561e55db05f56f04d866548873dfeb7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ProblemDestroyedOrRemovedEvent:
+    m_PersistentCalls:
+      m_Calls: []

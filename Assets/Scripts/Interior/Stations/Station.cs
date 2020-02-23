@@ -31,9 +31,16 @@ public class Station : MonoBehaviour
     {
         Ship.shipHitEvent.AddListener(HandleShipHit);
 
+        InitStation();
+
         InitPips();
 
         if (!activated) Deactivate();
+    }
+
+    protected virtual void InitStation()
+    {
+
     }
 
     protected virtual void InitPips()
@@ -87,19 +94,19 @@ public class Station : MonoBehaviour
         if (collision.tag == "Interior Resource" && overResource == collision.gameObject.GetComponent<InteriorResource>())
         {
             overResource = null;
-            Debug.Log("Station: resource over removed");
+            //Debug.Log("Station: resource over removed");
         }
     }
 
-    private bool resourceOver = false;
-    private InteriorResource overResource;
+    protected bool resourceOver = false;
+    protected InteriorResource overResource;
     protected virtual void HandleCollision(Collider2D collision)
     {
         if (collision.tag == "Interior Resource")
         {
             Debug.Log("Station: Collided with resource");
             overResource = collision.gameObject.GetComponent<InteriorResource>();
-            if (activated && !overResource.IsHeld)
+            if (activated && !overResource.IsHeld && TryCollectResource(overResource))
             {
                 CollectResource(overResource);
             }
@@ -108,7 +115,7 @@ public class Station : MonoBehaviour
         UpdateResourcePips();
     }
 
-    private void CollectResource(InteriorResource r)
+    protected void CollectResource(InteriorResource r)
     {
         IncreaseResources(r);
         r.Consume();
@@ -147,13 +154,18 @@ public class Station : MonoBehaviour
 
     private void Update()
     {
-        if (overResource != null && activated && !overResource.IsHeld) // handle case when player puts out fire while holding resource
+        if (overResource != null && activated && !overResource.IsHeld && TryCollectResource(overResource)) // handle case when player puts out fire while holding resource
         {
-            Debug.Log("Station: Found dropped resource!");
+            //Debug.Log("Station: Found dropped resource!");
             CollectResource(overResource);
         }
 
         StationUpdate();
+    }
+
+    protected virtual bool TryCollectResource(InteriorResource r)
+    {
+        return true;
     }
 
     protected virtual void StationUpdate()

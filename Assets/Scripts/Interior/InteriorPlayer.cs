@@ -39,6 +39,7 @@ public class InteriorPlayer : MonoBehaviour
     private void Update()
     {
         UpdatePickup();
+        UpdateUse();
     }
 
     private void FixedUpdate()
@@ -97,11 +98,17 @@ public class InteriorPlayer : MonoBehaviour
                 DropItem();
             }
         }
+    }
+
+    private bool pushing = false;
+    private void UpdateUse()
+    {
+        bool buttonDown = ((playerID == PlayerID.Player1 && (Input.GetKey(KeyCode.R) || Input.GetButton("B1")))
+             || (playerID == PlayerID.Player2 && (Input.GetKey(KeyCode.B) || Input.GetButton("B2"))));
 
         if (heldItem != null)
         {
-            if (heldItem.tag == "Tool") heldItem.GetComponent<Tool>().SetOn(((playerID == PlayerID.Player1 && (Input.GetKey(KeyCode.R) || Input.GetButton("B1")))
-             || (playerID == PlayerID.Player2 && (Input.GetKey(KeyCode.B) || Input.GetButton("B2")))));
+            if (heldItem.tag == "Tool") heldItem.GetComponent<Tool>().SetOn(buttonDown);
 
             /*
             if ((playerID == PlayerID.Player1 && (Input.GetKeyDown(KeyCode.R) || Input.GetButton("B1")))
@@ -110,6 +117,9 @@ public class InteriorPlayer : MonoBehaviour
                 if (heldItem.tag == "Tool") heldItem.GetComponent<Tool>().SetOn(true);// ToggleOn();
             }
             */
+        } else
+        {
+            pushing = buttonDown;
         }
     }
 
@@ -129,18 +139,30 @@ public class InteriorPlayer : MonoBehaviour
         if (heldItem != null)
         {
             //Debug.Log("Dropped resource!");
+            bool secured = false;
+            if (overToolStation != null)
+            {
+                secured = overToolStation.TrySecureObject(heldItem);
+            }
+            
             overItems.Add(heldItem);
             heldItem.GetComponent<PickupItem>().Drop();
             heldItem = null;
         }
     }
 
+    private ToolStation overToolStation;
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if ((collision.tag == "Interior Resource" || collision.tag == "Tool") && !overItems.Contains(collision.gameObject) && heldItem != collision.gameObject)
         {
             overItems.Add(collision.gameObject);
             //Debug.Log("Interior Player over item " + collision.tag.ToString() + " over items count = " + overItems.Count.ToString());
+        }
+        else
+        {
+            ToolStation ts = collision.GetComponent<ToolStation>();
+            if (ts != null) overToolStation = ts;
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
@@ -149,6 +171,18 @@ public class InteriorPlayer : MonoBehaviour
         {
             overItems.Remove(collision.gameObject);
             //Debug.Log("Interior Player no longer over item " + collision.tag.ToString() + " over items count = " + overItems.Count.ToString());
+        } else
+        {
+            ToolStation ts = collision.GetComponent<ToolStation>();
+            if (ts != null && ts == overToolStation) overToolStation = null;
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Debris" && pushing)
+        {
+            collision.gameObject.GetComponent<Rigidbody2D>().AddForce((collision.transform.position - transform.position).normalized * 5000f);
         }
     }
 
