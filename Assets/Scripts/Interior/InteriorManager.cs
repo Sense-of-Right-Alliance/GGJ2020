@@ -10,6 +10,11 @@ public class InteriorManager : MonoBehaviour
     [SerializeField] GameObject resourcePrefab;
     [SerializeField] Transform resourceSpawn;
     [SerializeField] GameObject flamePrefab;
+    [SerializeField] GameObject[] debrisPrefabs;
+    [SerializeField] Transform[] debrisLocations;
+
+    [SerializeField] GameObject steamVentPrefab;
+    [SerializeField] Transform[] steamVentLocations;
 
     [SerializeField] float flameChance = 0.6f;
 
@@ -22,6 +27,9 @@ public class InteriorManager : MonoBehaviour
     [SerializeField] GameObject interiorShipMap;
 
     List<GameObject> spawnedResources = new List<GameObject>();
+
+    private List<int> occupiedDebrisLocations = new List<int>();
+    private List<int> occupiedSteamLocations = new List<int>();
 
     private void Awake()
     {
@@ -80,6 +88,9 @@ public class InteriorManager : MonoBehaviour
         interiorPlayer.DropItem();
         interiorPlayer.RandomPush();
 
+        CheckSpawnSteamVents();
+        CheckSpawnDebris();
+
         // Push anything that can be pushed! Really shake things up.
         Pushable[] pushables = GameObject.FindObjectsOfType<Pushable>();
         for (int i = 0; i < pushables.Length; i++)
@@ -95,6 +106,84 @@ public class InteriorManager : MonoBehaviour
                 GameObject flame = GameObject.Instantiate<GameObject>(flamePrefab, igniteStation.gameObject.transform.position, Quaternion.identity);
                 flame.GetComponent<Flame>().Ignite(igniteStation);
             }
+        }
+    }
+
+    private void CheckSpawnSteamVents()
+    {
+        int numVents = 0;
+        float r = Random.value;
+        if (r > 0.5f) numVents = 0;
+        else if (r > 0.2f) numVents = 1;
+        else if (r > 0.1f) numVents = 2;
+        else numVents = 3;
+
+        numVents = 1; // DEBUG
+
+        SpawnSteamVent(numVents);
+    }
+
+    private void SpawnSteamVent(int amount)
+    {
+        List<int> availableSteamLocations = new List<int>();
+        for (int i = 0; i < steamVentLocations.Length; i++)
+        {
+            if (!occupiedSteamLocations.Contains(i))
+            {
+                availableSteamLocations.Add(i);
+            }
+        }
+
+        for (int i = 0; i < amount; i++)
+        {
+            if (occupiedSteamLocations.Count == steamVentLocations.Length)
+            {
+                Debug.Log("InteriorManager: All steam vent locaitons occupied!");
+                break;
+            }
+
+            int index = availableSteamLocations[Random.Range(0, availableSteamLocations.Count)];
+            occupiedSteamLocations.Add(index);
+            Transform t = steamVentLocations[index];
+            GameObject debris = Instantiate(steamVentPrefab, t.position, t.rotation);
+        }
+    }
+
+    private void CheckSpawnDebris()
+    {
+        int numDebris = 0;
+        float r = Random.value;
+        if (r > 0.5f) numDebris = 0;
+        else if (r > 0.2f) numDebris = 1;
+        else if (r > 0.1f) numDebris = 2;
+        else numDebris = 3;
+
+        SpawnDebris(numDebris);
+    }
+
+    private void SpawnDebris(int amount)
+    {
+        List<int> availableDebrisLocations = new List<int>();
+        for (int i = 0; i < debrisLocations.Length; i++)
+        {
+            if (!occupiedDebrisLocations.Contains(i))
+            {
+                availableDebrisLocations.Add(i);
+            }
+        }
+
+        for (int i = 0; i < amount; i++)
+        {
+            if (occupiedDebrisLocations.Count == debrisLocations.Length)
+            {
+                Debug.Log("InteriorManager: All debris locaitons occupied!");
+                break;
+            }
+
+            int index = availableDebrisLocations[Random.Range(0, availableDebrisLocations.Count)];
+            occupiedDebrisLocations.Add(index);
+            Transform t = debrisLocations[index];
+            GameObject debris = Instantiate(debrisPrefabs[Random.Range(0, debrisPrefabs.Length)], t.position, t.rotation);
         }
     }
 }

@@ -25,4 +25,9 @@ public class Pushable : MonoBehaviour
 
         rb.AddForce(v);
     }
+
+    public void PushInDir(Vector2 dir, float force)
+    {
+        rb.AddForce(dir * force);
+    }
 }

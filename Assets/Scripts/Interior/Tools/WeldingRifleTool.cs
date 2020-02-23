@@ -6,6 +6,7 @@ using System.Linq;
 public class WeldingRifleTool : Tool
 {
     [SerializeField] float range = 2f;
+    [SerializeField] float effectiveness = 1f;
     [SerializeField] GameObject weldingTipParticles;
 
     LineRenderer lr;
@@ -36,14 +37,23 @@ public class WeldingRifleTool : Tool
                     p2 = hit.point;
                     weldingTipParticles.SetActive(true);
                 }
+
+                Weldable weldable = hit.transform.GetComponent<Weldable>();
+                if (weldable != null)
+                {
+                    p2 = hit.point;
+                    weldingTipParticles.SetActive(true);
+                    weldable.Weld(effectiveness * Time.deltaTime);
+                }
             }
 
             weldingTipParticles.transform.position = p2;
             float rot_z = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
             weldingTipParticles.transform.rotation = Quaternion.Euler(0f, 0f, rot_z - 90);
-
+            
             if (lr != null)
             {
+                if (lr.positionCount < 2) lr.positionCount = 2;
                 lr.SetPosition(0, p1);
                 lr.SetPosition(1, p2);
             }

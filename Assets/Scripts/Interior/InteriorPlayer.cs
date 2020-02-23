@@ -81,7 +81,7 @@ public class InteriorPlayer : MonoBehaviour
 
         rigidbody2D.AddForce(velocity);
         
-        if (rigidbody2D.velocity.magnitude > 0.1) moveDir = rigidbody2D.velocity.normalized;
+        if (/*rigidbody2D.velocity.magnitude*/velocity.magnitude > 0.1) moveDir = rigidbody2D.velocity.normalized;
     }
 
     private void UpdatePickup()
@@ -157,5 +157,10 @@ public class InteriorPlayer : MonoBehaviour
         Vector2 v = new Vector2(UnityEngine.Random.Range(-1f,1f) * 1300f, UnityEngine.Random.Range(-1f, 1f) * 1300f);
 
         rigidbody2D.AddForce(v);
+    }
+
+    public void PushInDir(Vector2 dir, float force)
+    {
+        rigidbody2D.AddForce(dir * force);
     }
 }

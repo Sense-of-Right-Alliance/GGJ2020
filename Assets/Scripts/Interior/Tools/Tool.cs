@@ -48,9 +48,9 @@ public class Tool : PickupItem
     {
         base.Drop();
 
-        UpdateVisuals();
-
         if (on) on = false;
+
+        UpdateVisuals();
     }
 
     protected virtual void UpdateVisuals()
