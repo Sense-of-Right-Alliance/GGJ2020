@@ -3,16 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class Tool : MonoBehaviour
+public class Tool : PickupItem
 {
     protected bool on = false;
 
     private void Start()
     {
-        
+        Init();
     }
 
-    private void Update()
+    protected virtual void Init()
+    {
+        UpdateVisuals();
+    }
+
+    protected override void UpdatePickupItem()
     {
         UpdateTool();
     }
@@ -26,25 +31,36 @@ public class Tool : MonoBehaviour
     {
         on = !on;
 
-        Debug.Log("Tool toggled to " + on.ToString());
+        UpdateVisuals();
+
+        //Debug.Log("Tool toggled to " + on.ToString());
     }
 
     public virtual void SetOn(bool on)
     {
         if (this.on != on)
         {
-            Debug.Log("Toggling On to " + on);
-            this.on = on;
+            ToggleOn();
         }
     }
 
-    public virtual void Pickup()
+    public override void Drop()
     {
-        
+        base.Drop();
+
+        if (on) on = false;
+
+        UpdateVisuals();
     }
 
-    public virtual void Drop()
+    protected virtual void UpdateVisuals()
     {
-        if (on) on = false;
+
+    }
+
+    private void OnEnable()
+    {
+        UpdateVisuals();
+        Debug.Log("PrintOnEnable: script was enabled");
     }
 }

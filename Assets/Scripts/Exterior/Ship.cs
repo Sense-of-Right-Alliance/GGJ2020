@@ -10,6 +10,8 @@ public class Ship : MonoBehaviour
     [SerializeField] int maxHitPoints = 5;
     public int MaxHitPoints { get { return maxHitPoints; } }
 
+    [SerializeField] bool invincible = false;
+
     [SerializeField] float speed = 50f;
     [SerializeField] float speedBoostMult = 1f;
     [SerializeField] float maxSpeed = 10000f;
@@ -207,21 +209,24 @@ public class Ship : MonoBehaviour
 
     public void TakeHit(int damage)
     {
-        if (shields > 0)
-        {
-            shields = Mathf.Max(shields - 1, 0); // could change to damage, if wanted that. But currently just negates a hit
-            UpdateShieldsSprite();
-        }
-        else
-        {
-            currentHitPoints = Mathf.Max(currentHitPoints - damage, 0);
-            UpdateDamageSprite();
-
-            if (currentHitPoints <= 0)
+        if (!invincible)
+        { 
+            if (shields > 0)
             {
-                if (explosionPrefab != null) Instantiate(explosionPrefab, transform.position, Quaternion.identity);
-                exteriorManager.HandleShipDestroyed(this);
-                Destroy(gameObject);
+                shields = Mathf.Max(shields - 1, 0); // could change to damage, if wanted that. But currently just negates a hit
+                UpdateShieldsSprite();
+            }
+            else
+            {
+                currentHitPoints = Mathf.Max(currentHitPoints - damage, 0);
+                UpdateDamageSprite();
+
+                if (currentHitPoints <= 0)
+                {
+                    if (explosionPrefab != null) Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+                    exteriorManager.HandleShipDestroyed(this);
+                    Destroy(gameObject);
+                }
             }
         }
 

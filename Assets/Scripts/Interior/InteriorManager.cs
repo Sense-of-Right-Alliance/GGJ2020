@@ -10,6 +10,14 @@ public class InteriorManager : MonoBehaviour
     [SerializeField] GameObject resourcePrefab;
     [SerializeField] Transform resourceSpawn;
     [SerializeField] GameObject flamePrefab;
+    [SerializeField] GameObject[] debrisPrefabs;
+    [SerializeField] Transform[] debrisLocations;
+
+    [SerializeField] GameObject steamVentPrefab;
+    [SerializeField] Transform[] steamVentLocations;
+
+    [SerializeField] GameObject hullBreachPrefab;
+    [SerializeField] Transform[] hullBreachLocations;
 
     [SerializeField] float flameChance = 0.6f;
 
@@ -22,6 +30,10 @@ public class InteriorManager : MonoBehaviour
     [SerializeField] GameObject interiorShipMap;
 
     List<GameObject> spawnedResources = new List<GameObject>();
+
+    private List<int> occupiedDebrisLocations = new List<int>();
+    private List<int> occupiedSteamLocations = new List<int>();
+    private List<int> occupiedHullBreachLocations = new List<int>();
 
     private void Awake()
     {
@@ -54,8 +66,14 @@ public class InteriorManager : MonoBehaviour
     public void SpawnResource()
     {
         GameObject resource = GameObject.Instantiate<GameObject>(resourcePrefab, resourceSpawn.position, Quaternion.identity);
-
+        if (transform.parent != null) resource.transform.SetParent(transform.parent);
         spawnedResources.Add(resource);
+    }
+
+    public void ReclaimJettisonedObject(GameObject reclaimedObject)
+    {
+        reclaimedObject.transform.position = resourceSpawn.position;
+        reclaimedObject.SetActive(true);
     }
 
     public void ConsumeResource(GameObject r)
@@ -80,9 +98,15 @@ public class InteriorManager : MonoBehaviour
         interiorPlayer.DropItem();
         interiorPlayer.RandomPush();
 
-        for (int i = 0; i < spawnedResources.Count; i++)
+        CheckSpawnSteamVents();
+        CheckSpawnDebris();
+        CheckSpawnHullBreach();
+
+        // Push anything that can be pushed! Really shake things up.
+        Pushable[] pushables = GameObject.FindObjectsOfType<Pushable>();
+        for (int i = 0; i < pushables.Length; i++)
         {
-            spawnedResources[i].GetComponent<InteriorResourceContainer>().RandomPush();
+            pushables[i].RandomPush();
         }
 
         if (exteriorShip.Shields <= 0 && Random.value < flameChance && stations.Length > 0)
@@ -91,8 +115,122 @@ public class InteriorManager : MonoBehaviour
             if (flamePrefab != null)
             {
                 GameObject flame = GameObject.Instantiate<GameObject>(flamePrefab, igniteStation.gameObject.transform.position, Quaternion.identity);
+                if (transform.parent != null) flame.transform.SetParent(transform.parent);
                 flame.GetComponent<Flame>().Ignite(igniteStation);
             }
+        }
+    }
+
+    private void CheckSpawnHullBreach()
+    {
+        int numVents = 0;
+        float r = Random.value;
+        if (r > 0.8f) numVents = 0;
+        else numVents = 1;
+
+        SpawnHullBreach(numVents);
+    }
+
+    private void SpawnHullBreach(int amount)
+    {
+        List<int> availableBreachLocations = new List<int>();
+        for (int i = 0; i < hullBreachLocations.Length; i++)
+        {
+            if (!occupiedHullBreachLocations.Contains(i))
+            {
+                availableBreachLocations.Add(i);
+            }
+        }
+
+        for (int i = 0; i < amount; i++)
+        {
+            if (occupiedHullBreachLocations.Count == hullBreachLocations.Length)
+            {
+                Debug.Log("InteriorManager: All steam vent locaitons occupied!");
+                break;
+            }
+
+            int index = availableBreachLocations[Random.Range(0, availableBreachLocations.Count)];
+            occupiedHullBreachLocations.Add(index);
+            Transform t = hullBreachLocations[index];
+            GameObject hullBreach = Instantiate(hullBreachPrefab, t.position, t.rotation);
+            if (transform.parent != null) hullBreach.transform.SetParent(transform.parent);
+        }
+    }
+
+    private void CheckSpawnSteamVents()
+    {
+        int numVents = 0;
+        float r = Random.value;
+        if (r > 0.5f) numVents = 0;
+        else if (r > 0.2f) numVents = 1;
+        else numVents = 2;
+
+        SpawnSteamVent(numVents);
+    }
+
+    private void SpawnSteamVent(int amount)
+    {
+        List<int> availableSteamLocations = new List<int>();
+        for (int i = 0; i < steamVentLocations.Length; i++)
+        {
+            if (!occupiedSteamLocations.Contains(i))
+            {
+                availableSteamLocations.Add(i);
+            }
+        }
+
+        for (int i = 0; i < amount; i++)
+        {
+            if (occupiedSteamLocations.Count == steamVentLocations.Length)
+            {
+                Debug.Log("InteriorManager: All steam vent locaitons occupied!");
+                break;
+            }
+
+            int index = availableSteamLocations[Random.Range(0, availableSteamLocations.Count)];
+            occupiedSteamLocations.Add(index);
+            Transform t = steamVentLocations[index];
+            GameObject steamVent = Instantiate(steamVentPrefab, t.position, t.rotation);
+            if (transform.parent != null) steamVent.transform.SetParent(transform.parent);
+        }
+    }
+
+    private void CheckSpawnDebris()
+    {
+        int numDebris = 0;
+        float r = Random.value;
+        if (r > 0.5f) numDebris = 0;
+        else if (r > 0.2f) numDebris = 1;
+        else numDebris = 2;
+
+        SpawnDebris(numDebris);
+    }
+
+    private void SpawnDebris(int amount)
+    {
+        List<int> availableDebrisLocations = new List<int>();
+        for (int i = 0; i < debrisLocations.Length; i++)
+        {
+            if (!occupiedDebrisLocations.Contains(i))
+            {
+                availableDebrisLocations.Add(i);
+            }
+        }
+
+        for (int i = 0; i < amount; i++)
+        {
+            if (occupiedDebrisLocations.Count == debrisLocations.Length)
+            {
+                Debug.Log("InteriorManager: All debris locaitons occupied!");
+                break;
+            }
+
+            int index = availableDebrisLocations[Random.Range(0, availableDebrisLocations.Count)];
+            occupiedDebrisLocations.Add(index);
+            Transform t = debrisLocations[index];
+            GameObject debris = Instantiate(debrisPrefabs[Random.Range(0, debrisPrefabs.Length)], t.position, t.rotation);
+            if (transform.parent != null) debris.transform.SetParent(transform.parent);
         }
     }
 }

@@ -32,6 +32,8 @@ public class Station : MonoBehaviour
         Ship.shipHitEvent.AddListener(HandleShipHit);
 
         InitPips();
+
+        if (!activated) Deactivate();
     }
 
     protected virtual void InitPips()
@@ -54,6 +56,7 @@ public class Station : MonoBehaviour
             pipPos.x += (pipSpace * -Mathf.Floor(numPips / 2f)) + (pipSpace * i);
 
             GameObject pip = GameObject.Instantiate<GameObject>(resourcePipPrefab, pipPos, Quaternion.identity);
+            pip.transform.SetParent(transform);
 
             resourcePips[i] = pip.GetComponent<ResourcePip>();
         }
