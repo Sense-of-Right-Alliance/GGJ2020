@@ -48,6 +48,11 @@ public class ExteriorManager : MonoBehaviour
             PlayerPrefs.SetInt("highscore", ScoreManager.scoreManager.Score);
         }
 
+        GameObject.Find("ShipInteriorWalls").SetActive(false);
+        GameObject.Find("ShipInteriorMap").SetActive(false);
+        GameObject.Find("Stations").SetActive(false);
+        GameObject.Find("Siren").SetActive(false);
+
         GameManager.gameManager.FailMission();
     }
     

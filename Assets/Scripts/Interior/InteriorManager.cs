@@ -19,8 +19,6 @@ public class InteriorManager : MonoBehaviour
     [SerializeField] GameObject hullBreachPrefab;
     [SerializeField] Transform[] hullBreachLocations;
 
-    [SerializeField] float flameChance = 0.6f;
-
     [SerializeField] Ship exteriorShip;
     [SerializeField] InteriorPlayer interiorPlayer;
     [SerializeField] Station[] stations;
@@ -151,7 +149,7 @@ public class InteriorManager : MonoBehaviour
         }
     }
 
-    public void HandleShipDamage()
+    public void HandleShipDamage(InteriorProblemOdds problemOdds = null)
     {
         // Shake things up
         interiorCameraQuad.GetComponent<CameraShake>().Shake(0.3f,0.005f);
@@ -170,17 +168,27 @@ public class InteriorManager : MonoBehaviour
 
         // ---- Spawn Problems for Intrior Player ---- //
 
+        if (problemOdds == null)
+        {
+            problemOdds = new InteriorProblemOdds();
+            problemOdds.nothingOdds = 100f;
+            problemOdds.debrisOdds = 100f;
+            problemOdds.steamOdds = 100f;
+            problemOdds.flameOdds = 100f;
+            problemOdds.breachOdds = 100f;
+        }
+
         // Problems that can occur when shields are up
-        CheckSpawnSteamVents();
+        CheckSpawnSteamVents(problemOdds.ComputeChanceForProblem(InteriorProblemType.Steam), problemOdds.numProblems);
 
         // Problems that can only occur when shields are down
         if (exteriorShip.Shields <= 0 || !exteriorShip.ShieldsEnabled)
         {
             aSource.PlayOneShot(hullHitSounds[Random.Range(0, hullHitSounds.Length)], 0.5f);
 
-            CheckSpawnFlame();
-            CheckSpawnDebris();
-            CheckSpawnHullBreach();
+            CheckSpawnFlame(problemOdds.ComputeChanceForProblem(InteriorProblemType.Flame), problemOdds.numProblems);
+            CheckSpawnDebris(problemOdds.ComputeChanceForProblem(InteriorProblemType.Debris), problemOdds.numProblems);
+            CheckSpawnHullBreach(problemOdds.ComputeChanceForProblem(InteriorProblemType.Breach), problemOdds.numProblems);
         }
         else
         {
@@ -189,31 +197,46 @@ public class InteriorManager : MonoBehaviour
     }
 
     // Flames only happen on stations and prevent them from functioning
-    private void CheckSpawnFlame()
+    private void CheckSpawnFlame(float odds, int num)
     {
-        if (Random.value < flameChance && stations.Length > 0)
+        int count = 0;
+        for (int i = 0; i < num; i++)
         {
-            Station igniteStation = stations[Random.Range(0, stations.Length)];
-            if (flamePrefab != null)
-            {
-                GameObject flame = GameObject.Instantiate<GameObject>(flamePrefab, igniteStation.gameObject.transform.position, Quaternion.identity);
-                if (transform.parent != null) flame.transform.SetParent(transform.parent);
-                flame.GetComponent<Flame>().Ignite(igniteStation);
-
-                flame.GetComponent<InteriorProblem>().ProblemDestroyedOrRemovedEvent.AddListener(OnFlameDestroyed);
-                numFlames++;
-            }
+            if (Random.value <= odds) count++;
         }
+
+        if (count > 0) SpawnStationFlames(count);
     }
 
-    private void CheckSpawnHullBreach()
+    private void SpawnStationFlames(int amount)
     {
-        int numBreaches = 0;
-        float r = Random.value;
-        if (r > 0.2f) numBreaches = 0;
-        else numBreaches = 1;
+        for (int i = 0; i < amount; i++)
+        {
+            if (stations.Length > 0)
+            {
+                Station igniteStation = stations[Random.Range(0, stations.Length)];
+                if (flamePrefab != null)
+                {
+                    GameObject flame = GameObject.Instantiate<GameObject>(flamePrefab, igniteStation.gameObject.transform.position, Quaternion.identity);
+                    if (transform.parent != null) flame.transform.SetParent(transform.parent);
+                    flame.GetComponent<Flame>().Ignite(igniteStation);
 
-        SpawnHullBreach(numBreaches);
+                    flame.GetComponent<InteriorProblem>().ProblemDestroyedOrRemovedEvent.AddListener(OnFlameDestroyed);
+                    numFlames++;
+                }
+            }
+        }        
+    }
+
+    private void CheckSpawnHullBreach(float odds, int num)
+    {
+        int count = 0;
+        for (int i = 0; i < num; i++)
+        {
+            if (Random.value <= odds) count++;
+        }
+
+        if (count > 0) SpawnHullBreach(count);
     }
 
     private void SpawnHullBreach(int amount)
@@ -247,15 +270,15 @@ public class InteriorManager : MonoBehaviour
         }
     }
 
-    private void CheckSpawnSteamVents()
+    private void CheckSpawnSteamVents(float odds, int num)
     {
-        int numVents = 0;
-        float r = Random.value;
-        if (r > 0.5f) numVents = 0;
-        else if (r > 0.2f) numVents = 1;
-        else numVents = 2;
+        int count = 0;
+        for (int i = 0; i < num; i++)
+        {
+            if (Random.value <= odds) count++;
+        }
 
-        SpawnSteamVent(numVents);
+        if (count > 0) SpawnSteamVent(count);
     }
 
     private void SpawnSteamVent(int amount)
@@ -289,15 +312,15 @@ public class InteriorManager : MonoBehaviour
         }
     }
 
-    private void CheckSpawnDebris()
+    private void CheckSpawnDebris(float odds, int num)
     {
-        int numDebris = 0;
-        float r = Random.value;
-        if (r > 0.5f) numDebris = 0;
-        else if (r > 0.2f) numDebris = 1;
-        else numDebris = 2;
+        int count = 0;
+        for (int i = 0; i < num; i++)
+        {
+            if (Random.value <= odds) count++;
+        }
 
-        SpawnDebris(numDebris);
+        if (count > 0) SpawnDebris(count);
     }
 
     private void SpawnDebris(int amount)

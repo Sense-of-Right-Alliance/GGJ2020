@@ -101,7 +101,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.09, y: 0.37}
+    oldSize: {x: 0.140625, y: 0.578125}
     newSize: {x: 0.09, y: 0.54}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -153,3 +153,10 @@ MonoBehaviour:
   speed: 15
   damage: 1
   wobbleAmount: 0
+  problemOdds:
+    nothingOdds: 50
+    debrisOdds: 20
+    steamOdds: 20
+    flameOdds: 5
+    breachOdds: 5
+    numProblems: 1

@@ -1333,6 +1333,7 @@ MonoBehaviour:
   - Resource
   - Asteroid
   - Enemy Projectile
+  - Shockwave
 --- !u!61 &325573596
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1407,7 +1408,7 @@ Transform:
   - {fileID: 886352689}
   - {fileID: 289846043}
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &410399001
 GameObject:
@@ -3055,7 +3056,6 @@ MonoBehaviour:
   - {fileID: 1023312352}
   - {fileID: 1457616523}
   - {fileID: 199719691}
-  flameChance: 0.6
   exteriorShip: {fileID: 0}
   interiorPlayer: {fileID: 0}
   stations:
@@ -4051,7 +4051,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!81 &1003431850
 AudioListener:
@@ -4482,6 +4482,7 @@ MonoBehaviour:
   - AmbushEnemy
   - Asteroid
   - Enemy Projectile
+  - Shockwave
 --- !u!61 &1130472985
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -5137,7 +5138,7 @@ Transform:
   - {fileID: 1802455801}
   - {fileID: 1429657721}
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1398045684
 GameObject:
@@ -6210,7 +6211,7 @@ Transform:
   m_LocalScale: {x: 8, y: 9, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!64 &1737135820
 MeshCollider:
@@ -6773,7 +6774,7 @@ Transform:
   m_LocalScale: {x: 8, y: 9, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1888508383
 GameObject:
@@ -6849,6 +6850,8 @@ MonoBehaviour:
   homingCorvettePrefab: {fileID: 4927587125060077755, guid: a42f0b3eefc76c546a9635818d6a760f,
     type: 3}
   novaSaucerPrefab: {fileID: 0}
+  mediumShrapnelAsteroidPrefab: {fileID: 0}
+  shockwavePrefab: {fileID: 0}
   spawnDelay: 0.3
   enemyTopSpawnTransform: {fileID: 688071271}
   enemyBottomSpawnTransform: {fileID: 1169332290}
@@ -7513,7 +7516,7 @@ PrefabInstance:
     - target: {fileID: 5926554707891443729, guid: 25228b40e8283f744ab81d3b828807b8,
         type: 3}
       propertyPath: m_RootOrder
-      value: 12
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 5926554707891443729, guid: 25228b40e8283f744ab81d3b828807b8,
         type: 3}
@@ -7666,7 +7669,7 @@ PrefabInstance:
     - target: {fileID: 4960148900392517662, guid: 0faf1b6dcc28102478e1bf949873c5bd,
         type: 3}
       propertyPath: m_RootOrder
-      value: 10
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4960148900392517662, guid: 0faf1b6dcc28102478e1bf949873c5bd,
         type: 3}
@@ -7761,7 +7764,7 @@ PrefabInstance:
     - target: {fileID: 5428338951377334393, guid: 4a9a2a554924169449c262911cfacac3,
         type: 3}
       propertyPath: m_RootOrder
-      value: 14
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 5428338951377334393, guid: 4a9a2a554924169449c262911cfacac3,
         type: 3}

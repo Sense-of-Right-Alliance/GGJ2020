@@ -10,6 +10,8 @@ public class EnemyProjectile : MonoBehaviour
     [SerializeField] protected int damage = 1;
     [SerializeField] protected float wobbleAmount = 0f;
 
+    [SerializeField] InteriorProblemOdds problemOdds;
+
     protected Vector2 _direction;
 
     // Start is called before the first frame update
@@ -43,7 +45,7 @@ public class EnemyProjectile : MonoBehaviour
         else if (collision.transform.CompareTag("Player"))
         {
             if (explosionPrefab != null) Instantiate(explosionPrefab, transform.position, Quaternion.identity);
-            collision.gameObject.GetComponent<Ship>().TakeHit(damage);
+            collision.gameObject.GetComponent<Ship>().TakeHit(damage, problemOdds);
             Destroy(gameObject);
         }
         else if (collision.transform.CompareTag("Asteroid"))

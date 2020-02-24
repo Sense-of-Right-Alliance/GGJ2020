@@ -42,7 +42,7 @@ public class ToolStation : Station
         p.SetSecured(this);
 
         Transform t = securedObject.transform;
-        if (securedObject.transform.parent != null) t = securedObject.transform.parent;
+        if (securedObject.transform.parent != null && securedObject.transform.parent.GetComponent<Pushable>() != null) t = securedObject.transform.parent;
 
         t.position = transform.position;
         t.rotation = transform.rotation;

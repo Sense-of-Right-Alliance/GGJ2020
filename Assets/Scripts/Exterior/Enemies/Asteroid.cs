@@ -14,6 +14,10 @@ public class Asteroid : MonoBehaviour
 
     [SerializeField] int scoreValue = 100;
 
+    [SerializeField] float shrapnelForce = 0;
+
+    [SerializeField] InteriorProblemOdds problemOdds;
+
     private Quaternion _rotationAmount;
     private MovementBehaviour _movementBehaviour;
 
@@ -24,8 +28,8 @@ public class Asteroid : MonoBehaviour
 
     private void Start()
     {
-        _movementBehaviour = GetComponent<MovementBehaviour>();
-        _movementBehaviour.direction = -transform.up;
+        //_movementBehaviour = GetComponent<MovementBehaviour>();
+        //_movementBehaviour.direction = -transform.up;
 
         _rotationAmount = Quaternion.Euler(0, 0, UnityEngine.Random.Range(-2.5f / hitPoints, 2.5f / hitPoints));
     }
@@ -41,9 +45,19 @@ public class Asteroid : MonoBehaviour
         if (hitPoints <= 0)
         {
             if (explosionPrefab != null) Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+
+            //List<GameObject> spawnedAsteroids = new List<GameObject>();
             foreach (var childAsteroidPrefab in childAsteroidPrefabs)
             {
-                Instantiate(childAsteroidPrefab, transform.position, Quaternion.Euler(0, 0, Random.Range(-45, 45)));
+                Vector2 spawnPos = transform.position + new Vector3(Random.Range(-0.2f, 0.2f), Random.Range(-0.2f, 0.2f), 0f);
+                GameObject gObj = Instantiate(childAsteroidPrefab, spawnPos, Quaternion.Euler(0, 0, Random.Range(-45, 45)));
+                if (shrapnelForce > 0f)
+                {
+                    Vector3 dir = (gObj.transform.position - transform.position).normalized;
+                    gObj.GetComponent<Rigidbody2D>().AddForce(dir * shrapnelForce);
+                    
+                    //gObj.GetComponent<MovementBehaviour>().direction = dir;
+                }
             }
             
             ScoreManager.scoreManager.EnemyDestroyed(scoreValue);
@@ -61,7 +75,7 @@ public class Asteroid : MonoBehaviour
     {
         if (collision.transform.CompareTag("Player"))
         {
-            collision.gameObject.GetComponent<Ship>().TakeHit(1); // deals only 1 damage because we're not masochists
+            collision.gameObject.GetComponent<Ship>().TakeHit(1, problemOdds); // deals only 1 damage because we're not masochists
             TakeHit(1);
         }
         else if (collision.transform.CompareTag("Enemy") || collision.transform.CompareTag("AmbushEnemy"))

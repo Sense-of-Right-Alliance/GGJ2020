@@ -15,6 +15,8 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] GameObject mediumAsteroidPrefab;
     [SerializeField] GameObject homingCorvettePrefab;
     [SerializeField] GameObject novaSaucerPrefab;
+    [SerializeField] GameObject mediumShrapnelAsteroidPrefab;
+    [SerializeField] GameObject shockwavePrefab;
     [SerializeField] float spawnDelay = 0.5f; // seconds between each ship spawn in squadron
     [SerializeField] Transform enemyTopSpawnTransform;
     [SerializeField] Transform enemyBottomSpawnTransform;
@@ -66,6 +68,8 @@ public class SpawnManager : MonoBehaviour
             { EnemyType.MediumAsteroid, mediumAsteroidPrefab },
             { EnemyType.HomingCorvet, homingCorvettePrefab },
             { EnemyType.NovaSaucer, novaSaucerPrefab },
+            { EnemyType.MediumShrapnelAsteroid,  mediumShrapnelAsteroidPrefab },
+            { EnemyType.Shockwave, shockwavePrefab },
         };
 
         if (EnemyDestroyedOrRemovedEvent == null) EnemyDestroyedOrRemovedEvent = new UnityGameObjectEvent();
