@@ -44,7 +44,6 @@ public class Weldable : MonoBehaviour
         if (explosionPrefab != null)
         {
             GameObject obj = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
-            Debug.Log("Creating Explosion! " + obj);
         }
 
         Destroy(gameObject);

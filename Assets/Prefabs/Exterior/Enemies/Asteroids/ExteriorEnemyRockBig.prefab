@@ -11,11 +11,11 @@ GameObject:
   - component: {fileID: 4303212633405705332}
   - component: {fileID: 4303212633405705335}
   - component: {fileID: 942606664080155765}
-  - component: {fileID: 7139926870183664444}
+  - component: {fileID: 9029690273703223726}
   - component: {fileID: -4036976034239442463}
   - component: {fileID: -278988709436758044}
   m_Layer: 17
-  m_Name: ExteriorEnemyRock
+  m_Name: ExteriorEnemyRockBig
   m_TagString: Asteroid
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 4303212633405705334}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 1}
+  m_LocalScale: {x: 3.5, y: 3.5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayerID: -552611323
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: c9975e55cd964dc418c49a19884197de, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7b17b757109a94a479114125416bb336, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -106,7 +106,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!60 &7139926870183664444
+--- !u!60 &9029690273703223726
 PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -123,7 +123,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.15, y: 2.11}
+    oldSize: {x: 1.2, y: 0.98}
     newSize: {x: 0.93, y: 0.84}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -131,45 +131,27 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0.225, y: -1.005}
-      - {x: 0.325, y: -0.97499996}
-      - {x: 0.355, y: -0.965}
-      - {x: 0.49499997, y: -0.92499995}
-      - {x: 0.66499996, y: -0.875}
-      - {x: 0.765, y: -0.765}
-      - {x: 1.055, y: -0.39499998}
-      - {x: 1.0649999, y: -0.24499999}
-      - {x: 1.0749999, y: -0.074999996}
-      - {x: 1.0749999, y: 0.345}
-      - {x: 1.015, y: 0.42499998}
-      - {x: 0.905, y: 0.565}
-      - {x: 0.715, y: 0.79499996}
-      - {x: 0.635, y: 0.885}
-      - {x: 0.615, y: 0.895}
-      - {x: 0.515, y: 0.92499995}
-      - {x: 0.13499999, y: 1.055}
-      - {x: -0.055, y: 1.055}
-      - {x: -0.225, y: 0.995}
-      - {x: -0.36499998, y: 0.965}
-      - {x: -0.505, y: 0.905}
-      - {x: -0.705, y: 0.85499996}
-      - {x: -0.775, y: 0.79499996}
-      - {x: -0.825, y: 0.715}
-      - {x: -1.0749999, y: 0.375}
-      - {x: -1.0749999, y: -0.044999998}
-      - {x: -1.0649999, y: -0.225}
-      - {x: -1.055, y: -0.305}
-      - {x: -0.995, y: -0.445}
-      - {x: -0.955, y: -0.53499997}
-      - {x: -0.905, y: -0.645}
-      - {x: -0.815, y: -0.84499997}
-      - {x: -0.765, y: -0.955}
-      - {x: -0.72499996, y: -1.005}
-      - {x: -0.645, y: -1.015}
-      - {x: -0.445, y: -1.035}
-      - {x: -0.235, y: -1.055}
-      - {x: 0.055, y: -1.055}
-      - {x: 0.085, y: -1.045}
+    - - {x: 0.44, y: -0.21}
+      - {x: 0.48, y: -0.19}
+      - {x: 0.51, y: -0.11}
+      - {x: 0.59999996, y: 0.19}
+      - {x: 0.59999996, y: 0.31}
+      - {x: 0.57, y: 0.32999998}
+      - {x: 0.41, y: 0.39}
+      - {x: 0.12, y: 0.48999998}
+      - {x: -0.04, y: 0.48999998}
+      - {x: -0.41, y: 0.42999998}
+      - {x: -0.42999998, y: 0.41}
+      - {x: -0.53, y: 0.22999999}
+      - {x: -0.59999996, y: 0.089999996}
+      - {x: -0.59999996, y: -0.08}
+      - {x: -0.57, y: -0.28}
+      - {x: -0.47, y: -0.35999998}
+      - {x: -0.29999998, y: -0.48999998}
+      - {x: -0.22999999, y: -0.48999998}
+      - {x: -0.12, y: -0.39}
+      - {x: 0.01, y: -0.32999998}
+      - {x: 0.34, y: -0.24}
 --- !u!114 &-4036976034239442463
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -183,6 +165,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 3000
+  homingSpeed: 0
+  homingRadius: 5
   direction: {x: 0, y: -1}
 --- !u!114 &-278988709436758044
 MonoBehaviour:
@@ -196,14 +180,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c9a137e050a4ee093a4ed41735578c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EnemyDestroyedOrRemovedEvent:
+    m_PersistentCalls:
+      m_Calls: []
   explosionPrefab: {fileID: 0}
   childAsteroidPrefabs:
-  - {fileID: 4303212633405705334, guid: e01adaaf7914a684191f6acf03b006fa, type: 3}
-  - {fileID: 4303212633405705334, guid: e01adaaf7914a684191f6acf03b006fa, type: 3}
-  - {fileID: 4303212633405705334, guid: e01adaaf7914a684191f6acf03b006fa, type: 3}
-  - {fileID: 4303212633405705334, guid: e01adaaf7914a684191f6acf03b006fa, type: 3}
-  - {fileID: 4303212633405705334, guid: e9bec8fcaf78864488a2e8e0562a568f, type: 3}
-  - {fileID: 4303212633405705334, guid: e9bec8fcaf78864488a2e8e0562a568f, type: 3}
   - {fileID: 4303212633405705334, guid: e9bec8fcaf78864488a2e8e0562a568f, type: 3}
   - {fileID: 4303212633405705334, guid: e9bec8fcaf78864488a2e8e0562a568f, type: 3}
   - {fileID: 4303212633405705334, guid: e9bec8fcaf78864488a2e8e0562a568f, type: 3}
@@ -212,5 +193,13 @@ MonoBehaviour:
   - {fileID: 4303212633405705334, guid: f64466e5867c8de4c96bc6239d171ade, type: 3}
   - {fileID: 4303212633405705334, guid: f64466e5867c8de4c96bc6239d171ade, type: 3}
   - {fileID: 4303212633405705334, guid: f64466e5867c8de4c96bc6239d171ade, type: 3}
-  hitPoints: 20
-  scoreValue: 1000
+  hitPoints: 15
+  scoreValue: 150
+  shrapnelForce: 0
+  problemOdds:
+    nothingOdds: 50
+    debrisOdds: 50
+    steamOdds: 10
+    flameOdds: 10
+    breachOdds: 20
+    numProblems: 2

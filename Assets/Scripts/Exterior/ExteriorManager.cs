@@ -9,6 +9,7 @@ public class ExteriorManager : MonoBehaviour
     public static ExteriorManager exteriorManager; // Singletoooooooonnnnnnn!
 
     public SpawnManager GetSpawnManager() { return _spawnManager; }
+    public WaveManager GetWaveManager() { return _waveManager; }
 
     private WaveManager _waveManager;
     private SpawnManager _spawnManager;
@@ -47,6 +48,11 @@ public class ExteriorManager : MonoBehaviour
         {
             PlayerPrefs.SetInt("highscore", ScoreManager.scoreManager.Score);
         }
+
+        GameObject.Find("ShipInteriorWalls").SetActive(false);
+        GameObject.Find("ShipInteriorMap").SetActive(false);
+        GameObject.Find("Stations").SetActive(false);
+        GameObject.Find("Siren").SetActive(false);
 
         GameManager.gameManager.FailMission();
     }

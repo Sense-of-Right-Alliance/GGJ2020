@@ -40,6 +40,8 @@ public class Ship : MonoBehaviour
 
     private int currentHitPoints = 0;
     public int HitPoints { get { return currentHitPoints; } }
+    public float HitPointPercent { get { return currentHitPoints / MaxHitPoints; } }
+
     private float speedBoostTimer = 0f;
     private float crippledSpeedMult = 1f;
 
@@ -207,11 +209,11 @@ public class Ship : MonoBehaviour
         }
     }
 
-    public void TakeHit(int damage)
+    public void TakeHit(int damage, InteriorProblemOdds problemOdds = null)
     {
         if (!invincible)
         { 
-            if (shields > 0)
+            if (shields > 0 && ShieldsEnabled)
             {
                 shields = Mathf.Max(shields - 1, 0); // could change to damage, if wanted that. But currently just negates a hit
                 UpdateShieldsSprite();
@@ -231,7 +233,7 @@ public class Ship : MonoBehaviour
         }
 
         shipHitEvent.Invoke();
-        interiorManager.HandleShipDamage();
+        interiorManager.HandleShipDamage(problemOdds);
     }
 
     private void UpdateDamageSprite()

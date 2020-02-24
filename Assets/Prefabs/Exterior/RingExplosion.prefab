@@ -132,6 +132,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageRadius: 2
   damageDelay: 0.2
+  problemOdds:
+    nothingOdds: 10
+    debrisOdds: 10
+    steamOdds: 50
+    flameOdds: 40
+    breachOdds: 30
+    numProblems: 3
 --- !u!82 &4007266958333850579
 AudioSource:
   m_ObjectHideFlags: 0

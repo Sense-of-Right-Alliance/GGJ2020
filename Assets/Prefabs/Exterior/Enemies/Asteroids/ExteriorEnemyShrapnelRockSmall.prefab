@@ -11,11 +11,11 @@ GameObject:
   - component: {fileID: 4303212633405705332}
   - component: {fileID: 4303212633405705335}
   - component: {fileID: 942606664080155765}
-  - component: {fileID: 9029690273703223726}
+  - component: {fileID: 5181666675172989378}
   - component: {fileID: -4036976034239442463}
   - component: {fileID: -278988709436758044}
   m_Layer: 17
-  m_Name: ExteriorEnemyRockBig
+  m_Name: ExteriorEnemyShrapnelRockSmall
   m_TagString: Asteroid
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 4303212633405705334}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3.5, y: 3.5, z: 1}
+  m_LocalScale: {x: 4, y: 4, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayerID: -552611323
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 7b17b757109a94a479114125416bb336, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 39ca13f8dc299ac4c822284ec5dd7ad6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -97,7 +97,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1000
+  m_Mass: 5
   m_LinearDrag: 5
   m_AngularDrag: 0.05
   m_GravityScale: 0
@@ -106,7 +106,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!60 &9029690273703223726
+--- !u!60 &5181666675172989378
 PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -123,7 +123,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.2, y: 0.98}
+    oldSize: {x: 0.18, y: 0.18}
     newSize: {x: 0.93, y: 0.84}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -131,27 +131,14 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0.44, y: -0.21}
-      - {x: 0.48, y: -0.19}
-      - {x: 0.51, y: -0.11}
-      - {x: 0.59999996, y: 0.19}
-      - {x: 0.59999996, y: 0.31}
-      - {x: 0.57, y: 0.32999998}
-      - {x: 0.41, y: 0.39}
-      - {x: 0.12, y: 0.48999998}
-      - {x: -0.04, y: 0.48999998}
-      - {x: -0.41, y: 0.42999998}
-      - {x: -0.42999998, y: 0.41}
-      - {x: -0.53, y: 0.22999999}
-      - {x: -0.59999996, y: 0.089999996}
-      - {x: -0.59999996, y: -0.08}
-      - {x: -0.57, y: -0.28}
-      - {x: -0.47, y: -0.35999998}
-      - {x: -0.29999998, y: -0.48999998}
-      - {x: -0.22999999, y: -0.48999998}
-      - {x: -0.12, y: -0.39}
-      - {x: 0.01, y: -0.32999998}
-      - {x: 0.34, y: -0.24}
+    - - {x: -0.07, y: 0.074999996}
+      - {x: -0.08, y: 0.065}
+      - {x: -0.08, y: -0.065}
+      - {x: -0.07, y: -0.074999996}
+      - {x: 0.049999997, y: -0.074999996}
+      - {x: 0.08, y: -0.055}
+      - {x: 0.08, y: 0.065}
+      - {x: 0.06, y: 0.074999996}
 --- !u!114 &-4036976034239442463
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -164,7 +151,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ce4e229dbc0ba74e8744018fb730044, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 3000
+  speed: 20
+  homingSpeed: 0
+  homingRadius: 5
   direction: {x: 0, y: -1}
 --- !u!114 &-278988709436758044
 MonoBehaviour:
@@ -178,15 +167,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c9a137e050a4ee093a4ed41735578c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explosionPrefab: {fileID: 0}
-  childAsteroidPrefabs:
-  - {fileID: 4303212633405705334, guid: e9bec8fcaf78864488a2e8e0562a568f, type: 3}
-  - {fileID: 4303212633405705334, guid: e9bec8fcaf78864488a2e8e0562a568f, type: 3}
-  - {fileID: 4303212633405705334, guid: e9bec8fcaf78864488a2e8e0562a568f, type: 3}
-  - {fileID: 4303212633405705334, guid: f64466e5867c8de4c96bc6239d171ade, type: 3}
-  - {fileID: 4303212633405705334, guid: f64466e5867c8de4c96bc6239d171ade, type: 3}
-  - {fileID: 4303212633405705334, guid: f64466e5867c8de4c96bc6239d171ade, type: 3}
-  - {fileID: 4303212633405705334, guid: f64466e5867c8de4c96bc6239d171ade, type: 3}
-  - {fileID: 4303212633405705334, guid: f64466e5867c8de4c96bc6239d171ade, type: 3}
-  hitPoints: 15
-  scoreValue: 150
+  EnemyDestroyedOrRemovedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  explosionPrefab: {fileID: 235347168054186532, guid: 096546276d9a9d549ad67e5cc88926c4,
+    type: 3}
+  childAsteroidPrefabs: []
+  hitPoints: 1
+  scoreValue: 1
+  shrapnelForce: 0
+  problemOdds:
+    nothingOdds: 50
+    debrisOdds: 20
+    steamOdds: 5
+    flameOdds: 5
+    breachOdds: 5
+    numProblems: 1

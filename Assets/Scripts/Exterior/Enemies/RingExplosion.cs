@@ -8,6 +8,8 @@ public class RingExplosion : MonoBehaviour
     [SerializeField] float damageRadius = 2f;
     [SerializeField] float damageDelay = 0.2f;
 
+    [SerializeField] InteriorProblemOdds problemOdds;
+
     private float t = 0f;
 
     private void Update()
@@ -32,7 +34,7 @@ public class RingExplosion : MonoBehaviour
         {
             if (hitColliders[i].tag == "Player")
             {
-                hitColliders[i].GetComponent<Ship>().TakeHit(1);
+                hitColliders[i].GetComponent<Ship>().TakeHit(1, problemOdds);
             }
             else if (hitColliders[i].tag == "Enemy")
             {

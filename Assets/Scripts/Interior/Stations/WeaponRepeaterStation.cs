@@ -7,7 +7,7 @@ public class WeaponRepeaterStation : DurationStation
 {
     protected override void ProcessResource(InteriorResource r)
     {
-        Ship.BoostFireRate(r.Value * 8f, r.Value * Duration);
+        Ship.BoostFireRate(r.Value * 3f, r.Value * Duration);
         base.ProcessResource(r);
     }
 

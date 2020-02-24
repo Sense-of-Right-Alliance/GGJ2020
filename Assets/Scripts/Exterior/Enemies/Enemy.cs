@@ -25,6 +25,8 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] int scoreValue = 100;
 
+    [SerializeField] InteriorProblemOdds problemOdds;
+
     private MovementBehaviour _movementBehaviour;
     private AudioSource audioSource;
 
@@ -94,7 +96,7 @@ public class Enemy : MonoBehaviour
     {
         if (collision.transform.CompareTag("Player"))
         {
-            collision.gameObject.GetComponent<Ship>().TakeHit(1); // deals only 1 damage because we're not masochists
+            collision.gameObject.GetComponent<Ship>().TakeHit(1, problemOdds); // deals only 1 damage because we're not masochists
             Destroy(gameObject);
         }
     }

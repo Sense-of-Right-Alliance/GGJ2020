@@ -16,4 +16,6 @@ public enum EnemyType
     MediumAsteroid,
     HomingCorvet,
     NovaSaucer,
+    MediumShrapnelAsteroid,
+    Shockwave,
 }

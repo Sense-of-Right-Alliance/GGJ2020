@@ -13,4 +13,5 @@ public enum SpawnPattern
     FlyingVInverted,
     Column,
     DoubleColumn,
+    JostledRow,
 }

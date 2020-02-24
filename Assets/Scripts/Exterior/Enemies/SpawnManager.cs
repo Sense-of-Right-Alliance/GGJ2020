@@ -15,6 +15,8 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] GameObject mediumAsteroidPrefab;
     [SerializeField] GameObject homingCorvettePrefab;
     [SerializeField] GameObject novaSaucerPrefab;
+    [SerializeField] GameObject mediumShrapnelAsteroidPrefab;
+    [SerializeField] GameObject shockwavePrefab;
     [SerializeField] float spawnDelay = 0.5f; // seconds between each ship spawn in squadron
     [SerializeField] Transform enemyTopSpawnTransform;
     [SerializeField] Transform enemyBottomSpawnTransform;
@@ -37,6 +39,7 @@ public class SpawnManager : MonoBehaviour
         { SpawnPattern.Column, 6 },
         { SpawnPattern.DoubleColumn, 6 },
         { SpawnPattern.Random, 6 },
+        { SpawnPattern.JostledRow, 12 },
     };
 
     private Dictionary<EnemyType, GameObject> _enemyPrefabs;
@@ -66,6 +69,8 @@ public class SpawnManager : MonoBehaviour
             { EnemyType.MediumAsteroid, mediumAsteroidPrefab },
             { EnemyType.HomingCorvet, homingCorvettePrefab },
             { EnemyType.NovaSaucer, novaSaucerPrefab },
+            { EnemyType.MediumShrapnelAsteroid,  mediumShrapnelAsteroidPrefab },
+            { EnemyType.Shockwave, shockwavePrefab },
         };
 
         if (EnemyDestroyedOrRemovedEvent == null) EnemyDestroyedOrRemovedEvent = new UnityGameObjectEvent();
@@ -73,7 +78,9 @@ public class SpawnManager : MonoBehaviour
 
     private void Update()
     {
-
+        Vector3 left = enemyTopSpawnTransform.position - Vector3.right * spawnWidth / 2;
+        Vector3 right = enemyTopSpawnTransform.position + Vector3.right * spawnWidth / 2;
+        Debug.DrawLine(left, right);
     }
 
     private void OnEnemyDestroyedOrRemoved(GameObject enemy)
@@ -152,6 +159,45 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
+    private IEnumerator SpawnJostledRow(Vector2 reference, EnemyType enemyType, Quaternion rotation, string tagName)
+    {
+        Debug.Log("Spawning Jostled Row");
+        float radius = spawnWidth / 2.0f;
+        var numberOfSpawns = _squadronSpawns[SpawnPattern.JostledRow];
+
+        float spacing = 0f;
+        if (numberOfSpawns != 1)
+        {
+            spacing = spawnWidth / (numberOfSpawns - 1);
+        }
+
+        float jostleRange = 1f;
+
+        var spawnLocations = new List<List<Vector2>>(numberOfSpawns);
+        for (var i = 0; i < numberOfSpawns; i++)
+        {
+            spawnLocations.Add(new List<Vector2>());
+
+            var position = new Vector2(reference.x - radius + spacing * i, reference.y);
+            position.x += UnityEngine.Random.Range(-jostleRange, jostleRange);
+            position.y += UnityEngine.Random.Range(0, jostleRange*2);
+            spawnLocations[i].Add(position);
+        }
+
+        var prefab = _enemyPrefabs[enemyType];
+
+        for (int i = 0; i < spawnLocations.Count; i++)
+        {
+            for (int j = 0; j < spawnLocations[i].Count; j++)
+            {
+                var spawnPos = spawnLocations[i][j];
+                SpawnEnemy(prefab, spawnPos, rotation, tagName);
+            }
+
+            yield return new WaitForSeconds(0f);
+        }
+    }
+
     private IEnumerator SpawnFlyingV(Vector2 reference, EnemyType enemyType, Quaternion rotation, string tagName, bool inverted)
     {
         Debug.Log("Spawning Flying V Formation " + (inverted ? "(inverted)" : "(normal)"));
@@ -161,7 +207,7 @@ public class SpawnManager : MonoBehaviour
         float spacing = 0f;
         if (numberOfSpawns != 1)
         {
-            spacing = spawnWidth / (numberOfSpawns - 1);
+            spacing = spawnWidth / ((numberOfSpawns - 1)*2);
         }
 
         var spawnLocations = new List<List<Vector2>>(numberOfSpawns);
@@ -234,7 +280,7 @@ public class SpawnManager : MonoBehaviour
                 break;
         }
 
-        if (squadron.EnemyType == EnemyType.HugeAsteroid || squadron.EnemyType == EnemyType.MediumAsteroid)
+        if (squadron.EnemyType == EnemyType.HugeAsteroid || squadron.EnemyType == EnemyType.MediumAsteroid || squadron.EnemyType == EnemyType.MediumShrapnelAsteroid)
         {
             tagName = "Asteroid";
         }
@@ -255,6 +301,9 @@ public class SpawnManager : MonoBehaviour
                 break;
             case SpawnPattern.Column:
                 StartCoroutine(SpawnColumn(referenceVector, squadron.EnemyType, rotation, tagName));
+                break;
+            case SpawnPattern.JostledRow:
+                StartCoroutine(SpawnJostledRow(referenceVector, squadron.EnemyType, rotation, tagName));
                 break;
         }
     }
