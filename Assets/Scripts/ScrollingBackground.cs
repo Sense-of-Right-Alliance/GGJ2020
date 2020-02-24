@@ -13,28 +13,26 @@ public class ScrollingBackground : MonoBehaviour
     private void Start()
     {
         SpriteRenderer spriteRenderer = backgrounds[0].GetComponent<SpriteRenderer>();
-        spriteHeight = spriteRenderer.sprite.bounds.size.y * backgrounds[0].transform.localScale.y * transform.localScale.y;
+        spriteHeight = spriteRenderer.sprite.bounds.size.y * backgrounds[0].transform.localScale.y;
 
-        //Debug.Log("sprite height = " + spriteHeight + " scale " + backgrounds[0].transform.localScale.y);
+        Vector2 newPos = backgrounds[0].localPosition;
+        newPos.y = backgrounds[1].localPosition.y + spriteHeight;
 
-        Vector2 newPos = backgrounds[0].position;
-        newPos.y = backgrounds[1].position.y + spriteHeight;
-
-        backgrounds[0].position = newPos;
+        backgrounds[0].localPosition = newPos;
     }
 
     private void Update()
     {
         for (int i = 0; i < backgrounds.Length; i++)
         {
-            Vector2 newPos = backgrounds[i].position;
+            Vector2 newPos = backgrounds[i].localPosition;
             newPos.y -= scrollSpeed * Time.deltaTime;
             
             if (newPos.y < -spriteHeight * 1f)
             {
-                newPos.y = backgrounds[(i+1) % backgrounds.Length].position.y + spriteHeight;
+                newPos.y = backgrounds[(i+1) % backgrounds.Length].localPosition.y + spriteHeight;
             }
-            backgrounds[i].position = newPos;
+            backgrounds[i].localPosition = newPos;
         }
     }
 }

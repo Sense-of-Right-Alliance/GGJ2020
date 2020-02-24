@@ -40,6 +40,8 @@ public class Ship : MonoBehaviour
 
     private int currentHitPoints = 0;
     public int HitPoints { get { return currentHitPoints; } }
+    public float HitPointPercent { get { return currentHitPoints / MaxHitPoints; } }
+
     private float speedBoostTimer = 0f;
     private float crippledSpeedMult = 1f;
 

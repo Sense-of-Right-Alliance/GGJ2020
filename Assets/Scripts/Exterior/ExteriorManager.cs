@@ -9,6 +9,7 @@ public class ExteriorManager : MonoBehaviour
     public static ExteriorManager exteriorManager; // Singletoooooooonnnnnnn!
 
     public SpawnManager GetSpawnManager() { return _spawnManager; }
+    public WaveManager GetWaveManager() { return _waveManager; }
 
     private WaveManager _waveManager;
     private SpawnManager _spawnManager;

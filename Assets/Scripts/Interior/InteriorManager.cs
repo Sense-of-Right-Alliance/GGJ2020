@@ -104,11 +104,11 @@ public class InteriorManager : MonoBehaviour
 
     private void UpdateSiren()
     {
-        if (numBreaches > 0 || numFlames > 0)
+        if (numBreaches > 0 || numFlames > 0 || exteriorShip.HitPointPercent < 0.4f)
         {
             if (siren.Alert != Siren.AlertState.Red) siren.SetAlert(Siren.AlertState.Red);
         }
-        else if (numDebris > 0 || numVents > 0)
+        else if (numDebris > 0 || numVents > 0 || exteriorShip.HitPointPercent < 0.8f)
         {
             if (siren.Alert != Siren.AlertState.Yellow) siren.SetAlert(Siren.AlertState.Yellow);
         }

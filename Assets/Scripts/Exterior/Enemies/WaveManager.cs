@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
+using TMPro;
 
 public class WaveManager : MonoBehaviour
 {
@@ -11,9 +12,13 @@ public class WaveManager : MonoBehaviour
     public int WaveNumber => waveNumber;
 
     [SerializeField] MissionWavesObject missionWaves; // if set, will override the define Waves variable below.
+    [SerializeField] MissionWavesObject[] allMissions;
+    public MissionWavesObject[] AllMissions { get { return allMissions; } }
 
     [SerializeField] bool randomWavesAfterScripted = false;
     [SerializeField] EnemyType endlessSingleEnemyWave = EnemyType.Unknown; // for debugging
+
+    [SerializeField] TextMeshProUGUI waveText;
 
     public UnityEvent WavesCompletedEvent;
     public string MissionName { get { return missionWaves.name; } }
@@ -132,10 +137,19 @@ public class WaveManager : MonoBehaviour
     {
         _spawnManager = GetComponent<SpawnManager>();
 
+        int currentMissionId = PlayerPrefs.GetInt("mission_number");
+
+        MissionWavesObject mission = null;
         if (missionWaves != null)
         {
-            ReadMissionWavesObject();
+            mission = missionWaves;
         }
+        else if (currentMissionId < AllMissions.Length)
+        {
+            mission = AllMissions[currentMissionId];
+        }
+
+        if (mission != null) ReadMissionWavesObject(mission); 
 
         if (endlessSingleEnemyWave != EnemyType.Unknown)
         {
@@ -150,9 +164,10 @@ public class WaveManager : MonoBehaviour
         if (WavesCompletedEvent == null) WavesCompletedEvent = new UnityEvent();
     }
 
-    private void ReadMissionWavesObject()
+    private void ReadMissionWavesObject(MissionWavesObject mission)
     {
-        Waves = missionWaves.waves.ToList();
+        Waves = mission.waves.ToList();
+        Debug.Log("Loading Mission " + mission.name);
     }
 
     private void Update()
@@ -163,6 +178,9 @@ public class WaveManager : MonoBehaviour
     private IEnumerator ProcessWave()
     {
         waveNumber += 1;
+
+        if (waveText != null) waveText.text = "Wave " + waveNumber.ToString();
+       
 
         Wave wave;
         if (waveNumber <= Waves.Count)
@@ -184,6 +202,8 @@ public class WaveManager : MonoBehaviour
             if (randomWavesAfterScripted) Debug.Log("Wave " + waveNumber + " is not defined in WaveManager, so one will be generated randomly.");
             wave = GenerateRandomWave();
         }
+
+        Debug.Log("Wave Name: " + wave.name);
 
         if (waveNumber <= Waves.Count || randomWavesAfterScripted || endlessSingleEnemyWave != EnemyType.Unknown) // will end co-routine loop if out of waves and toggle not set
         {
