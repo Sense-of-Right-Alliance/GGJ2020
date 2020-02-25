@@ -17,6 +17,9 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] GameObject novaSaucerPrefab;
     [SerializeField] GameObject mediumShrapnelAsteroidPrefab;
     [SerializeField] GameObject shockwavePrefab;
+    [SerializeField] GameObject bulletAsteroidPrefab;
+    [SerializeField] GameObject enemyCanonPrefab;
+    [SerializeField] GameObject resourceAsteroidPrefab;
     [SerializeField] float spawnDelay = 0.5f; // seconds between each ship spawn in squadron
     [SerializeField] Transform enemyTopSpawnTransform;
     [SerializeField] Transform enemyBottomSpawnTransform;
@@ -71,6 +74,9 @@ public class SpawnManager : MonoBehaviour
             { EnemyType.NovaSaucer, novaSaucerPrefab },
             { EnemyType.MediumShrapnelAsteroid,  mediumShrapnelAsteroidPrefab },
             { EnemyType.Shockwave, shockwavePrefab },
+            { EnemyType.BulletAsteroid, bulletAsteroidPrefab },
+            { EnemyType.Canon, enemyCanonPrefab },
+            { EnemyType.ResourceAsteroid, resourceAsteroidPrefab },
         };
 
         if (EnemyDestroyedOrRemovedEvent == null) EnemyDestroyedOrRemovedEvent = new UnityGameObjectEvent();
@@ -141,14 +147,16 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
-    private IEnumerator SpawnRandom(Vector2 reference, EnemyType enemyType, Quaternion rotation, string tagName)
+    private IEnumerator SpawnRandom(Vector2 reference, EnemyType enemyType, Quaternion rotation, string tagName, float numMult=1f)
     {
         Debug.Log("Spawning Random 'Formation'");
         float radius = spawnWidth / 2.0f;
 
         var prefab = _enemyPrefabs[enemyType];
 
-        for (int i = 0; i < _squadronSpawns[SpawnPattern.Random]; i++)
+        if (enemyType == EnemyType.BulletAsteroid) numMult *= 2f;
+
+        for (int i = 0; i < _squadronSpawns[SpawnPattern.Random] * numMult; i++)
         {
             var spawnPos = reference;
             spawnPos.x += UnityEngine.Random.Range(-radius, radius);
@@ -280,7 +288,11 @@ public class SpawnManager : MonoBehaviour
                 break;
         }
 
-        if (squadron.EnemyType == EnemyType.HugeAsteroid || squadron.EnemyType == EnemyType.MediumAsteroid || squadron.EnemyType == EnemyType.MediumShrapnelAsteroid)
+        if (squadron.EnemyType == EnemyType.HugeAsteroid
+            || squadron.EnemyType == EnemyType.MediumAsteroid 
+            || squadron.EnemyType == EnemyType.MediumShrapnelAsteroid
+            || squadron.EnemyType == EnemyType.BulletAsteroid
+            || squadron.EnemyType == EnemyType.ResourceAsteroid)
         {
             tagName = "Asteroid";
         }
@@ -292,6 +304,9 @@ public class SpawnManager : MonoBehaviour
                 break;
             case SpawnPattern.Random:
                 StartCoroutine(SpawnRandom(referenceVector, squadron.EnemyType, rotation, tagName));
+                break;
+            case SpawnPattern.Random2:
+                StartCoroutine(SpawnRandom(referenceVector, squadron.EnemyType, rotation, tagName,2f));
                 break;
             case SpawnPattern.FlyingV:
                 StartCoroutine(SpawnFlyingV(referenceVector, squadron.EnemyType, rotation, tagName, false));

@@ -17,6 +17,9 @@ public class ScoreManager : MonoBehaviour
     [SerializeField] int score = 0;
     public int Score { get { return score; } }
 
+    [SerializeField] int pastMissionsScore = 0;
+    public int CummulativeScore { get { return pastMissionsScore + score; } }
+
     private void Awake()
     {
         ScoreManager.scoreManager = this;
@@ -33,9 +36,19 @@ public class ScoreManager : MonoBehaviour
         if (interiorPlayer == null) interiorPlayer = GameObject.FindObjectOfType<InteriorPlayer>();
         // todo subscrib to events
 
-
+        UpdatePastMissionsScore();
 
         UpdateScoreText();
+    }
+
+    private void UpdatePastMissionsScore()
+    {
+        int currentMission = PlayerPrefs.GetInt("mission_number");
+
+        for (int i = 0; i < currentMission; i++)
+        {
+            pastMissionsScore += PlayerPrefs.GetInt("mission_" + i + "_score");
+        }
     }
 
     public void PlayerShipHit() { AddScore(-100); }
@@ -56,6 +69,6 @@ public class ScoreManager : MonoBehaviour
 
     private void UpdateScoreText()
     {
-        scoreText.text = score.ToString();
+        scoreText.text = CummulativeScore.ToString(); // score.ToString();
     }
 }

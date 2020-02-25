@@ -45,6 +45,7 @@ GameObject:
   - component: {fileID: 942606664080155765}
   - component: {fileID: -4036976034239442463}
   - component: {fileID: -2371133969248381656}
+  - component: {fileID: -2799214300375298379}
   m_Layer: 9
   m_Name: ExteriorEnemyShipSpeedster
   m_TagString: Enemy
@@ -172,9 +173,6 @@ MonoBehaviour:
   explosionPrefab: {fileID: 235347168054186532, guid: 096546276d9a9d549ad67e5cc88926c4,
     type: 3}
   hitPoints: 1
-  resourcePickupPrefab: {fileID: 1346024567363085296, guid: 363461cbd48a8bd44b2475ac184559d6,
-    type: 3}
-  dropChance: 0.25
   projectilePrefab: {fileID: 2989912971476457516, guid: be9a4ed381f0f3445a03f4ab1eadb393,
     type: 3}
   projectileSpawnTransform: {fileID: 9191688010904647974}
@@ -188,6 +186,7 @@ MonoBehaviour:
     flameOdds: 10
     breachOdds: 20
     numProblems: 1
+  spreadShot: 0
 --- !u!50 &942606664080155765
 Rigidbody2D:
   serializedVersion: 4
@@ -321,3 +320,20 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &-2799214300375298379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4303212633405705334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3e945c7e74e3db4c9d04907762bd271, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  resourcePrefab: {fileID: 1346024567363085296, guid: 363461cbd48a8bd44b2475ac184559d6,
+    type: 3}
+  dropChanceOnDestroy: 0.1
+  dropChanceOnHit: 0
+  dropCount: 1

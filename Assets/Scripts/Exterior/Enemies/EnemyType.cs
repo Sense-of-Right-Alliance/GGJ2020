@@ -18,4 +18,7 @@ public enum EnemyType
     NovaSaucer,
     MediumShrapnelAsteroid,
     Shockwave,
+    BulletAsteroid,
+    Canon,
+    ResourceAsteroid,
 }

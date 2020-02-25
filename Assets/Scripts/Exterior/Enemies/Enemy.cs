@@ -16,8 +16,6 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] GameObject explosionPrefab;
     [SerializeField] int hitPoints = 2;
-    [SerializeField] GameObject resourcePickupPrefab;
-    [SerializeField] float dropChance = 0.5f; // chance
     [SerializeField] GameObject projectilePrefab;
     [SerializeField] Transform projectileSpawnTransform;
     [SerializeField] private float shootDelay = 0.2f;
@@ -26,6 +24,8 @@ public class Enemy : MonoBehaviour
     [SerializeField] int scoreValue = 100;
 
     [SerializeField] InteriorProblemOdds problemOdds;
+
+    [SerializeField] int spreadShot = 0;
 
     private MovementBehaviour _movementBehaviour;
     private AudioSource audioSource;
@@ -66,6 +66,20 @@ public class Enemy : MonoBehaviour
     {
         audioSource.Play();
         Instantiate(projectilePrefab, projectileSpawnTransform.position, transform.rotation * shootDirection);
+
+        if (spreadShot > 0)
+        {
+            float fanAngle = 45f;
+            for (int i = 0; i < spreadShot; i++)
+            {
+                Quaternion rotation = transform.rotation * shootDirection;
+                GameObject obj = Instantiate(projectilePrefab, projectileSpawnTransform.position, rotation);
+                obj.transform.Rotate(new Vector3(0, 0, -fanAngle + (fanAngle/spreadShot) * i));
+
+                obj = Instantiate(projectilePrefab, projectileSpawnTransform.position, rotation);
+                obj.transform.Rotate(new Vector3(0, 0, fanAngle - (fanAngle / spreadShot) * i));
+            }
+        }
     }
 
     public void TakeHit(int damage)
@@ -74,6 +88,19 @@ public class Enemy : MonoBehaviour
         if (hitPoints <= 0)
         {
             BlowUp();
+        } else
+        {
+            CheckForResourceDrop(false);
+        }
+    }
+
+    private void CheckForResourceDrop(bool destroy)
+    {
+        ExteriorResourceDrop drop = GetComponent<ExteriorResourceDrop>();
+        if (drop)
+        {
+            if (destroy) drop.HandleDestroy();
+            else drop.HandleHit();
         }
     }
 
@@ -82,7 +109,9 @@ public class Enemy : MonoBehaviour
         ScoreManager.scoreManager.EnemyDestroyed(scoreValue);
 
         if (explosionPrefab != null) Instantiate(explosionPrefab, transform.position, Quaternion.identity);
-        if (canDropResource && resourcePickupPrefab != null && Random.value < dropChance) Instantiate(resourcePickupPrefab, transform.position, Quaternion.identity);
+
+        CheckForResourceDrop(true);
+
         Remove();
     }
 

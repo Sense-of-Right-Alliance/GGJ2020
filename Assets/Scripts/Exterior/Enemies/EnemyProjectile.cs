@@ -9,21 +9,27 @@ public class EnemyProjectile : MonoBehaviour
     [SerializeField] protected float speed = 10f;
     [SerializeField] protected int damage = 1;
     [SerializeField] protected float wobbleAmount = 0f;
+    [SerializeField] bool spin = false;
 
     [SerializeField] InteriorProblemOdds problemOdds;
 
     protected Vector2 _direction;
+    protected Quaternion _rotationAmount;
 
     // Start is called before the first frame update
     private void Start()
     {
         _direction = -transform.up;
+
+        //if (spin) _rotationAmount = Quaternion.Euler(0, 0, UnityEngine.Random.Range(-speed, speed));
     }
 
     // Update is called once per frame
     private void Update()
     {
         UpdatePosition();
+        
+        if (spin) transform.Rotate(Vector3.forward * (speed * 100f * Time.deltaTime));
     }
 
     protected virtual void UpdatePosition()

@@ -43,12 +43,6 @@ public class ExteriorManager : MonoBehaviour
     {
         _waveManager.StopWaves();
 
-        int highScore = PlayerPrefs.GetInt("highscore");
-        if (ScoreManager.scoreManager.Score > highScore)
-        {
-            PlayerPrefs.SetInt("highscore", ScoreManager.scoreManager.Score);
-        }
-
         GameObject.Find("ShipInteriorWalls").SetActive(false);
         GameObject.Find("ShipInteriorMap").SetActive(false);
         GameObject.Find("Stations").SetActive(false);

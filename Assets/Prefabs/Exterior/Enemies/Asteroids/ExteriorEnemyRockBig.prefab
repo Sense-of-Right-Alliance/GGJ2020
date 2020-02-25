@@ -194,12 +194,13 @@ MonoBehaviour:
   - {fileID: 4303212633405705334, guid: f64466e5867c8de4c96bc6239d171ade, type: 3}
   - {fileID: 4303212633405705334, guid: f64466e5867c8de4c96bc6239d171ade, type: 3}
   hitPoints: 15
+  breakAgainstOtherAsteroids: 0
   scoreValue: 150
   shrapnelForce: 0
   problemOdds:
-    nothingOdds: 50
+    nothingOdds: 20
     debrisOdds: 50
     steamOdds: 10
-    flameOdds: 10
-    breachOdds: 20
+    flameOdds: 5
+    breachOdds: 10
     numProblems: 2

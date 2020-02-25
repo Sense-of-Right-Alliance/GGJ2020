@@ -153,8 +153,9 @@ MonoBehaviour:
   speed: 15
   damage: 1
   wobbleAmount: 0
+  spin: 0
   problemOdds:
-    nothingOdds: 50
+    nothingOdds: 20
     debrisOdds: 20
     steamOdds: 20
     flameOdds: 5
