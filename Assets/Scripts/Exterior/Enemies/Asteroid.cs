@@ -12,12 +12,14 @@ public class Asteroid : MonoBehaviour
     [SerializeField] private List<GameObject> childAsteroidPrefabs;
     [SerializeField] private int hitPoints = 12;
 
+    [SerializeField] bool breakAgainstOtherAsteroids = false;
+
     [SerializeField] int scoreValue = 100;
 
     [SerializeField] float shrapnelForce = 0;
 
     [SerializeField] InteriorProblemOdds problemOdds;
-
+    
     private Quaternion _rotationAmount;
     private MovementBehaviour _movementBehaviour;
 
@@ -44,6 +46,8 @@ public class Asteroid : MonoBehaviour
         hitPoints -= damage;
         if (hitPoints <= 0)
         {
+            CheckForResourceDrop(true);
+
             if (explosionPrefab != null) Instantiate(explosionPrefab, transform.position, Quaternion.identity);
 
             //List<GameObject> spawnedAsteroids = new List<GameObject>();
@@ -63,6 +67,10 @@ public class Asteroid : MonoBehaviour
             ScoreManager.scoreManager.EnemyDestroyed(scoreValue);
             Remove();
         }
+        else
+        {
+            CheckForResourceDrop(false);
+        }
     }
 
     public void Remove()
@@ -76,12 +84,26 @@ public class Asteroid : MonoBehaviour
         if (collision.transform.CompareTag("Player"))
         {
             collision.gameObject.GetComponent<Ship>().TakeHit(1, problemOdds); // deals only 1 damage because we're not masochists
-            TakeHit(1);
+            TakeHit(breakAgainstOtherAsteroids ? this.hitPoints : 1);
         }
         else if (collision.transform.CompareTag("Enemy") || collision.transform.CompareTag("AmbushEnemy"))
         {
             collision.gameObject.GetComponent<Enemy>().BlowUp();
-            //TakeHit(1);
+            if (breakAgainstOtherAsteroids) TakeHit(this.hitPoints);
+        }
+        else if (breakAgainstOtherAsteroids && collision.transform.CompareTag("Asteroid"))
+        {
+            TakeHit(this.hitPoints);
+        }
+    }
+
+    private void CheckForResourceDrop(bool destroy)
+    {
+        ExteriorResourceDrop drop = GetComponent<ExteriorResourceDrop>();
+        if (drop)
+        {
+            if (destroy) drop.HandleDestroy();
+            else drop.HandleHit();
         }
     }
 }

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -1635305100421136544}
   - component: {fileID: -3529215680039391380}
   m_Layer: 11
-  m_Name: ExteriorEnemyProjectileFatOne
+  m_Name: ExteriorEnemyProjectileScattershot
   m_TagString: Enemy Projectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -150,11 +150,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   explosionPrefab: {fileID: 0}
-  speed: 5
+  speed: 7.5
   damage: 1
-  wobbleAmount: 0
+  wobbleAmount: 0.01
+  spin: 0
   problemOdds:
-    nothingOdds: 50
+    nothingOdds: 20
     debrisOdds: 20
     steamOdds: 20
     flameOdds: 10

@@ -171,8 +171,7 @@ MonoBehaviour:
   EnemyDestroyedOrRemovedEvent:
     m_PersistentCalls:
       m_Calls: []
-  explosionPrefab: {fileID: 1346024567363085296, guid: 363461cbd48a8bd44b2475ac184559d6,
-    type: 3}
+  explosionPrefab: {fileID: 0}
   childAsteroidPrefabs:
   - {fileID: 4303212633405705334, guid: 5211cc2bc685bca40ae74b5232588a82, type: 3}
   - {fileID: 4303212633405705334, guid: 5211cc2bc685bca40ae74b5232588a82, type: 3}
@@ -181,9 +180,10 @@ MonoBehaviour:
   - {fileID: 4303212633405705334, guid: 5211cc2bc685bca40ae74b5232588a82, type: 3}
   - {fileID: 4303212633405705334, guid: 5211cc2bc685bca40ae74b5232588a82, type: 3}
   - {fileID: 4303212633405705334, guid: 5211cc2bc685bca40ae74b5232588a82, type: 3}
-  hitPoints: 2
+  hitPoints: 1
+  breakAgainstOtherAsteroids: 0
   scoreValue: 5
-  shrapnelForce: 3000
+  shrapnelForce: 3500
   problemOdds:
     nothingOdds: 50
     debrisOdds: 50

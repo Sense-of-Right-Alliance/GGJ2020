@@ -150,6 +150,7 @@ MonoBehaviour:
     flameOdds: 10
     breachOdds: 20
     numProblems: 1
+  spreadShot: 0
 --- !u!50 &5457739928993918894
 Rigidbody2D:
   serializedVersion: 4

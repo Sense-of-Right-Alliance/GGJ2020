@@ -14,87 +14,117 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   missionName: Asteroid Belt
   waves:
-  - name: Medium Roid Wave
+  - name: Medium Roids
     _waveEvents:
+    - _duration: 3
+      _squadron:
+        _pattern: 1
+        _zone: 1
+        _enemyType: 7
+    - _duration: 5
+      _squadron:
+        _pattern: 7
+        _zone: 1
+        _enemyType: 7
+    - _duration: 3
+      _squadron:
+        _pattern: 2
+        _zone: 1
+        _enemyType: 14
+    - _duration: 2
+      _squadron:
+        _pattern: 1
+        _zone: 1
+        _enemyType: 7
+    - _duration: 15
+      _squadron:
+        _pattern: 7
+        _zone: 1
+        _enemyType: 7
+    - _duration: 15
+      _squadron:
+        _pattern: 7
+        _zone: 1
+        _enemyType: 7
+  - name: Bullet Roids
+    _waveEvents:
+    - _duration: 3
+      _squadron:
+        _pattern: 1
+        _zone: 1
+        _enemyType: 12
+    - _duration: 3
+      _squadron:
+        _pattern: 8
+        _zone: 1
+        _enemyType: 12
+    - _duration: 3
+      _squadron:
+        _pattern: 7
+        _zone: 1
+        _enemyType: 12
+    - _duration: 3
+      _squadron:
+        _pattern: 7
+        _zone: 1
+        _enemyType: 12
+    - _duration: 3
+      _squadron:
+        _pattern: 8
+        _zone: 1
+        _enemyType: 12
+    - _duration: 3
+      _squadron:
+        _pattern: 1
+        _zone: 1
+        _enemyType: 12
+    - _duration: 3
+      _squadron:
+        _pattern: 8
+        _zone: 1
+        _enemyType: 12
+    - _duration: 3
+      _squadron:
+        _pattern: 7
+        _zone: 1
+        _enemyType: 12
+    - _duration: 3
+      _squadron:
+        _pattern: 8
+        _zone: 1
+        _enemyType: 12
+    - _duration: 5
+      _squadron:
+        _pattern: 1
+        _zone: 1
+        _enemyType: 12
+  - name: Shrapnel Roids
+    _waveEvents:
+    - _duration: 5
+      _squadron:
+        _pattern: 7
+        _zone: 1
+        _enemyType: 7
     - _duration: 3
       _squadron:
         _pattern: 1
         _zone: 1
         _enemyType: 10
-    - _duration: 5
-      _squadron:
-        _pattern: 7
-        _zone: 1
-        _enemyType: 7
     - _duration: 3
       _squadron:
         _pattern: 1
         _zone: 1
-        _enemyType: 7
-    - _duration: 2
+        _enemyType: 10
+    - _duration: 3
       _squadron:
         _pattern: 7
-        _zone: 1
+        _zone: 0
         _enemyType: 7
     - _duration: 5
       _squadron:
         _pattern: 7
         _zone: 1
-        _enemyType: 7
-  - name: Speedster Wave
-    _waveEvents:
-    - _duration: 10
-      _squadron:
-        _pattern: 2
-        _zone: 1
-        _enemyType: 1
-    - _duration: 3
-      _squadron:
-        _pattern: 3
-        _zone: 1
-        _enemyType: 1
-    - _duration: 3
-      _squadron:
-        _pattern: 1
-        _zone: 1
-        _enemyType: 7
-    - _duration: 5
-      _squadron:
-        _pattern: 3
-        _zone: 1
-        _enemyType: 2
-    - _duration: 5
-      _squadron:
-        _pattern: 1
-        _zone: 1
-        _enemyType: 7
-  - name: Huge Roid Wave
-    _waveEvents:
-    - _duration: 10
-      _squadron:
-        _pattern: 7
-        _zone: 1
-        _enemyType: 7
-    - _duration: 3
-      _squadron:
-        _pattern: 1
-        _zone: 1
-        _enemyType: 7
-    - _duration: 3
-      _squadron:
-        _pattern: 1
-        _zone: 1
-        _enemyType: 7
-    - _duration: 3
-      _squadron:
-        _pattern: 2
-        _zone: 5
-        _enemyType: 6
-    - _duration: 8
-      _squadron:
-        _pattern: 3
-        _zone: 1
-        _enemyType: 2
+        _enemyType: 10
   - name: Big Boi Wave
     _waveEvents:
     - _duration: 10

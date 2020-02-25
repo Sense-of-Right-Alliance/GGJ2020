@@ -11,11 +11,12 @@ GameObject:
   - component: {fileID: 4303212633405705332}
   - component: {fileID: 4303212633405705335}
   - component: {fileID: 942606664080155765}
-  - component: {fileID: 5181666675172989378}
+  - component: {fileID: 2343544907300211305}
   - component: {fileID: -4036976034239442463}
   - component: {fileID: -278988709436758044}
+  - component: {fileID: 632619011698001377}
   m_Layer: 17
-  m_Name: ExteriorEnemyShrapnelRockSmall
+  m_Name: ExteriorEnemyRockMediumResource
   m_TagString: Asteroid
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 4303212633405705334}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 4, y: 4, z: 1}
+  m_LocalScale: {x: 3, y: 3, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -74,8 +75,8 @@ SpriteRenderer:
   m_SortingLayerID: -552611323
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 39ca13f8dc299ac4c822284ec5dd7ad6, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 99ca2408897596b428ab6e8210f934bf, type: 3}
+  m_Color: {r: 1, g: 0.92368233, b: 0.0047169924, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -97,7 +98,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 5
+  m_Mass: 10
   m_LinearDrag: 5
   m_AngularDrag: 0.05
   m_GravityScale: 0
@@ -106,7 +107,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!60 &5181666675172989378
+--- !u!60 &2343544907300211305
 PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -123,7 +124,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.18, y: 0.18}
+    oldSize: {x: 0.45, y: 0.4}
     newSize: {x: 0.93, y: 0.84}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -131,14 +132,15 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -0.07, y: 0.074999996}
-      - {x: -0.08, y: 0.065}
-      - {x: -0.08, y: -0.065}
-      - {x: -0.07, y: -0.074999996}
-      - {x: 0.049999997, y: -0.074999996}
-      - {x: 0.08, y: -0.055}
-      - {x: 0.08, y: 0.065}
-      - {x: 0.06, y: 0.074999996}
+    - - {x: -0.13499999, y: 0.21499999}
+      - {x: -0.21499999, y: 0.105}
+      - {x: -0.21499999, y: -0.055}
+      - {x: -0.195, y: -0.16499999}
+      - {x: -0.095, y: -0.21499999}
+      - {x: 0.074999996, y: -0.21499999}
+      - {x: 0.21499999, y: -0.125}
+      - {x: 0.21499999, y: 0.13499999}
+      - {x: 0.205, y: 0.21499999}
 --- !u!114 &-4036976034239442463
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -151,7 +153,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ce4e229dbc0ba74e8744018fb730044, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 20
+  speed: 50
   homingSpeed: 0
   homingRadius: 5
   direction: {x: 0, y: -1}
@@ -171,15 +173,36 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   explosionPrefab: {fileID: 0}
-  childAsteroidPrefabs: []
-  hitPoints: 2
+  childAsteroidPrefabs:
+  - {fileID: 4303212633405705334, guid: f64466e5867c8de4c96bc6239d171ade, type: 3}
+  - {fileID: 4303212633405705334, guid: f64466e5867c8de4c96bc6239d171ade, type: 3}
+  - {fileID: 4303212633405705334, guid: f64466e5867c8de4c96bc6239d171ade, type: 3}
+  - {fileID: 4303212633405705334, guid: f64466e5867c8de4c96bc6239d171ade, type: 3}
+  hitPoints: 10
   breakAgainstOtherAsteroids: 0
-  scoreValue: 1
+  scoreValue: 50
   shrapnelForce: 0
   problemOdds:
     nothingOdds: 10
-    debrisOdds: 30
-    steamOdds: 20
-    flameOdds: 10
+    debrisOdds: 50
+    steamOdds: 10
+    flameOdds: 5
     breachOdds: 10
     numProblems: 1
+--- !u!114 &632619011698001377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4303212633405705334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3e945c7e74e3db4c9d04907762bd271, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  resourcePrefab: {fileID: 1346024567363085296, guid: 363461cbd48a8bd44b2475ac184559d6,
+    type: 3}
+  dropChanceOnDestroy: 1
+  dropChanceOnHit: 0
+  dropCount: 1

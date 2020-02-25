@@ -170,10 +170,10 @@ MonoBehaviour:
   EnemyDestroyedOrRemovedEvent:
     m_PersistentCalls:
       m_Calls: []
-  explosionPrefab: {fileID: 235347168054186532, guid: 096546276d9a9d549ad67e5cc88926c4,
-    type: 3}
+  explosionPrefab: {fileID: 0}
   childAsteroidPrefabs: []
   hitPoints: 2
+  breakAgainstOtherAsteroids: 0
   scoreValue: 50
   shrapnelForce: 0
   problemOdds:

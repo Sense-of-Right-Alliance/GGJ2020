@@ -20,8 +20,11 @@ public class GameManager : MonoBehaviour
     public void CompleteMission()
     {
         Debug.Log("GameManager -> Mission Complete!");
-
+        
         int currentMission = PlayerPrefs.GetInt("mission_number");
+
+        PlayerPrefs.SetInt("mission_" + currentMission + "_score", ScoreManager.scoreManager.Score);
+
         currentMission++;
         if (currentMission >= ExteriorManager.exteriorManager.GetWaveManager().AllMissions.Length)
         {
@@ -40,6 +43,13 @@ public class GameManager : MonoBehaviour
     public void FailMission()
     {
         Debug.Log("GameManager -> Mission Failed!");
+
+        int highScore = PlayerPrefs.GetInt("highscore");
+        if (ScoreManager.scoreManager.Score > highScore)
+        {
+            PlayerPrefs.SetInt("highscore", ScoreManager.scoreManager.Score);
+        }
+
         transitionAnimator.PlayMissionFailTransition(GoToStart);
     }
 
