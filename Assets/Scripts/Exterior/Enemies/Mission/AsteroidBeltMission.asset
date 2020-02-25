@@ -36,7 +36,7 @@ MonoBehaviour:
         _pattern: 1
         _zone: 1
         _enemyType: 7
-    - _duration: 15
+    - _duration: 2
       _squadron:
         _pattern: 7
         _zone: 1
@@ -139,19 +139,19 @@ MonoBehaviour:
         _enemyType: 2
     - _duration: 5
       _squadron:
-        _pattern: 2
-        _zone: 1
-        _enemyType: 3
+        _pattern: 5
+        _zone: 3
+        _enemyType: 4
     - _duration: 5
       _squadron:
-        _pattern: 6
-        _zone: 1
-        _enemyType: 2
-    - _duration: 5
+        _pattern: 5
+        _zone: 4
+        _enemyType: 5
+    - _duration: 15
       _squadron:
         _pattern: 3
         _zone: 1
-        _enemyType: 3
+        _enemyType: 2
   - name: Shrapnel Wave
     _waveEvents:
     - _duration: 10

@@ -154,6 +154,8 @@ public class SpawnManager : MonoBehaviour
 
         var prefab = _enemyPrefabs[enemyType];
 
+        if (enemyType == EnemyType.BulletAsteroid) numMult *= 2f;
+
         for (int i = 0; i < _squadronSpawns[SpawnPattern.Random] * numMult; i++)
         {
             var spawnPos = reference;

@@ -37,6 +37,8 @@ public class StartManager : MonoBehaviour
 
         int highScore = PlayerPrefs.GetInt("highscore");
         scoreText.text = "HS: " + highScore.ToString();
+
+        PlayerPrefs.SetInt("mission_number", 0);
     }
 
     private void Update()
