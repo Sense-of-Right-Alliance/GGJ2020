@@ -31,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 4303212633405705334}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 1}
+  m_LocalScale: {x: 9, y: 9, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -202,7 +202,11 @@ MonoBehaviour:
   EnemyDestroyedOrRemovedEvent:
     m_PersistentCalls:
       m_Calls: []
-  explosionPrefab: {fileID: 0}
+  explosionPrefab: {fileID: 235347168054186532, guid: 6a990f3b44005534986bd67b0c61ed91,
+    type: 3}
+  explosionSFXOverride: {fileID: 8300000, guid: 602d87e36a1df6e438a1c7ef51bb6083,
+    type: 3}
+  explosionVolume: 0.5
   childAsteroidPrefabs:
   - {fileID: 4303212633405705334, guid: e01adaaf7914a684191f6acf03b006fa, type: 3}
   - {fileID: 4303212633405705334, guid: e01adaaf7914a684191f6acf03b006fa, type: 3}

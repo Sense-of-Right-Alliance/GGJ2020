@@ -9,6 +9,8 @@ public class Asteroid : MonoBehaviour
     public UnityGameObjectEvent EnemyDestroyedOrRemovedEvent;
 
     [SerializeField] private GameObject explosionPrefab;
+    [SerializeField] private AudioClip explosionSFXOverride;
+    [SerializeField] private float explosionVolume = 0.5f;
     [SerializeField] private List<GameObject> childAsteroidPrefabs;
     [SerializeField] private int hitPoints = 12;
 
@@ -48,7 +50,16 @@ public class Asteroid : MonoBehaviour
         {
             CheckForResourceDrop(true);
 
-            if (explosionPrefab != null) Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+            if (explosionPrefab != null)
+            {
+                GameObject obj = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+                if (explosionSFXOverride != null)
+                {
+                    obj.GetComponent<AudioSource>().clip = explosionSFXOverride;
+                    obj.GetComponent<AudioSource>().volume = explosionVolume;
+                    obj.GetComponent<AudioSource>().Play();
+                }
+            }
 
             //List<GameObject> spawnedAsteroids = new List<GameObject>();
             foreach (var childAsteroidPrefab in childAsteroidPrefabs)
