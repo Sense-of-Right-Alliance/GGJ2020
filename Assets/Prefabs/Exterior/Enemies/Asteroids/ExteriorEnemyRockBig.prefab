@@ -183,7 +183,8 @@ MonoBehaviour:
   EnemyDestroyedOrRemovedEvent:
     m_PersistentCalls:
       m_Calls: []
-  explosionPrefab: {fileID: 0}
+  explosionPrefab: {fileID: 235347168054186532, guid: 6a990f3b44005534986bd67b0c61ed91,
+    type: 3}
   childAsteroidPrefabs:
   - {fileID: 4303212633405705334, guid: e9bec8fcaf78864488a2e8e0562a568f, type: 3}
   - {fileID: 4303212633405705334, guid: e9bec8fcaf78864488a2e8e0562a568f, type: 3}
