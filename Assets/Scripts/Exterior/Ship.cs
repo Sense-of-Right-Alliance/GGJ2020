@@ -38,12 +38,16 @@ public class Ship : MonoBehaviour
 
     [SerializeField] PlayerID playerID = PlayerID.Player2;
 
+    [SerializeField] GameObject engineFlameEffect;
+    [SerializeField] GameObject engineSmokeEffect;
+    [SerializeField] GameObject engineTrailEffect;
+
     private int currentHitPoints = 0;
     public int HitPoints { get { return currentHitPoints; } }
     public float HitPointPercent { get { return currentHitPoints / MaxHitPoints; } }
 
     private float speedBoostTimer = 0f;
-    private float crippledSpeedMult = 1f;
+    [SerializeField] float crippledSpeedMult = 1f;
 
     private bool firingEnabled = true;
     private float fireTimer = 0f;
@@ -78,6 +82,10 @@ public class Ship : MonoBehaviour
         int savedPlayerID = PlayerPrefs.GetInt("Pilot",-1);
         if (savedPlayerID == 0) playerID = PlayerID.Player1;
         else if (savedPlayerID == 1) playerID = PlayerID.Player2;
+
+        engineFlameEffect.SetActive(crippledSpeedMult >= 1);
+        engineSmokeEffect.SetActive(crippledSpeedMult < 1);
+        engineTrailEffect.SetActive(speedBoostMult > 1f);
     }
 
     // Update is called once per frame
@@ -106,6 +114,8 @@ public class Ship : MonoBehaviour
                 speedBoostMult = 1f;
             }
         }
+
+        engineTrailEffect.SetActive(speedBoostMult > 1f);
     }
 
     private void UpdateFireRateBoost()
@@ -275,6 +285,9 @@ public class Ship : MonoBehaviour
     public void CrippleMovementMult(float amount)
     {
         crippledSpeedMult = amount;
+        
+        engineFlameEffect.SetActive(crippledSpeedMult >= 1);
+        engineSmokeEffect.SetActive(crippledSpeedMult < 1);
     }
 
     public void DisableFiring() { firingEnabled = false; }
@@ -292,7 +305,9 @@ public class Ship : MonoBehaviour
     {
         if (energyBallPrefab != null)
         {
-            Instantiate(energyBallPrefab, transform.position, Quaternion.identity);
+            Instantiate(energyBallPrefab, projectileSpawnTransform.position, Quaternion.identity);
+
+            PushInDir(-Vector2.up, 1000f);
         }
     }
 
@@ -321,4 +336,9 @@ public class Ship : MonoBehaviour
 
     public void DisableShields() { shieldsEnabled = false; UpdateShieldsSprite(); }
     public void EnableShields() { shieldsEnabled = true; UpdateShieldsSprite(); }
+
+    public void PushInDir(Vector2 dir, float force)
+    {
+        rigidbody2D.AddForce(dir * force);
+    }
 }

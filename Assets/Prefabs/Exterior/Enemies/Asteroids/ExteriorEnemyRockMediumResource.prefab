@@ -75,8 +75,8 @@ SpriteRenderer:
   m_SortingLayerID: -552611323
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 99ca2408897596b428ab6e8210f934bf, type: 3}
-  m_Color: {r: 1, g: 0.92368233, b: 0.0047169924, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 41b4bcf5ac020d84b9c728687f0206d7, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -124,7 +124,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.45, y: 0.4}
+    oldSize: {x: 0.43, y: 0.43}
     newSize: {x: 0.93, y: 0.84}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -176,11 +176,8 @@ MonoBehaviour:
     type: 3}
   explosionSFXOverride: {fileID: 8300000, guid: 602d87e36a1df6e438a1c7ef51bb6083,
     type: 3}
-  childAsteroidPrefabs:
-  - {fileID: 4303212633405705334, guid: f64466e5867c8de4c96bc6239d171ade, type: 3}
-  - {fileID: 4303212633405705334, guid: f64466e5867c8de4c96bc6239d171ade, type: 3}
-  - {fileID: 4303212633405705334, guid: f64466e5867c8de4c96bc6239d171ade, type: 3}
-  - {fileID: 4303212633405705334, guid: f64466e5867c8de4c96bc6239d171ade, type: 3}
+  explosionVolume: 0.5
+  childAsteroidPrefabs: []
   hitPoints: 10
   breakAgainstOtherAsteroids: 0
   scoreValue: 50
