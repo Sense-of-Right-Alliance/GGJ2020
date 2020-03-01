@@ -19,7 +19,7 @@ public class InteriorPlayer : MonoBehaviour
     Rigidbody2D rigidbody2D;
 
     private GameObject heldItem;
-    private List<GameObject> overItems = new List<GameObject>();
+    //private List<GameObject> overItems = new List<GameObject>();
     private AudioSource audioSource;
 
     private Vector2 moveDir = Vector2.up;
@@ -113,7 +113,16 @@ public class InteriorPlayer : MonoBehaviour
 
         if (heldItem != null)
         {
-            if (heldItem.tag == "Tool") heldItem.GetComponent<Tool>().SetOn(buttonDown);
+            if (heldItem.tag == "Tool")
+            {
+                Tool tool = heldItem.GetComponent<Tool>();
+                if (tool == null) heldItem.GetComponentInChildren<Tool>();
+
+                if (tool != null)
+                {
+                    tool.SetOn(buttonDown);
+                }
+            }
         } else
         {
             pushing = buttonDown;
@@ -153,9 +162,22 @@ public class InteriorPlayer : MonoBehaviour
             {
                 //Debug.Log("Target Acquired!");
                 heldItem = hitColliders[i].gameObject;
-                heldItem.GetComponent<PickupItem>().Pickup(this);
-                audioSource.Play();
-                break;
+                if (heldItem)
+                {
+                    PickupItem pi = heldItem.GetComponent<PickupItem>();
+                    if (pi == null) heldItem.GetComponentInChildren<PickupItem>();
+
+                    if (pi != null)
+                    {
+                        pi.Pickup(this);
+                        audioSource.Play();
+                        break;
+                    } else
+                    {
+                        Debug.Log("Unalble to pickup item!! Has no pickup item component! " + heldItem.tag);
+                    }
+                    
+                }
             }
             i++;
         }
@@ -181,13 +203,24 @@ public class InteriorPlayer : MonoBehaviour
             //Debug.Log("Dropped resource!");
             if (overStation != null)
             {
-                overStation.TryProcessItem(heldItem.GetComponent<PickupItem>());
+                PickupItem pi = heldItem.GetComponent<PickupItem>();
+                if (pi == null) pi = heldItem.GetComponentInChildren<PickupItem>();
+
+                if (pi != null) overStation.TryProcessItem(pi);
             }
 
             if (heldItem != null) // wasn't consumed. So just drop it
             {
-                overItems.Add(heldItem);
-                heldItem.GetComponent<PickupItem>().Drop();
+                //overItems.Add(heldItem);
+
+                PickupItem pi = heldItem.GetComponent<PickupItem>();
+                if (pi == null) heldItem.GetComponentInChildren<PickupItem>();
+
+                if (pi != null)
+                {
+                    pi.Drop();
+                }
+
                 heldItem = null;
             }
         }
@@ -196,6 +229,7 @@ public class InteriorPlayer : MonoBehaviour
     private Station overStation;
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        /*
         if ((collision.tag == "Interior Resource" || collision.tag == "Tool") && !overItems.Contains(collision.gameObject) && heldItem != collision.gameObject)
         {
             //overItems.Add(collision.gameObject);
@@ -206,9 +240,13 @@ public class InteriorPlayer : MonoBehaviour
             Station station = collision.GetComponent<Station>();
             if (station != null) overStation = station;
         }
+        */
+        Station station = collision.GetComponent<Station>();
+        if (station != null) overStation = station;
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
+        /*
         if (collision.tag == "Interior Resource" || collision.tag == "Tool")
         {
             //overItems.Remove(collision.gameObject);
@@ -218,6 +256,9 @@ public class InteriorPlayer : MonoBehaviour
             Station station = collision.GetComponent<Station>();
             if (station != null && station == overStation) overStation = null;
         }
+        */
+        Station station = collision.GetComponent<Station>();
+        if (station != null && station == overStation) overStation = null;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
