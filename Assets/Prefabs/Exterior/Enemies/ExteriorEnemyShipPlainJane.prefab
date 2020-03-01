@@ -186,7 +186,7 @@ MonoBehaviour:
     flameOdds: 10
     breachOdds: 20
     numProblems: 1
-  spreadShot: 1
+  spreadShot: 0
 --- !u!50 &942606664080155765
 Rigidbody2D:
   serializedVersion: 4
@@ -334,6 +334,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   resourcePrefab: {fileID: 1346024567363085296, guid: 363461cbd48a8bd44b2475ac184559d6,
     type: 3}
-  dropChanceOnDestroy: 0.2
+  dropChanceOnDestroy: 0.9
   dropChanceOnHit: 0
   dropCount: 1

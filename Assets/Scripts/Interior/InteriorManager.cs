@@ -119,6 +119,9 @@ public class InteriorManager : MonoBehaviour
     public void SpawnResource()
     {
         GameObject resource = GameObject.Instantiate<GameObject>(resourcePrefab, resourceSpawn.position, Quaternion.identity);
+        resource.transform.position += new Vector3(Random.Range(-0.1f, 0.1f), Random.Range(-0.1f, 0.1f), 0);
+        resource.transform.Rotate(Quaternion.Euler(0, 0, UnityEngine.Random.Range(0f, 360f)).eulerAngles);
+
         if (transform.parent != null) resource.transform.SetParent(transform.parent);
         spawnedResources.Add(resource);
 
@@ -128,8 +131,10 @@ public class InteriorManager : MonoBehaviour
     public void ReclaimJettisonedObject(GameObject reclaimedObject)
     {
         Transform t = reclaimedObject.transform;
+        
+        t.position = resourceSpawn.position + new Vector3(Random.Range(-0.1f, 0.1f), Random.Range(-0.1f, 0.1f), 0);
+        if (reclaimedObject.tag != "Player") t.Rotate(Quaternion.Euler(0, 0, UnityEngine.Random.Range(0f, 360f)).eulerAngles);
 
-        t.position = resourceSpawn.position;
         reclaimedObject.SetActive(true);
 
         aSource.PlayOneShot(loadItemSfX, 0.5f);

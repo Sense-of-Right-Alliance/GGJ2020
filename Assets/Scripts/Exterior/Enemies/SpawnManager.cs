@@ -326,8 +326,9 @@ public class SpawnManager : MonoBehaviour
     public void JettisonObject(GameObject interiorObject, Vector3 dir)
     {
         // just get left or right
-        if (dir.x < 0) dir = new Vector3(-1, 0, 0);
-        if (dir.x > 0) dir = new Vector3(1, 0, 0);
+        Vector3 spawnDir = Vector3.zero;
+        if (dir.x < 0) spawnDir = new Vector3(-1, 0, 0);
+        if (dir.x > 0) spawnDir = new Vector3(1, 0, 0);
         
         GameObject playerShip = GetPlayerShip();
 
@@ -335,8 +336,9 @@ public class SpawnManager : MonoBehaviour
         {
             interiorObject.SetActive(false);
 
-            GameObject r = SpawnResource(playerShip.transform.position + dir * 0.5f);
-            r.GetComponent<ExternalResourcePickup>().DelayCollisionUntilExit();
+            GameObject r = SpawnResource(playerShip.transform.position + spawnDir * 0.5f);
+            r.GetComponent<SpaceDrift>().SetDrifDirection(dir);
+            r.GetComponent<ExternalResourcePickup>().DelayPickup(1.5f);
             r.AddComponent<JettisonedObject>();
             r.GetComponent<JettisonedObject>().SetInteriorObject(interiorObject);
         }
