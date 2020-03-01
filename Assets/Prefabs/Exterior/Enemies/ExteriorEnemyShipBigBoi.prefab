@@ -334,6 +334,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   resourcePrefab: {fileID: 1346024567363085296, guid: 363461cbd48a8bd44b2475ac184559d6,
     type: 3}
-  dropChanceOnDestroy: 0.5
+  dropChanceOnDestroy: 1
   dropChanceOnHit: 0
   dropCount: 1

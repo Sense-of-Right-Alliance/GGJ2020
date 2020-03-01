@@ -14,6 +14,8 @@ public class InteriorPlayer : MonoBehaviour
 
     [SerializeField] PlayerID playerID = PlayerID.Player1;
 
+    [SerializeField] float pickupRadius = 0.3f;
+
     Rigidbody2D rigidbody2D;
 
     private GameObject heldItem;
@@ -40,6 +42,8 @@ public class InteriorPlayer : MonoBehaviour
     {
         UpdatePickup();
         UpdateUse();
+
+        Debug.DrawLine(transform.position, transform.position + Vector3.right * pickupRadius);
     }
 
     private void FixedUpdate()
@@ -90,9 +94,8 @@ public class InteriorPlayer : MonoBehaviour
         if ((playerID == PlayerID.Player1 && (Input.GetKeyDown(KeyCode.G) || Input.GetButtonDown("A1")))
             || (playerID == PlayerID.Player2 && (Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("A2"))))
         {
-            if (heldItem == null && overItems.Count > 0)
+            if (heldItem == null)
             {
-                audioSource.Play();
                 PickupItem();
             } else
             {
@@ -117,22 +120,58 @@ public class InteriorPlayer : MonoBehaviour
         }
     }
 
+    /*
+    private GameObject GetClosestPickupItem()
+    {
+        GameObject closest = null;
+        float closestDist = 99999;
+
+        for (int i = 0; i < overItems.Count; i++)
+        {
+            if (overItems[i] != null)
+            {
+                float distance = ((Vector2)overItems[i].transform.position - (Vector2)transform.position).magnitude;
+                if (distance < closestDist)
+                {
+                    closest = overItems[i];
+                    closestDist = distance;
+                }
+            }
+        }
+
+        return closest;
+    }
+    */
+    
     private void PickupItem()
     {
+        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, pickupRadius);
+        int i = 0;
+        while (i < hitColliders.Length)
+        {
+            if (hitColliders[i].tag == "Interior Resource" || hitColliders[i].tag == "Tool")
+            {
+                //Debug.Log("Target Acquired!");
+                heldItem = hitColliders[i].gameObject;
+                heldItem.GetComponent<PickupItem>().Pickup(this);
+                audioSource.Play();
+                break;
+            }
+            i++;
+        }
+
+        /*
         if (heldItem == null)
         {
-            //Debug.Log("Picked up resource!");
-
-            heldItem = overItems[0];
-            overItems.RemoveAt(0);
             while ((heldItem == null || heldItem.activeSelf) && overItems.Count > 0)
             {
-                heldItem = overItems[0];
-                overItems.RemoveAt(0);
+                heldItem = GetClosestPickupItem();
+                overItems.Remove(heldItem);
             }
             
             if (heldItem != null && heldItem.activeSelf) heldItem.GetComponent<PickupItem>().Pickup(this);
         }
+        */
     }
 
     public void DropItem()
@@ -159,7 +198,7 @@ public class InteriorPlayer : MonoBehaviour
     {
         if ((collision.tag == "Interior Resource" || collision.tag == "Tool") && !overItems.Contains(collision.gameObject) && heldItem != collision.gameObject)
         {
-            overItems.Add(collision.gameObject);
+            //overItems.Add(collision.gameObject);
             //Debug.Log("Interior Player over item " + collision.tag.ToString() + " over items count = " + overItems.Count.ToString());
         }
         else
@@ -172,7 +211,7 @@ public class InteriorPlayer : MonoBehaviour
     {
         if (collision.tag == "Interior Resource" || collision.tag == "Tool")
         {
-            overItems.Remove(collision.gameObject);
+            //overItems.Remove(collision.gameObject);
             //Debug.Log("Interior Player no longer over item " + collision.tag.ToString() + " over items count = " + overItems.Count.ToString());
         } else
         {

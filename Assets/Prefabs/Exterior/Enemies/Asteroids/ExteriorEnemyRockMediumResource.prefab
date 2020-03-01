@@ -205,4 +205,4 @@ MonoBehaviour:
     type: 3}
   dropChanceOnDestroy: 1
   dropChanceOnHit: 0
-  dropCount: 1
+  dropCount: 3

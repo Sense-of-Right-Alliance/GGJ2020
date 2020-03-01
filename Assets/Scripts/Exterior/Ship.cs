@@ -16,8 +16,14 @@ public class Ship : MonoBehaviour
     [SerializeField] float speedBoostMult = 1f;
     [SerializeField] float maxSpeed = 10000f;
 
-    [SerializeField] float fireRate = 6f; // shots per second
-    [SerializeField] float fireRateBoost = 0f;
+    [SerializeField] float fireRateLeft = 3f; // shots per second
+    [SerializeField] float fireRateBoostLeft = 0f;
+    [SerializeField] float fireRateRight = 3f; // shots per second
+    [SerializeField] float fireRateBoostRight = 0f;
+    private bool firingEnabledLeft = true;
+    private bool firingEnabledRight = true;
+    private float fireTimerLeft = 0f;
+    private float fireTimerRight = 0f;
 
     [SerializeField] GameObject projectilePrefab;
     [SerializeField] GameObject energyBallPrefab;
@@ -26,7 +32,9 @@ public class Ship : MonoBehaviour
     [SerializeField] ExteriorManager exteriorManager;
     [SerializeField] InteriorManager interiorManager;
 
-    [SerializeField] Transform projectileSpawnTransform;
+    [SerializeField] Transform projSpawnFront;
+    [SerializeField] Transform projSpawnLeft;
+    [SerializeField] Transform projSpawnRight;
 
     [SerializeField] Sprite[] damageSprites;
     [SerializeField] SpriteRenderer damageRenderer;
@@ -42,33 +50,39 @@ public class Ship : MonoBehaviour
     [SerializeField] GameObject engineSmokeEffect;
     [SerializeField] GameObject engineTrailEffect;
 
-    private int currentHitPoints = 0;
+    [SerializeField] private int currentHitPoints = 5;
     public int HitPoints { get { return currentHitPoints; } }
-    public float HitPointPercent { get { return currentHitPoints / MaxHitPoints; } }
+    public float HitPointPercent { get { return (float)currentHitPoints / (float)MaxHitPoints; } }
 
     private float speedBoostTimer = 0f;
     [SerializeField] float crippledSpeedMult = 1f;
 
-    private bool firingEnabled = true;
-    private float fireTimer = 0f;
-    private float fireRateBoostTimer = 0f;
-
     Rigidbody2D rigidbody2D;
     AudioSource audioSource;
+    SpriteRenderer spriteRenderer;
 
-    List<float> spreadStacks = new List<float>();
+    [SerializeField] List<float> spreadStacks = new List<float>();
+    [SerializeField] List<ShipBonusStack> engineBoostStacks = new List<ShipBonusStack>();
+    [SerializeField] List<ShipBonusStack> fireRateBoostStacksLeft = new List<ShipBonusStack>();
+    [SerializeField] List<ShipBonusStack> fireRateBoostStacksRight = new List<ShipBonusStack>();
+
+    public int NumFireSpreadStacks { get { return spreadStacks.Count; } }
+    public int NumEngineBoostStacks { get { return engineBoostStacks.Count; } }
+    public int NumFireRateBoostStacksLeft { get { return fireRateBoostStacksLeft.Count; } }
+    public int NumFireRateBoostStacksRight { get { return fireRateBoostStacksRight.Count; } }
 
     private void Awake()
     {
         rigidbody2D = GetComponent<Rigidbody2D>();
         audioSource = GetComponent<AudioSource>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
 
         if (exteriorManager == null) exteriorManager = GameObject.FindObjectOfType<ExteriorManager>();
         if (interiorManager == null) interiorManager = GameObject.FindObjectOfType<InteriorManager>();
 
         if (shipHitEvent == null) shipHitEvent = new UnityEvent();
 
-        currentHitPoints = maxHitPoints;
+        //currentHitPoints = maxHitPoints; // disabled, so can set starting health in editor.
     }
 
     // Start is called before the first frame update
@@ -76,10 +90,10 @@ public class Ship : MonoBehaviour
     {
         UpdateDamageSprite();
         UpdateShieldsSprite();
-        speedBoostMult = 1;
-        fireRateBoost = 0f;
+        //speedBoostMult = 1;
+        //fireRateBoost = 0f;
 
-        int savedPlayerID = PlayerPrefs.GetInt("Pilot",-1);
+        int savedPlayerID = PlayerPrefs.GetInt("Pilot", -1);
         if (savedPlayerID == 0) playerID = PlayerID.Player1;
         else if (savedPlayerID == 1) playerID = PlayerID.Player2;
 
@@ -94,8 +108,9 @@ public class Ship : MonoBehaviour
         UpdateSpeedBoost();
         UpdateFireRateBoost();
         UpdateWeaponSpread();
-        
-        if (firingEnabled) UpdateProjectile();
+
+        UpdateProjectile();
+        UpdateManeuvers();
     }
 
     private void FixedUpdate()
@@ -105,37 +120,71 @@ public class Ship : MonoBehaviour
 
     private void UpdateSpeedBoost()
     {
-        if (speedBoostMult > 1f)
+        speedBoostMult = 1;
+
+        if (engineStacksDrainMult > 1f) Debug.Log("Stack drain " + engineStacksDrainMult);
+
+        // update stack timers
+        for (int i = 0; i < engineBoostStacks.Count; i++)
         {
-            speedBoostTimer -= Time.deltaTime;
-            if (speedBoostTimer <= 0f)
+            if (i == 0) engineBoostStacks[i].Duration -= Time.deltaTime * engineStacksDrainMult; // only remove from the oldest stack, as this is like a fuel reserve
+            if (engineBoostStacks[i].Duration <= 0)
             {
-                speedBoostTimer = 0f;
-                speedBoostMult = 1f;
+                engineBoostStacks.RemoveAt(i--);
+            } else
+            {
+                speedBoostMult += engineBoostStacks[i].Amount;
             }
         }
+
+        speedBoostMult = Mathf.Max(1, speedBoostMult);
 
         engineTrailEffect.SetActive(speedBoostMult > 1f);
     }
 
     private void UpdateFireRateBoost()
     {
-        if (fireRateBoost > 0f)
+        fireRateBoostLeft = 0;
+             
+        // update stack timers
+        for (int i = 0; i < fireRateBoostStacksLeft.Count; i++)
         {
-            fireRateBoostTimer -= Time.deltaTime;
-            if (fireRateBoostTimer <= 0f)
+            if (i == 0) fireRateBoostStacksLeft[i].Duration -= Time.deltaTime * fireRateStackDrainLeft; // only remove from the oldest stack, as this is like an ammo reserve
+            if (fireRateBoostStacksLeft[i].Duration <= 0)
             {
-                fireRateBoostTimer = 0f;
-                fireRateBoost = 0f;
+                fireRateBoostStacksLeft.RemoveAt(i--);
+            }
+            else
+            {
+                fireRateBoostLeft += fireRateBoostStacksLeft[i].Amount;
             }
         }
+
+        fireRateBoostRight = 0;
+
+        // update stack timers
+        for (int i = 0; i < fireRateBoostStacksRight.Count; i++)
+        {
+            if (i == 0) fireRateBoostStacksRight[i].Duration -= Time.deltaTime * fireRateStackDrainRight;
+            if (fireRateBoostStacksRight[i].Duration <= 0)
+            {
+                fireRateBoostStacksRight.RemoveAt(i--);
+            }
+            else
+            {
+                fireRateBoostRight += fireRateBoostStacksRight[i].Amount;
+            }
+        }
+
+        fireRateStackDrainLeft = 0; // resets each frame.
+        fireRateStackDrainRight = 0; // resets each frame.
     }
 
     private void UpdateWeaponSpread()
     {
         if (spreadStacks.Count > 0 && spreadEnabled)
         {
-            for (int i = spreadStacks.Count-1; i >= 0; i--)
+            for (int i = spreadStacks.Count - 1; i >= 0; i--)
             {
                 spreadStacks[i] -= Time.deltaTime;
                 if (spreadStacks[i] <= 0f)
@@ -145,7 +194,7 @@ public class Ship : MonoBehaviour
                     if (spreadStacks.Count == 0) break;
                 }
             }
-        }        
+        }
     }
 
     private void UpdateMovement()
@@ -188,40 +237,100 @@ public class Ship : MonoBehaviour
         rigidbody2D.AddForce(velocity);
     }
 
+    private float fireRateStackDrainLeft = 0f; // won't drain fire rate stacks unless are firing.
+    private float fireRateStackDrainRight = 0f; // won't drain fire rate stacks unless are firing.
+
     private void UpdateProjectile()
     {
-        fireTimer -= Time.deltaTime;
-        if ((playerID == PlayerID.Player1 && (Input.GetKey(KeyCode.G) || Input.GetButton("A1")))
-            || (playerID == PlayerID.Player2 && (Input.GetKey(KeyCode.Space) || Input.GetButton("A2"))))
+        if (fireTimerLeft > 0) fireTimerLeft -= Time.deltaTime;
+        if (fireTimerRight > 0) fireTimerRight -= Time.deltaTime;
+
+        bool fireLeft = (playerID == PlayerID.Player1 && (Input.GetKey(KeyCode.G) || (Input.GetAxis("TriggerLeft1") > 0)) || (playerID == PlayerID.Player2 && (Input.GetKey(KeyCode.Space) || (Input.GetAxis("TriggerLeft2") > 0))));
+        bool fireRight = (playerID == PlayerID.Player1 && (Input.GetKey(KeyCode.G) || (Input.GetAxis("TriggerRight1") > 0)) || (playerID == PlayerID.Player2 && (Input.GetKey(KeyCode.Space) || (Input.GetAxis("TriggerRight2") > 0))));
+
+        if (fireLeft && fireTimerLeft <= 0f && firingEnabledLeft)
         {
-            if (fireTimer <= 0f)
+            fireTimerLeft = 1f / (fireRateLeft + fireRateBoostLeft);
+            FireProjectile(projSpawnLeft);
+            fireRateStackDrainLeft = fireRateLeft + fireRateBoostLeft;
+        }
+
+        if (fireRight && fireTimerRight <= 0f && firingEnabledRight)
+        {
+            fireTimerRight = 1f / (fireRateRight + fireRateBoostRight);
+            FireProjectile(projSpawnRight);
+            fireRateStackDrainRight = fireRateRight + fireRateBoostRight;
+        }
+
+
+        /* Disabled spread for the moment, as we added left and right controlls
+        if (spreadEnabled) // spread fire
+        {
+            Vector2 newPos;
+            float spreadDist = 0.5f;
+            for (int i = 0; i < spreadStacks.Count; i++)
             {
-                audioSource.Play();
+                newPos = projSpawnFront.position;
+                newPos.x -= spreadDist * (i + 1);
+                Instantiate(projectilePrefab, newPos, Quaternion.identity);
+                newPos = projSpawnFront.position;
+                newPos.x += spreadDist * (i + 1);
+                Instantiate(projectilePrefab, newPos, Quaternion.identity);
+            }
+        }
+        */
+    }
 
-                fireTimer = 1f / (fireRate + fireRateBoost);
-                Instantiate(projectilePrefab, projectileSpawnTransform.position, Quaternion.identity);
+    private void UpdateManeuvers()
+    {
+        if (barrelRollTimer > 0f)
+        {
+            barrelRollTimer -= Time.deltaTime;
 
-                if (spreadEnabled) // spread fire
-                {
-                    Vector2 newPos;
-                    float spreadDist = 0.5f;
-                    for (int i = 0; i < spreadStacks.Count; i++)
-                    {
-                        newPos = projectileSpawnTransform.position;
-                        newPos.x -= spreadDist * (i + 1);
-                        Instantiate(projectilePrefab, newPos, Quaternion.identity);
-                        newPos = projectileSpawnTransform.position;
-                        newPos.x += spreadDist * (i + 1);
-                        Instantiate(projectilePrefab, newPos, Quaternion.identity);
-                    }
-                }
+            spriteRenderer.color = Color.Lerp(Color.gray, Color.black, Mathf.Sin(barrelRollTimer));
+
+            if (barrelRollTimer <= 0f)
+            {
+                spriteRenderer.color = Color.white;
+
+                StopBarrelRoll();
+            }
+        }
+        else
+        {
+            if (crippledSpeedMult >= 1f && engineBoostStacks.Count > 0 && (playerID == PlayerID.Player1 && (Input.GetKey(KeyCode.R) || Input.GetButtonDown("B1")) || (playerID == PlayerID.Player2 && (Input.GetKey(KeyCode.B) || Input.GetButtonDown("B2")))))
+            {
+                StartBarrelRoll(0.5f);
             }
         }
     }
 
+    private float engineStacksDrainMult = 1f;
+    private float barrelRollTimer = 0f;
+    private void StartBarrelRoll(float duration)
+    {
+        barrelRollTimer = duration;
+        GetComponent<Collider2D>().enabled = false;
+
+        engineStacksDrainMult = 3f;
+    }
+
+    private void StopBarrelRoll()
+    {
+        GetComponent<Collider2D>().enabled = true;
+
+        engineStacksDrainMult = 1f;
+    }
+
+    private void FireProjectile(Transform t)
+    {
+        audioSource.Play();
+        Instantiate(projectilePrefab, t.position, t.rotation);
+    }
+
     public void TakeHit(int damage, InteriorProblemOdds problemOdds = null)
     {
-        if (!invincible)
+        if (!invincible && barrelRollTimer <= 0f)
         { 
             if (shields > 0 && ShieldsEnabled)
             {
@@ -267,19 +376,19 @@ public class Ship : MonoBehaviour
         UpdateDamageSprite();
     }
 
-    public void BoostSpeedMult(float amount, float duration)
+    public void AddBoostSpeedMultStack(float amount, float duration)
     {
-        speedBoostMult = amount;
-
-        speedBoostTimer += duration;
-
-        //Debug.Log("Ship Boosting Speed: Boost = " + speedBoost + " timer = " + speedBoostTimer);
+        engineBoostStacks.Add(new ShipBonusStack(amount, duration));
     }
 
-    public void BoostFireRate(float amount, float duration)
+    public void AddBoostFireRateStackLeft(float amount, float duration)
     {
-        fireRateBoost = amount;
-        fireRateBoostTimer += duration;
+        fireRateBoostStacksLeft.Add(new ShipBonusStack(amount, duration));
+    }
+    
+    public void AddBoostFireRateStackRight(float amount, float duration)
+    {
+        fireRateBoostStacksRight.Add(new ShipBonusStack(amount, duration));
     }
 
     public void CrippleMovementMult(float amount)
@@ -290,9 +399,11 @@ public class Ship : MonoBehaviour
         engineSmokeEffect.SetActive(crippledSpeedMult < 1);
     }
 
-    public void DisableFiring() { firingEnabled = false; }
-    public void EnableFiring() { firingEnabled = true; }
-    
+    public void DisableFiringLeft() { firingEnabledLeft = false; }
+    public void DisableFiringRight() { firingEnabledRight = false; }
+    public void EnableFiringLeft() { firingEnabledLeft = true; }
+    public void EnableFiringRight() { firingEnabledRight = true; }
+
     public void AddWeaponSpread(float duration)
     {
         spreadStacks.Add(duration);
@@ -305,7 +416,7 @@ public class Ship : MonoBehaviour
     {
         if (energyBallPrefab != null)
         {
-            Instantiate(energyBallPrefab, projectileSpawnTransform.position, Quaternion.identity);
+            Instantiate(energyBallPrefab, projSpawnFront.position, Quaternion.identity);
 
             PushInDir(-Vector2.up, 1000f);
         }

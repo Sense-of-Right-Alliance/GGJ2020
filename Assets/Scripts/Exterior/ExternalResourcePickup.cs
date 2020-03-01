@@ -5,7 +5,7 @@ using System.Linq;
 
 public class ExternalResourcePickup : MonoBehaviour
 {
-    private bool delayUntilExit = false;
+    private float delayPickup = 0;
 
     private void Start()
     {
@@ -14,38 +14,65 @@ public class ExternalResourcePickup : MonoBehaviour
 
     private void Update()
     {
-        
+        if (delayPickup > 0) delayPickup -= Time.deltaTime;
+
+        if (delayPickup <= 0 && collidedOnDelay.Count > 0)
+        {
+            Pickup();
+        }
     }
+
+    List<GameObject> collidedOnDelay = new List<GameObject>();
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Player" && !delayUntilExit)
+        if (collision.tag == "Player")
         {
-            InteriorManager interiorManager = GameObject.FindObjectOfType<InteriorManager>();
-
-            if (interiorManager != null)
+            if (delayPickup > 0)
             {
-                JettisonedObject jo = GetComponent<JettisonedObject>();
-                if (jo != null)
-                {
-                    interiorManager.ReclaimJettisonedObject(jo.InteriorObject);
-                } else
-                {
-                    interiorManager.SpawnResource();
-                }
+                collidedOnDelay.Add(collision.gameObject);
             }
-
-            Destroy(gameObject);
+            else
+            {
+                Pickup();
+            }
         }
+    }
+
+    private void Pickup()
+    {
+        collidedOnDelay.Clear();
+
+        InteriorManager interiorManager = GameObject.FindObjectOfType<InteriorManager>();
+
+        if (interiorManager != null)
+        {
+            JettisonedObject jo = GetComponent<JettisonedObject>();
+            if (jo != null)
+            {
+                interiorManager.ReclaimJettisonedObject(jo.InteriorObject);
+            }
+            else
+            {
+                interiorManager.SpawnResource();
+            }
+        }
+
+        Destroy(gameObject);
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (delayUntilExit) delayUntilExit = false;
+        if (delayPickup > 0) delayPickup = 0;
+
+        if (collidedOnDelay.Count > 0)
+        {
+            collidedOnDelay.Remove(collision.gameObject);
+        }
     }
 
-    public void DelayCollisionUntilExit()
+    public void DelayPickup(float time)
     {
-        delayUntilExit = true;
+        delayPickup = time;
     }
 }
