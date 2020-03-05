@@ -139,6 +139,15 @@ public class WaveManager : MonoBehaviour
 
         int currentMissionId = PlayerPrefs.GetInt("mission_number");
 
+        MissionDetails missionDetails = GetComponent<MissionDetails>();
+        if (missionDetails != null)
+        {
+            Waves = missionDetails.Waves;
+
+            Debug.Log("Loading Mission " + missionDetails.Name + " : " + missionDetails.Description);
+        }
+
+        // Mission Waves Object takes priority over MissionDetails component (for now!)
         MissionWavesObject mission = null;
         if (missionWaves != null)
         {
@@ -166,7 +175,7 @@ public class WaveManager : MonoBehaviour
 
     private void ReadMissionWavesObject(MissionWavesObject mission)
     {
-        Waves = mission.waves.ToList();
+        Waves = mission.Waves.ToList();
         Debug.Log("Loading Mission " + mission.name);
     }
 
@@ -203,7 +212,7 @@ public class WaveManager : MonoBehaviour
             wave = GenerateRandomWave();
         }
 
-        Debug.Log("Wave Name: " + wave.name);
+        Debug.Log("Wave Name: " + wave.Name);
 
         if (waveNumber <= Waves.Count || randomWavesAfterScripted || endlessSingleEnemyWave != EnemyType.Unknown) // will end co-routine loop if out of waves and toggle not set
         {

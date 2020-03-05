@@ -118,60 +118,58 @@ public class SpawnManager : MonoBehaviour
         //Debug.Log("Spawned! Num Spawns = " + _enemySpawns.Count);
     }
 
-    private IEnumerator SpawnColumn(Vector2 reference, EnemyType enemyType, Quaternion rotation, string tagName)
+    private IEnumerator SpawnColumn(Vector2 reference, EnemyType enemyType, Quaternion rotation, string tagName, int count, float spawnDelay)
     {
         Debug.Log("Spawning Column Formation");
 
         var prefab = _enemyPrefabs[enemyType];
 
-        for (int i = 0; i < _squadronSpawns[SpawnPattern.Column]; i++)
+        for (int i = 0; i < (count == -1 ? _squadronSpawns[SpawnPattern.Column] : count); i++)
         {
             var spawnPos = reference;
 
             SpawnEnemy(prefab, spawnPos, rotation, tagName);
 
-            yield return new WaitForSeconds(spawnDelay * 2.5f);
+            yield return new WaitForSeconds(spawnDelay == -1 ? this.spawnDelay : spawnDelay * 2.5f);
         }
     }
 
-    private IEnumerator SpawnCenter(Vector2 reference, EnemyType enemyType, Quaternion rotation, string tagName)
+    private IEnumerator SpawnCenter(Vector2 reference, EnemyType enemyType, Quaternion rotation, string tagName, int count, float spawnDelay)
     {
         Debug.Log("Spawning Center Formation");
         var prefab = _enemyPrefabs[enemyType];
 
-        for (int i = 0; i < _squadronSpawns[SpawnPattern.Center]; i++)
+        for (int i = 0; i < (count == -1 ? _squadronSpawns[SpawnPattern.Center] : count); i++)
         {
             SpawnEnemy(prefab, reference, rotation, tagName);
 
-            yield return new WaitForSeconds(spawnDelay);
+            yield return new WaitForSeconds(spawnDelay == -1 ? this.spawnDelay : spawnDelay);
         }
     }
 
-    private IEnumerator SpawnRandom(Vector2 reference, EnemyType enemyType, Quaternion rotation, string tagName, float numMult=1f)
+    private IEnumerator SpawnRandom(Vector2 reference, EnemyType enemyType, Quaternion rotation, string tagName, int count, float spawnDelay)
     {
         Debug.Log("Spawning Random 'Formation'");
         float radius = spawnWidth / 2.0f;
 
         var prefab = _enemyPrefabs[enemyType];
 
-        if (enemyType == EnemyType.BulletAsteroid) numMult *= 2f;
-
-        for (int i = 0; i < _squadronSpawns[SpawnPattern.Random] * numMult; i++)
+        for (int i = 0; i < (count == -1 ? _squadronSpawns[SpawnPattern.Random] : count); i++)
         {
             var spawnPos = reference;
             spawnPos.x += UnityEngine.Random.Range(-radius, radius);
 
             SpawnEnemy(prefab, spawnPos, rotation, tagName);
 
-            yield return new WaitForSeconds(spawnDelay);
+            yield return new WaitForSeconds(spawnDelay == -1 ? this.spawnDelay : spawnDelay);
         }
     }
 
-    private IEnumerator SpawnJostledRow(Vector2 reference, EnemyType enemyType, Quaternion rotation, string tagName)
+    private IEnumerator SpawnJostledRow(Vector2 reference, EnemyType enemyType, Quaternion rotation, string tagName, int count, float spawnDelay)
     {
         Debug.Log("Spawning Jostled Row");
         float radius = spawnWidth / 2.0f;
-        var numberOfSpawns = _squadronSpawns[SpawnPattern.JostledRow];
+        var numberOfSpawns = (count == -1 ? _squadronSpawns[SpawnPattern.JostledRow] : count);
 
         float spacing = 0f;
         if (numberOfSpawns != 1)
@@ -206,11 +204,11 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
-    private IEnumerator SpawnFlyingV(Vector2 reference, EnemyType enemyType, Quaternion rotation, string tagName, bool inverted)
+    private IEnumerator SpawnFlyingV(Vector2 reference, EnemyType enemyType, Quaternion rotation, string tagName, bool inverted, int count, float spawnDelay)
     {
         Debug.Log("Spawning Flying V Formation " + (inverted ? "(inverted)" : "(normal)"));
         float radius = spawnWidth / 2.0f;
-        var numberOfSpawns = inverted ? _squadronSpawns[SpawnPattern.FlyingVInverted] : _squadronSpawns[SpawnPattern.FlyingV];
+        var numberOfSpawns = (count == -1 ? _squadronSpawns[SpawnPattern.FlyingV] : count);
 
         float spacing = 0f;
         if (numberOfSpawns != 1)
@@ -248,7 +246,7 @@ public class SpawnManager : MonoBehaviour
                 SpawnEnemy(prefab, spawnPos, rotation, tagName);
             }
 
-            yield return new WaitForSeconds(spawnDelay);
+            yield return new WaitForSeconds(spawnDelay == -1 ? this.spawnDelay : spawnDelay);
         }
     }
 
@@ -300,25 +298,22 @@ public class SpawnManager : MonoBehaviour
         switch (squadron.SpawnPattern)
         {
             case SpawnPattern.Center:
-                StartCoroutine(SpawnCenter(referenceVector, squadron.EnemyType, rotation, tagName));
+                StartCoroutine(SpawnCenter(referenceVector, squadron.EnemyType, rotation, tagName, squadron.Count, squadron.SpawnDelay));
                 break;
             case SpawnPattern.Random:
-                StartCoroutine(SpawnRandom(referenceVector, squadron.EnemyType, rotation, tagName));
-                break;
-            case SpawnPattern.Random2:
-                StartCoroutine(SpawnRandom(referenceVector, squadron.EnemyType, rotation, tagName,2f));
+                StartCoroutine(SpawnRandom(referenceVector, squadron.EnemyType, rotation, tagName, squadron.Count, squadron.SpawnDelay));
                 break;
             case SpawnPattern.FlyingV:
-                StartCoroutine(SpawnFlyingV(referenceVector, squadron.EnemyType, rotation, tagName, false));
+                StartCoroutine(SpawnFlyingV(referenceVector, squadron.EnemyType, rotation, tagName, false, squadron.Count, squadron.SpawnDelay));
                 break;
             case SpawnPattern.FlyingVInverted:
-                StartCoroutine(SpawnFlyingV(referenceVector, squadron.EnemyType, rotation, tagName, true));
+                StartCoroutine(SpawnFlyingV(referenceVector, squadron.EnemyType, rotation, tagName, true, squadron.Count, squadron.SpawnDelay));
                 break;
             case SpawnPattern.Column:
-                StartCoroutine(SpawnColumn(referenceVector, squadron.EnemyType, rotation, tagName));
+                StartCoroutine(SpawnColumn(referenceVector, squadron.EnemyType, rotation, tagName, squadron.Count, squadron.SpawnDelay));
                 break;
             case SpawnPattern.JostledRow:
-                StartCoroutine(SpawnJostledRow(referenceVector, squadron.EnemyType, rotation, tagName));
+                StartCoroutine(SpawnJostledRow(referenceVector, squadron.EnemyType, rotation, tagName, squadron.Count, squadron.SpawnDelay));
                 break;
         }
     }

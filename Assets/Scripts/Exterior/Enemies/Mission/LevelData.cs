@@ -3,5 +3,5 @@ using System.Collections.Generic;
 
 public class LevelData : MonoBehaviour
 {
-    public List<Wave> Waves = new List<Wave>();
+    public List<MobWave> Waves = new List<MobWave>();
 }

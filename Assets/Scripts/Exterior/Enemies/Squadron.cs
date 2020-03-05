@@ -15,10 +15,18 @@ public class Squadron
     [SerializeField] EnemyType _enemyType;
     public EnemyType EnemyType { get { return _enemyType; } }
 
-    public Squadron(EnemyType enemyType, SpawnPattern spawnPattern, SpawnZone spawnZone = SpawnZone.Top)
+    [SerializeField] int _count;
+    public int Count { get { return _count; } private set { _count = value; } }
+
+    [SerializeField] float _spawnDelay;
+    public float SpawnDelay { get { return _spawnDelay; } private set { _spawnDelay = value; } }
+
+    public Squadron(EnemyType enemyType, SpawnPattern spawnPattern, SpawnZone spawnZone = SpawnZone.Top, int count = -1, float spawnDelay = -1)
     {
         _enemyType = enemyType;
         _pattern = spawnPattern;
         _zone = spawnZone;
+        _count = count;
+        _spawnDelay = spawnDelay;
     }
 }

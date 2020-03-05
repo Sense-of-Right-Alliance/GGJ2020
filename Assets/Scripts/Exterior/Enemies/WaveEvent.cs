@@ -9,8 +9,19 @@ public class WaveEvent
     [SerializeField] float _duration = 0f;
     public float Duration { get { return _duration; } private set { _duration = value; } }
 
-    [SerializeField] Squadron _squadron;
-    public Squadron Squadron { get { return _squadron; } private set { _squadron = value; } }
+    [SerializeField] SpawnPattern _pattern;
+    [SerializeField] SpawnZone _zone;
+    [SerializeField] EnemyType _enemyType;
+    [SerializeField] int _count;
+
+    private Squadron _squadron;
+    public Squadron Squadron {
+        get
+        {
+            if (_squadron == null) _squadron = new Squadron(_enemyType, _pattern, _zone, _count);
+            return _squadron;
+        }
+    }
 
     private static WaveEvent Delay(float duration)
     {
