@@ -14,5 +14,4 @@ public enum SpawnPattern
     Column,
     DoubleColumn,
     JostledRow,
-    Random2,
 }

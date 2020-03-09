@@ -222,7 +222,7 @@ MonoBehaviour:
   - {fileID: 4303212633405705334, guid: f64466e5867c8de4c96bc6239d171ade, type: 3}
   - {fileID: 4303212633405705334, guid: f64466e5867c8de4c96bc6239d171ade, type: 3}
   - {fileID: 4303212633405705334, guid: f64466e5867c8de4c96bc6239d171ade, type: 3}
-  hitPoints: 20
+  hitPoints: 200
   breakAgainstOtherAsteroids: 0
   scoreValue: 1000
   shrapnelForce: 0

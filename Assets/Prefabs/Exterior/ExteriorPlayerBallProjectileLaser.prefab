@@ -98,7 +98,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   explosionPrefab: {fileID: 0}
   speed: 20
-  damage: 20
+  damage: 8
   indestructable: 1
   spin: 1000
 --- !u!50 &853907197576167874

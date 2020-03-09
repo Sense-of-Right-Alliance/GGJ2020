@@ -28,14 +28,14 @@ public class Enemy : MonoBehaviour
     [SerializeField] int spreadShot = 0;
 
     private MovementBehaviour _movementBehaviour;
-    private AudioSource audioSource;
+    private AudioSource _audioSource;
 
     private float _shootTimer;
     
 
     private void Awake()
     {
-        audioSource = GetComponent<AudioSource>();
+        _audioSource = GetComponent<AudioSource>();
         _movementBehaviour = GetComponent<MovementBehaviour>();
 
         if (EnemyDestroyedOrRemovedEvent == null) EnemyDestroyedOrRemovedEvent = new UnityGameObjectEvent();
@@ -64,7 +64,7 @@ public class Enemy : MonoBehaviour
 
     private void Shoot()
     {
-        audioSource.Play();
+        _audioSource.Play();
         Instantiate(projectilePrefab, projectileSpawnTransform.position, transform.rotation * shootDirection);
 
         if (spreadShot > 0)

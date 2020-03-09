@@ -21,4 +21,5 @@ public enum EnemyType
     BulletAsteroid,
     Canon,
     ResourceAsteroid,
+    AsteroidTurret,
 }

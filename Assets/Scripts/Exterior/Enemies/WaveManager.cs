@@ -11,17 +11,13 @@ public class WaveManager : MonoBehaviour
     [SerializeField] private int waveNumber;
     public int WaveNumber => waveNumber;
 
-    [SerializeField] MissionWavesObject missionWaves; // if set, will override the define Waves variable below.
-    [SerializeField] MissionWavesObject[] allMissions;
-    public MissionWavesObject[] AllMissions { get { return allMissions; } }
-
     [SerializeField] bool randomWavesAfterScripted = false;
     [SerializeField] EnemyType endlessSingleEnemyWave = EnemyType.Unknown; // for debugging
 
     [SerializeField] TextMeshProUGUI waveText;
 
     public UnityEvent WavesCompletedEvent;
-    public string MissionName { get { return missionWaves.name; } }
+    public string MissionName { get { return GetComponent<MissionDetails>().Name; } }
     public bool WavesCompleted { get { return (waveNumber >= Waves.Count && endlessSingleEnemyWave == EnemyType.Unknown); } }
 
     private SpawnManager _spawnManager;
@@ -137,19 +133,20 @@ public class WaveManager : MonoBehaviour
     {
         _spawnManager = GetComponent<SpawnManager>();
 
+        if (WavesCompletedEvent == null) WavesCompletedEvent = new UnityEvent();
+    }
+
+    private void InitializeWaves()
+    {
         int currentMissionId = PlayerPrefs.GetInt("mission_number");
 
-        MissionWavesObject mission = null;
-        if (missionWaves != null)
+        MissionDetails missionDetails = GetComponent<MissionDetails>();
+        if (missionDetails != null)
         {
-            mission = missionWaves;
-        }
-        else if (currentMissionId < AllMissions.Length)
-        {
-            mission = AllMissions[currentMissionId];
-        }
+            Waves = missionDetails.Waves;
 
-        if (mission != null) ReadMissionWavesObject(mission); 
+            Debug.Log("Loading Mission " + missionDetails.Name + " : " + missionDetails.Description + " num waves = " + Waves.Count);
+        }
 
         if (endlessSingleEnemyWave != EnemyType.Unknown)
         {
@@ -160,14 +157,6 @@ public class WaveManager : MonoBehaviour
                 WaveEvent.SpawnSquadron(new Squadron(endlessSingleEnemyWave, SpawnPattern.Center)),
             }) };
         }
-
-        if (WavesCompletedEvent == null) WavesCompletedEvent = new UnityEvent();
-    }
-
-    private void ReadMissionWavesObject(MissionWavesObject mission)
-    {
-        Waves = mission.waves.ToList();
-        Debug.Log("Loading Mission " + mission.name);
     }
 
     private void Update()
@@ -180,7 +169,6 @@ public class WaveManager : MonoBehaviour
         waveNumber += 1;
 
         if (waveText != null) waveText.text = "Wave " + waveNumber.ToString();
-       
 
         Wave wave;
         if (waveNumber <= Waves.Count)
@@ -203,7 +191,7 @@ public class WaveManager : MonoBehaviour
             wave = GenerateRandomWave();
         }
 
-        Debug.Log("Wave Name: " + wave.name);
+        Debug.Log("ProcessingWave: " + wave.Name);
 
         if (waveNumber <= Waves.Count || randomWavesAfterScripted || endlessSingleEnemyWave != EnemyType.Unknown) // will end co-routine loop if out of waves and toggle not set
         {
@@ -227,6 +215,8 @@ public class WaveManager : MonoBehaviour
 
     public void StartWaves()
     {
+        InitializeWaves();
+
         StartCoroutine(ProcessWave());
     }
 
