@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using System;
+
+[Serializable]
+public enum MissionType { None, AsteroidBelt }
 
 public class MissionDetails : MonoBehaviour
 {

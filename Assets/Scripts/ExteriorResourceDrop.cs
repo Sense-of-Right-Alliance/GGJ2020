@@ -13,11 +13,13 @@ public class ExteriorResourceDrop : MonoBehaviour
 
     private void Start()
     {
+        /*
         if (dropChanceOnDestroy >= 1f || dropChanceOnHit >= 1f)
         {
             SpriteRenderer sr = GetComponent<SpriteRenderer>();
             if (sr) sr.color = Color.yellow;
         }
+        */
     }
 
     private void Update()

@@ -16,12 +16,21 @@ public class EnemyProjectile : MonoBehaviour
     protected Vector2 _direction;
     protected Quaternion _rotationAmount;
 
+    protected Vector2 overrideDir;
+
+    protected Vector2 Direction { get { return overrideDir != null ? overrideDir : _direction; } }
+
     // Start is called before the first frame update
     private void Start()
     {
         _direction = -transform.up;
 
         //if (spin) _rotationAmount = Quaternion.Euler(0, 0, UnityEngine.Random.Range(-speed, speed));
+    }
+
+    public void SetDirection(Vector2 dir)
+    {
+        overrideDir = dir;
     }
 
     // Update is called once per frame
@@ -36,8 +45,8 @@ public class EnemyProjectile : MonoBehaviour
     {
         Vector3 newPos = transform.position;
 
-        newPos.y += _direction.y * speed * Time.deltaTime;
-        newPos.x += _direction.x * speed * Time.deltaTime + UnityEngine.Random.Range(-wobbleAmount, wobbleAmount);
+        newPos.y += Direction.y * speed * Time.deltaTime;
+        newPos.x += Direction.x * speed * Time.deltaTime + UnityEngine.Random.Range(-wobbleAmount, wobbleAmount);
 
         transform.position = newPos;
     }

@@ -20,6 +20,7 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] GameObject bulletAsteroidPrefab;
     [SerializeField] GameObject enemyCanonPrefab;
     [SerializeField] GameObject resourceAsteroidPrefab;
+    [SerializeField] GameObject asteroidTurretPrefab;
     [SerializeField] float spawnDelay = 0.5f; // seconds between each ship spawn in squadron
     [SerializeField] Transform enemyTopSpawnTransform;
     [SerializeField] Transform enemyBottomSpawnTransform;
@@ -77,6 +78,7 @@ public class SpawnManager : MonoBehaviour
             { EnemyType.BulletAsteroid, bulletAsteroidPrefab },
             { EnemyType.Canon, enemyCanonPrefab },
             { EnemyType.ResourceAsteroid, resourceAsteroidPrefab },
+            { EnemyType.AsteroidTurret, asteroidTurretPrefab },
         };
 
         if (EnemyDestroyedOrRemovedEvent == null) EnemyDestroyedOrRemovedEvent = new UnityGameObjectEvent();
@@ -290,7 +292,8 @@ public class SpawnManager : MonoBehaviour
             || squadron.EnemyType == EnemyType.MediumAsteroid 
             || squadron.EnemyType == EnemyType.MediumShrapnelAsteroid
             || squadron.EnemyType == EnemyType.BulletAsteroid
-            || squadron.EnemyType == EnemyType.ResourceAsteroid)
+            || squadron.EnemyType == EnemyType.ResourceAsteroid
+            || squadron.EnemyType == EnemyType.AsteroidTurret)
         {
             tagName = "Asteroid";
         }

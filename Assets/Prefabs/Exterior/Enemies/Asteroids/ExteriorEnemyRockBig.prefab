@@ -185,6 +185,8 @@ MonoBehaviour:
       m_Calls: []
   explosionPrefab: {fileID: 235347168054186532, guid: 6a990f3b44005534986bd67b0c61ed91,
     type: 3}
+  explosionSFXOverride: {fileID: 0}
+  explosionVolume: 0.5
   childAsteroidPrefabs:
   - {fileID: 4303212633405705334, guid: e9bec8fcaf78864488a2e8e0562a568f, type: 3}
   - {fileID: 4303212633405705334, guid: e9bec8fcaf78864488a2e8e0562a568f, type: 3}
@@ -194,7 +196,7 @@ MonoBehaviour:
   - {fileID: 4303212633405705334, guid: f64466e5867c8de4c96bc6239d171ade, type: 3}
   - {fileID: 4303212633405705334, guid: f64466e5867c8de4c96bc6239d171ade, type: 3}
   - {fileID: 4303212633405705334, guid: f64466e5867c8de4c96bc6239d171ade, type: 3}
-  hitPoints: 15
+  hitPoints: 50
   breakAgainstOtherAsteroids: 0
   scoreValue: 150
   shrapnelForce: 0

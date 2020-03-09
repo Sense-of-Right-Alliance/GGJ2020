@@ -13,110 +13,111 @@ public class AsteroidMissionDetails : MissionDetails
 
         _waves = new List<Wave>
         {
+            /*
             new Wave(new List<WaveEvent>
             {
                 WaveEvent.ShortDelay(),
-                WaveEvent.SpawnSquadron(new Squadron(EnemyType.MediumAsteroid, SpawnPattern.JostledRow)),
-                WaveEvent.ShortDelay(),
-                WaveEvent.SpawnSquadron(new Squadron(EnemyType.MediumAsteroid, SpawnPattern.JostledRow)),
-            }),
-            new Wave(new List<WaveEvent>
-            {
+                WaveEvent.SpawnSquadron(new Squadron(EnemyType.HugeAsteroid, SpawnPattern.Center, SpawnZone.TopAsteroid, 1)),
                 WaveEvent.LongDelay(),
-                WaveEvent.SpawnSquadron(new Squadron(EnemyType.BigBoi, SpawnPattern.FlyingV, SpawnZone.Bottom)),
-                WaveEvent.SpawnSquadron(new Squadron(EnemyType.CrabLeft, SpawnPattern.Column, SpawnZone.Left)),
-            }),
-            new Wave(new List<WaveEvent>
-            {
                 WaveEvent.LongDelay(),
-                WaveEvent.SpawnSquadron(new Squadron(EnemyType.Speedster, SpawnPattern.FlyingV)),
-                WaveEvent.ShortDelay(),
-                WaveEvent.SpawnSquadron(new Squadron(EnemyType.CrabRight, SpawnPattern.Column, SpawnZone.Right)),
-                WaveEvent.SpawnSquadron(new Squadron(EnemyType.BigBoi, SpawnPattern.FlyingVInverted)),
-            }),
-            new Wave(new List<WaveEvent>
-            {
                 WaveEvent.LongDelay(),
-                WaveEvent.SpawnSquadron(new Squadron(EnemyType.HugeAsteroid, SpawnPattern.Center, SpawnZone.TopAsteroid)),
-                WaveEvent.ShortDelay(),
-                WaveEvent.SpawnSquadron(new Squadron(EnemyType.Speedster, SpawnPattern.FlyingV, SpawnZone.Bottom)),
-                WaveEvent.SpawnSquadron(new Squadron(EnemyType.Speedster, SpawnPattern.FlyingVInverted, SpawnZone.Bottom)),
-                WaveEvent.MediumDelay(),
-                WaveEvent.SpawnSquadron(new Squadron(EnemyType.PlainJane, SpawnPattern.Random)),
-                WaveEvent.SpawnSquadron(new Squadron(EnemyType.PlainJane, SpawnPattern.Random)),
-                WaveEvent.ShortDelay(),
-                WaveEvent.SpawnSquadron(new Squadron(EnemyType.BigBoi, SpawnPattern.FlyingVInverted, SpawnZone.Bottom)),
-            }),
-            new Wave(new List<WaveEvent>
-            {
                 WaveEvent.LongDelay(),
-                WaveEvent.SpawnSquadron(new Squadron(EnemyType.Speedster, SpawnPattern.FlyingV)),
-                WaveEvent.SpawnSquadron(new Squadron(EnemyType.CrabLeft, SpawnPattern.Column, SpawnZone.Left)),
-            }),
-            new Wave(new List<WaveEvent>
-            {
                 WaveEvent.LongDelay(),
-                WaveEvent.SpawnSquadron(new Squadron(EnemyType.CrabLeft, SpawnPattern.Column, SpawnZone.Left)),
-            }),
-            new Wave(new List<WaveEvent>
-            {
-                WaveEvent.ShortDelay(),
-                WaveEvent.SpawnSquadron(new Squadron(EnemyType.BigBoi, SpawnPattern.FlyingVInverted)),
-                WaveEvent.ShortDelay(),
-                WaveEvent.SpawnSquadron(new Squadron(EnemyType.BigBoi, SpawnPattern.FlyingVInverted)),
-                WaveEvent.ShortDelay(),
-                WaveEvent.SpawnSquadron(new Squadron(EnemyType.BigBoi, SpawnPattern.FlyingVInverted)),
-            }),
-            new Wave(new List<WaveEvent>
-            {
-                WaveEvent.ShortDelay(),
-                WaveEvent.SpawnSquadron(new Squadron(EnemyType.HugeAsteroid, SpawnPattern.Center, SpawnZone.TopAsteroid)),
                 WaveEvent.LongDelay(),
-                WaveEvent.SpawnSquadron(new Squadron(EnemyType.HugeAsteroid, SpawnPattern.Center, SpawnZone.TopAsteroid)),
-                WaveEvent.LongDelay(),
-                WaveEvent.SpawnSquadron(new Squadron(EnemyType.CrabRight, SpawnPattern.Column, SpawnZone.Right)),
-                WaveEvent.SpawnSquadron(new Squadron(EnemyType.PlainJane, SpawnPattern.Random)),
-            }),
-            new Wave(new List<WaveEvent>
-            {
-                WaveEvent.LongDelay(),
-                WaveEvent.SpawnSquadron(new Squadron(EnemyType.Speedster, SpawnPattern.FlyingV, SpawnZone.Bottom)),
-                WaveEvent.SpawnSquadron(new Squadron(EnemyType.Speedster, SpawnPattern.FlyingVInverted, SpawnZone.Bottom)),
-                WaveEvent.ShortDelay(),
-                WaveEvent.SpawnSquadron(new Squadron(EnemyType.BigBoi, SpawnPattern.Center, SpawnZone.Bottom)),
-            }),
-            new Wave(new List<WaveEvent>
-            {
-                WaveEvent.ShortDelay(),
-                WaveEvent.SpawnSquadron(new Squadron(EnemyType.BigBoi, SpawnPattern.FlyingV)),
-                WaveEvent.ShortDelay(),
-                WaveEvent.SpawnSquadron(new Squadron(EnemyType.HugeAsteroid, SpawnPattern.Center, SpawnZone.TopAsteroid)),
-                WaveEvent.ShortDelay(),
-                WaveEvent.SpawnSquadron(new Squadron(EnemyType.BigBoi, SpawnPattern.FlyingVInverted)),
-            }),
-            new Wave(new List<WaveEvent>
-            {
-                WaveEvent.ShortDelay(),
-                WaveEvent.SpawnSquadron(new Squadron(EnemyType.HomingCorvet, SpawnPattern.Center)),
-                WaveEvent.ShortDelay(),
-                WaveEvent.SpawnSquadron(new Squadron(EnemyType.PlainJane, SpawnPattern.Column)),
-                WaveEvent.ShortDelay(),
-                WaveEvent.SpawnSquadron(new Squadron(EnemyType.HomingCorvet, SpawnPattern.FlyingV)),
-                WaveEvent.ShortDelay(),
-                WaveEvent.SpawnSquadron(new Squadron(EnemyType.HomingCorvet, SpawnPattern.Center)),
-            }),
-            new Wave(new List<WaveEvent>
-            {
-                WaveEvent.ShortDelay(),
-                WaveEvent.SpawnSquadron(new Squadron(EnemyType.NovaSaucer, SpawnPattern.Center)),
-                WaveEvent.ShortDelay(),
-                WaveEvent.SpawnSquadron(new Squadron(EnemyType.BigBoi, SpawnPattern.Column)),
-                WaveEvent.ShortDelay(),
-                WaveEvent.SpawnSquadron(new Squadron(EnemyType.NovaSaucer, SpawnPattern.Column)),
-                WaveEvent.ShortDelay(),
-                WaveEvent.SpawnSquadron(new Squadron(EnemyType.PlainJane, SpawnPattern.FlyingV)),
-            })
 
+            }),
+            */
+            new Wave(new List<WaveEvent>
+            {
+                WaveEvent.ShortDelay(),
+                WaveEvent.SpawnSquadron(new Squadron(EnemyType.MediumAsteroid, SpawnPattern.JostledRow)),
+                WaveEvent.ShortDelay(),
+                WaveEvent.SpawnSquadron(new Squadron(EnemyType.MediumAsteroid, SpawnPattern.JostledRow)),
+                WaveEvent.ShortDelay(),
+                WaveEvent.SpawnSquadron(new Squadron(EnemyType.ResourceAsteroid, SpawnPattern.Random, SpawnZone.Top, 1)),
+                WaveEvent.ShortDelay(),
+                WaveEvent.SpawnSquadron(new Squadron(EnemyType.MediumAsteroid, SpawnPattern.JostledRow)),
+            }),
+            new Wave(new List<WaveEvent>
+            {
+                WaveEvent.ShortDelay(),
+                WaveEvent.SpawnSquadron(new Squadron(EnemyType.MediumAsteroid, SpawnPattern.JostledRow)),
+                WaveEvent.ShortDelay(),
+                WaveEvent.SpawnSquadron(new Squadron(EnemyType.MediumAsteroid, SpawnPattern.JostledRow)),
+                WaveEvent.ShortDelay(),
+                WaveEvent.SpawnSquadron(new Squadron(EnemyType.ResourceAsteroid, SpawnPattern.Random, SpawnZone.Top, 1)),
+                WaveEvent.ShortDelay(),
+                WaveEvent.SpawnSquadron(new Squadron(EnemyType.MediumAsteroid, SpawnPattern.JostledRow)),
+                WaveEvent.MediumDelay(),
+                WaveEvent.SpawnSquadron(new Squadron(EnemyType.AsteroidTurret, SpawnPattern.Random, SpawnZone.Top, 1)),
+            }),
+            new Wave(new List<WaveEvent>
+            {
+                WaveEvent.MediumDelay(),
+                WaveEvent.SpawnSquadron(new Squadron(EnemyType.MediumShrapnelAsteroid, SpawnPattern.Center)),
+                WaveEvent.MediumDelay(),
+                WaveEvent.SpawnSquadron(new Squadron(EnemyType.MediumAsteroid, SpawnPattern.JostledRow)),
+                WaveEvent.MediumDelay(),
+                WaveEvent.SpawnSquadron(new Squadron(EnemyType.MediumShrapnelAsteroid, SpawnPattern.JostledRow)),
+                WaveEvent.ShortDelay(),
+                WaveEvent.SpawnSquadron(new Squadron(EnemyType.ResourceAsteroid, SpawnPattern.Random, SpawnZone.Top, 1)),
+                WaveEvent.ShortDelay(),
+                WaveEvent.SpawnSquadron(new Squadron(EnemyType.MediumShrapnelAsteroid, SpawnPattern.JostledRow)),
+                WaveEvent.MediumDelay(),
+                WaveEvent.SpawnSquadron(new Squadron(EnemyType.AsteroidTurret, SpawnPattern.Random, SpawnZone.Top, 2)),
+            }),
+            new Wave(new List<WaveEvent>
+            {
+                WaveEvent.ShortDelay(),
+                WaveEvent.SpawnSquadron(new Squadron(EnemyType.MediumAsteroid, SpawnPattern.JostledRow)),
+                WaveEvent.ShortDelay(),
+                WaveEvent.SpawnSquadron(new Squadron(EnemyType.MediumAsteroid, SpawnPattern.JostledRow)),
+                WaveEvent.ShortDelay(),
+                WaveEvent.SpawnSquadron(new Squadron(EnemyType.ResourceAsteroid, SpawnPattern.Random, SpawnZone.Top, 1)),
+                WaveEvent.ShortDelay(),
+                WaveEvent.SpawnSquadron(new Squadron(EnemyType.MediumShrapnelAsteroid, SpawnPattern.JostledRow)),
+                WaveEvent.MediumDelay(),
+                WaveEvent.SpawnSquadron(new Squadron(EnemyType.AsteroidTurret, SpawnPattern.Random, SpawnZone.Top, 3)),
+            }),
+            new Wave(new List<WaveEvent>
+            {
+                WaveEvent.MediumDelay(),
+                WaveEvent.SpawnSquadron(new Squadron(EnemyType.MediumAsteroid, SpawnPattern.JostledRow)),
+                WaveEvent.ShortDelay(),
+                WaveEvent.SpawnSquadron(new Squadron(EnemyType.MediumAsteroid, SpawnPattern.JostledRow)),
+                WaveEvent.ShortDelay(),
+                WaveEvent.SpawnSquadron(new Squadron(EnemyType.ResourceAsteroid, SpawnPattern.Random, SpawnZone.Top, 1)),
+                WaveEvent.ShortDelay(),
+                WaveEvent.SpawnSquadron(new Squadron(EnemyType.MediumShrapnelAsteroid, SpawnPattern.JostledRow)),
+                WaveEvent.MediumDelay(),
+                WaveEvent.SpawnSquadron(new Squadron(EnemyType.AsteroidTurret, SpawnPattern.Random, SpawnZone.Top, 4)),
+            }),
+            new Wave(new List<WaveEvent>
+            {
+                WaveEvent.MediumDelay(),
+                WaveEvent.SpawnSquadron(new Squadron(EnemyType.BulletAsteroid, SpawnPattern.Random, SpawnZone.Top, 20, 0.2f)),
+                WaveEvent.ShortDelay(),
+                WaveEvent.SpawnSquadron(new Squadron(EnemyType.BulletAsteroid, SpawnPattern.Random, SpawnZone.Top, 20, 0.2f)),
+                WaveEvent.ShortDelay(),
+                WaveEvent.SpawnSquadron(new Squadron(EnemyType.BulletAsteroid, SpawnPattern.Random, SpawnZone.Top, 20, 0.2f)),
+                WaveEvent.ShortDelay(),
+                WaveEvent.SpawnSquadron(new Squadron(EnemyType.BulletAsteroid, SpawnPattern.Random, SpawnZone.Top, 20, 0.2f)),
+                WaveEvent.ShortDelay(),
+                WaveEvent.SpawnSquadron(new Squadron(EnemyType.BulletAsteroid, SpawnPattern.Random, SpawnZone.Top, 20, 0.2f)),
+            }),
+            new Wave(new List<WaveEvent>
+            {
+                WaveEvent.MediumDelay(),
+                WaveEvent.SpawnSquadron(new Squadron(EnemyType.MediumAsteroid, SpawnPattern.JostledRow)),
+                WaveEvent.ShortDelay(),
+                WaveEvent.SpawnSquadron(new Squadron(EnemyType.MediumAsteroid, SpawnPattern.JostledRow)),
+                WaveEvent.ShortDelay(),
+                WaveEvent.SpawnSquadron(new Squadron(EnemyType.ResourceAsteroid, SpawnPattern.Random, SpawnZone.Top, 1)),
+                WaveEvent.MediumDelay(),
+                WaveEvent.SpawnSquadron(new Squadron(EnemyType.AsteroidTurret, SpawnPattern.Random, SpawnZone.Top, 5)),
+                WaveEvent.MediumDelay(),
+                WaveEvent.SpawnSquadron(new Squadron(EnemyType.HugeAsteroid, SpawnPattern.Center, SpawnZone.TopAsteroid, 1)),
+            }),
         };
     }
 }

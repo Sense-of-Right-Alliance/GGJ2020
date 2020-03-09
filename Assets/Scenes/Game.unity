@@ -1081,7 +1081,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 30}
+  m_Offset: {x: 0, y: 35}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -1553,7 +1553,7 @@ MonoBehaviour:
   exteriorShip: {fileID: 0}
   activated: 1
   resourceRequirement: 3
-  resourceCount: 0
+  resourceCount: 2
   resourcePipPrefab: {fileID: 4364623327053348872, guid: c93aa1eecbae35c448ae84a8fd966803,
     type: 3}
   addResourceSFX: {fileID: 8300000, guid: 6038f9e6cf9f0b6439b795cbf001c388, type: 3}
@@ -2988,7 +2988,7 @@ MonoBehaviour:
   addResourceSFX: {fileID: 8300000, guid: 6038f9e6cf9f0b6439b795cbf001c388, type: 3}
   doEffectSFX: {fileID: 8300000, guid: c3cd6fad04cc7cb4da2f9c05c4f63081, type: 3}
   disableSFX: {fileID: 8300000, guid: db9c42ae04551ce49978816123ad803b, type: 3}
-  boostMultPerResource: 1
+  boostMultPerResource: 1.2
   duration: 25
   maxStacks: 5
   leftGun: 1
@@ -3411,7 +3411,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 886352688}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.616, y: -0.34, z: 0}
+  m_LocalPosition: {x: -2.93, y: 0.35, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1343496270}
@@ -3739,7 +3739,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 902696282}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.384, y: -0.34, z: 0}
+  m_LocalPosition: {x: -5.14, y: 0.32, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1343496270}
@@ -5056,53 +5056,6 @@ Transform:
   - {fileID: 103410213}
   m_Father: {fileID: 519420032}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1196825881
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1196825883}
-  - component: {fileID: 1196825882}
-  m_Layer: 0
-  m_Name: TestData
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1196825882
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1196825881}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 95acc33643ca6bd44828009f9cd5cecb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Waves:
-  - Type: 0
-    Prefab: {fileID: 0}
-    Count: 0
---- !u!4 &1196825883
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1196825881}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 30, y: -2.6375003, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1209525298 stripped
 GameObject:
@@ -7154,6 +7107,8 @@ MonoBehaviour:
     type: 3}
   resourceAsteroidPrefab: {fileID: 4303212633405705334, guid: dc57a0f3d9c1a5a43b915b3b291f4a44,
     type: 3}
+  asteroidTurretPrefab: {fileID: 6784660339211800809, guid: 7c52ec5a4b348a44f937c3fa2b1f796b,
+    type: 3}
   spawnDelay: 0.3
   enemyTopSpawnTransform: {fileID: 688071271}
   enemyBottomSpawnTransform: {fileID: 1169332290}
@@ -7180,13 +7135,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waveNumber: 0
-  missionWaves: {fileID: 0}
-  allMissions:
-  - {fileID: 11400000, guid: 5ba5951b0678e424c8b6c7da5676eea9, type: 2}
-  - {fileID: 11400000, guid: 847bc2508dbb45e48909974779a8c542, type: 2}
-  - {fileID: 11400000, guid: 62a39feef6006e8488c373dc24425fd0, type: 2}
-  - {fileID: 11400000, guid: 44a1c20bd317a7248b8ef79981913dad, type: 2}
-  - {fileID: 11400000, guid: 000e1e30294b9a8448d71062498aacef, type: 2}
   randomWavesAfterScripted: 0
   endlessSingleEnemyWave: 0
   waveText: {fileID: 907969971}
@@ -7386,7 +7334,7 @@ MonoBehaviour:
   addResourceSFX: {fileID: 8300000, guid: 6038f9e6cf9f0b6439b795cbf001c388, type: 3}
   doEffectSFX: {fileID: 8300000, guid: c3cd6fad04cc7cb4da2f9c05c4f63081, type: 3}
   disableSFX: {fileID: 8300000, guid: db9c42ae04551ce49978816123ad803b, type: 3}
-  boostMultPerResource: 1
+  boostMultPerResource: 1.2
   duration: 25
   maxStacks: 5
   leftGun: 0
@@ -7940,6 +7888,16 @@ PrefabInstance:
         type: 3}
       propertyPath: fireRate
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2709358210058121326, guid: 990b27246ed4d83499c01f1565057762,
+        type: 3}
+      propertyPath: fireRateLeft
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2709358210058121326, guid: 990b27246ed4d83499c01f1565057762,
+        type: 3}
+      propertyPath: fireRateRight
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2709358210058121327, guid: 990b27246ed4d83499c01f1565057762,
         type: 3}

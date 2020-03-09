@@ -24,7 +24,12 @@ public class GameManager : MonoBehaviour
         int currentMission = PlayerPrefs.GetInt("mission_number");
 
         PlayerPrefs.SetInt("mission_" + currentMission + "_score", ScoreManager.scoreManager.Score);
+        
+        currentMission = 0;
+        PlayerPrefs.SetInt("mission_number", currentMission);
+        transitionAnimator.PlayMissionCompletedTransition(GoToStart);
 
+        /*
         currentMission++;
         if (currentMission >= ExteriorManager.exteriorManager.GetWaveManager().AllMissions.Length)
         {
@@ -37,7 +42,8 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.SetInt("mission_number", currentMission);
             transitionAnimator.PlayMissionCompletedTransition(GoToMission);
         }
-        
+        */
+
     }
 
     public void FailMission()

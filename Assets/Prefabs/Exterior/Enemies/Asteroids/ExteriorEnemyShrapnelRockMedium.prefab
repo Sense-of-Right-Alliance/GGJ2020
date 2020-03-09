@@ -152,7 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ce4e229dbc0ba74e8744018fb730044, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 50
+  speed: 60
   homingSpeed: 0
   homingRadius: 5
   direction: {x: 0, y: -1}
@@ -173,6 +173,8 @@ MonoBehaviour:
       m_Calls: []
   explosionPrefab: {fileID: 235347168054186532, guid: 6a990f3b44005534986bd67b0c61ed91,
     type: 3}
+  explosionSFXOverride: {fileID: 0}
+  explosionVolume: 0.5
   childAsteroidPrefabs:
   - {fileID: 4303212633405705334, guid: 5211cc2bc685bca40ae74b5232588a82, type: 3}
   - {fileID: 4303212633405705334, guid: 5211cc2bc685bca40ae74b5232588a82, type: 3}
