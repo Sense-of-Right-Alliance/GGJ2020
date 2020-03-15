@@ -16,6 +16,8 @@ public class WaveManager : MonoBehaviour
 
     [SerializeField] TextMeshProUGUI waveText;
 
+    [SerializeField] bool dontSpawn = false;
+
     public UnityEvent WavesCompletedEvent;
     public string MissionName { get { return GetComponent<MissionDetails>().Name; } }
     public bool WavesCompleted { get { return (waveNumber >= Waves.Count && endlessSingleEnemyWave == EnemyType.Unknown); } }
@@ -217,7 +219,7 @@ public class WaveManager : MonoBehaviour
     {
         InitializeWaves();
 
-        StartCoroutine(ProcessWave());
+        if (!dontSpawn) StartCoroutine(ProcessWave());
     }
 
     public void StopWaves()

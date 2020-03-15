@@ -66,8 +66,6 @@ public class Flame : MonoBehaviour
     {
         station.Reactivate();
 
-        ScoreManager.scoreManager.FireExtinguished();
-
         GetComponent<InteriorProblem>().HandleDestroyedOrRemoved();
 
         Destroy(gameObject);

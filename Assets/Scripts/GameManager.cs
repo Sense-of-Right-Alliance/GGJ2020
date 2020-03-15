@@ -73,7 +73,8 @@ public class GameManager : MonoBehaviour
     private void ShowMissionFailedUI()
     {
         MissionFailedUI.SetActive(true);
-        MissionFailedUI.transform.Find("ScoreText").GetComponent<TextMeshProUGUI>().text = "Score " + ScoreManager.scoreManager.Score;
+        MissionFailedUI.GetComponent<StatsUIPanel>().DisplayStats(ScoreManager.scoreManager);
+
         confirmCallback = GoToStart;
         state = GameState.Confirming;
     }
@@ -81,7 +82,7 @@ public class GameManager : MonoBehaviour
     private void ShowMissionCompletedUI()
     {
         MissionCompletedUI.SetActive(true);
-        MissionFailedUI.transform.Find("ScoreText").GetComponent<TextMeshProUGUI>().text = "Score " + ScoreManager.scoreManager.Score;
+        MissionCompletedUI.GetComponent<StatsUIPanel>().DisplayStats(ScoreManager.scoreManager);
         confirmCallback = GoToStart;
         state = GameState.Confirming;
     }

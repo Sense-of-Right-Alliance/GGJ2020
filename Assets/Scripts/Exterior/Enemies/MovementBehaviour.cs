@@ -5,13 +5,16 @@ using UnityEngine;
 
 public class MovementBehaviour : MonoBehaviour
 {
-    [SerializeField] float speed = 3f;
-    [SerializeField] float homingSpeed = 0f;
-    [SerializeField] float homingRadius = 5f;
+    [SerializeField] protected float speed = 3f;
+    [SerializeField] protected float homingSpeed = 0f;
+    [SerializeField] protected float homingRadius = 5f;
+
+    [SerializeField] protected bool isInPosition = false;
+    public bool IsInPosition { get { return isInPosition; } }
 
     public Vector2 direction = Vector2.down;
 
-    private Rigidbody2D _rigidbody2D;
+    protected Rigidbody2D _rigidbody2D;
 
     Transform target;
 
@@ -22,7 +25,12 @@ public class MovementBehaviour : MonoBehaviour
 
     private void Start()
     {
-        
+        StartProjectile();
+    }
+
+    protected virtual void StartProjectile()
+    {
+        isInPosition = true;
     }
 
     private void FixedUpdate()
@@ -39,7 +47,7 @@ public class MovementBehaviour : MonoBehaviour
         }
     }
 
-    private void UpdateMovement()
+    protected virtual void UpdateMovement()
     {
         _rigidbody2D.AddForce(speed * direction.normalized);
     }

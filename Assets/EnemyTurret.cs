@@ -14,7 +14,7 @@ public class EnemyTurret : MonoBehaviour
 
     Transform target;
 
-    protected Vector2 _direction = Vector2.up;
+    protected Vector2 _direction = -Vector2.up;
 
     private AudioSource _audioSource;
 
@@ -23,6 +23,14 @@ public class EnemyTurret : MonoBehaviour
     private void Start()
     {
         _audioSource = GetComponent<AudioSource>();
+
+        Asteroid a = transform.GetComponentInParent<Asteroid>();
+        if (a != null) a.BlownUpEvent.AddListener(BlowUp);
+    }
+
+    private void BlowUp(GameObject obj)
+    {
+        ScoreManager.scoreManager.EnemyDestroyed(10);
     }
 
     private void Update()

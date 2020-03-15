@@ -156,6 +156,7 @@ MonoBehaviour:
   speed: 60
   homingSpeed: 0
   homingRadius: 5
+  isInPosition: 0
   direction: {x: 0, y: -1}
 --- !u!114 &-278988709436758044
 MonoBehaviour:
@@ -172,6 +173,9 @@ MonoBehaviour:
   EnemyDestroyedOrRemovedEvent:
     m_PersistentCalls:
       m_Calls: []
+  BlownUpEvent:
+    m_PersistentCalls:
+      m_Calls: []
   explosionPrefab: {fileID: 235347168054186532, guid: 6a990f3b44005534986bd67b0c61ed91,
     type: 3}
   explosionSFXOverride: {fileID: 0}
@@ -184,7 +188,7 @@ MonoBehaviour:
   hitPoints: 10
   breakAgainstOtherAsteroids: 0
   scoreValue: 50
-  shrapnelForce: 0
+  shrapnelForce: 100
   problemOdds:
     nothingOdds: 10
     debrisOdds: 50

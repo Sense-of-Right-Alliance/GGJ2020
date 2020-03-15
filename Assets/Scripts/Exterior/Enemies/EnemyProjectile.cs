@@ -13,12 +13,12 @@ public class EnemyProjectile : MonoBehaviour
 
     [SerializeField] InteriorProblemOdds problemOdds;
 
-    protected Vector2 _direction;
+    [SerializeField] protected Vector2 _direction;
     protected Quaternion _rotationAmount;
 
     protected Vector2 overrideDir;
 
-    protected Vector2 Direction { get { return overrideDir != null ? overrideDir : _direction; } }
+    protected Vector2 Direction { get { return overrideDir != null && overrideDir.magnitude > 0 ? overrideDir : _direction; } }
 
     // Start is called before the first frame update
     private void Start()

@@ -150,7 +150,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   explosionPrefab: {fileID: 0}
-  speed: 15
+  speed: 10
   damage: 1
   wobbleAmount: 0
   spin: 0
@@ -161,3 +161,4 @@ MonoBehaviour:
     flameOdds: 5
     breachOdds: 5
     numProblems: 1
+  _direction: {x: 0, y: 0}
