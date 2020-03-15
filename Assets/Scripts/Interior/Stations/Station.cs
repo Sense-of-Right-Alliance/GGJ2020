@@ -68,13 +68,19 @@ public class Station : MonoBehaviour
 
         for (int i = 0; i < numPips; i++)
         {
+            GameObject pip = GameObject.Instantiate<GameObject>(resourcePipPrefab, Vector2.zero, Quaternion.identity);
+            
+            // y
             Vector3 pipPos = transform.position;
-            pipPos.y -= (spriteRenderer.sprite.bounds.size.y / 2f) + (spriteRenderer.sprite.bounds.size.y * 0.15f);
-
-            float pipSpace = 0.16f;
-            pipPos.x += (pipSpace * -Mathf.Floor(numPips / 2f)) + (pipSpace * i);
-
-            GameObject pip = GameObject.Instantiate<GameObject>(resourcePipPrefab, pipPos, Quaternion.identity);
+            pipPos.y -= (spriteRenderer.sprite.bounds.size.y / 2f) + (spriteRenderer.sprite.bounds.size.y * 0.2f);
+            // x
+            float pipWidth = pip.GetComponent<SpriteRenderer>().sprite.bounds.size.x;
+            float pipBuffer = pipWidth * 0.3f;
+            float pipBarLength = (pipWidth * (float)numPips) + (pipBuffer * (float)(numPips - 1));
+            float halfLength = pipBarLength / 2.0f;
+            pipPos.x = (pipWidth/2.0f) + pipPos.x - halfLength + ((pipWidth+pipBuffer) * i);
+            
+            pip.transform.position = pipPos;
             pip.transform.SetParent(transform);
 
             resourcePips[i] = pip.GetComponent<ResourcePip>();

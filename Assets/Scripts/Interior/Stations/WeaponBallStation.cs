@@ -7,7 +7,7 @@ public class WeaponBallStation : Station
 {
     protected override void ProcessResource(InteriorResource r)
     {
-        Ship.FireEnergyBall(r.Value);
+        Ship.AddEnergyBall(r.Value);
         base.ProcessResource(r);
     }
 

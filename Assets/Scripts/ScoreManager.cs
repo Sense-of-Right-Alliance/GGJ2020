@@ -69,7 +69,7 @@ public class ScoreManager : MonoBehaviour
 
     public void StationUsed() { AddScore(75); ResourcesConsumed++; }
 
-    public void InteriorProblemFixed() { AddScore(100); }
+    public void InteriorProblemFixed() { AddScore(100); InteriorProblemsFixed++; }
 
     public void ExteriorResourcePickedUp() { AddScore(50); ResourcesCollected++; }
 

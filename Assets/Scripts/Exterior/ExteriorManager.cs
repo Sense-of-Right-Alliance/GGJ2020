@@ -17,6 +17,8 @@ public class ExteriorManager : MonoBehaviour
     [SerializeField] Rect _bounds;
     public Rect Bounds { get { return _bounds; } }
 
+    [SerializeField] ExteriorHUD exteriorHUD;
+
     private void Awake()
     {
         ExteriorManager.exteriorManager = this;
@@ -66,5 +68,10 @@ public class ExteriorManager : MonoBehaviour
         {
             GameManager.gameManager.CompleteMission();
         }
+    }
+
+    public void UpdateEnergyBallUI(int count)
+    {
+        exteriorHUD.UpdateEnergyBallUI(count);
     }
 }

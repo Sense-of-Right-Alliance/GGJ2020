@@ -56,26 +56,28 @@ public class Ship : MonoBehaviour
 
     private float speedBoostTimer = 0f;
     [SerializeField] float crippledSpeedMult = 1f;
-
-    Rigidbody2D rigidbody2D;
-    AudioSource audioSource;
-    SpriteRenderer spriteRenderer;
-
+    
     [SerializeField] List<float> spreadStacks = new List<float>();
     [SerializeField] List<ShipBonusStack> engineBoostStacks = new List<ShipBonusStack>();
     [SerializeField] List<ShipBonusStack> fireRateBoostStacksLeft = new List<ShipBonusStack>();
     [SerializeField] List<ShipBonusStack> fireRateBoostStacksRight = new List<ShipBonusStack>();
+
+    [SerializeField] int numEnergyBalls = 0;
 
     public int NumFireSpreadStacks { get { return spreadStacks.Count; } }
     public int NumEngineBoostStacks { get { return engineBoostStacks.Count; } }
     public int NumFireRateBoostStacksLeft { get { return fireRateBoostStacksLeft.Count; } }
     public int NumFireRateBoostStacksRight { get { return fireRateBoostStacksRight.Count; } }
 
+    Rigidbody2D _rigidbody2D;
+    AudioSource _audioSource;
+    SpriteRenderer _spriteRenderer;
+
     private void Awake()
     {
-        rigidbody2D = GetComponent<Rigidbody2D>();
-        audioSource = GetComponent<AudioSource>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        _rigidbody2D = GetComponent<Rigidbody2D>();
+        _audioSource = GetComponent<AudioSource>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
 
         if (exteriorManager == null) exteriorManager = GameObject.FindObjectOfType<ExteriorManager>();
         if (interiorManager == null) interiorManager = GameObject.FindObjectOfType<InteriorManager>();
@@ -100,6 +102,8 @@ public class Ship : MonoBehaviour
         engineFlameEffect.SetActive(crippledSpeedMult >= 1);
         engineSmokeEffect.SetActive(crippledSpeedMult < 1);
         engineTrailEffect.SetActive(speedBoostMult > 1f);
+
+        UpdateEnergyBallUI();
     }
 
     // Update is called once per frame
@@ -234,7 +238,10 @@ public class Ship : MonoBehaviour
             velocity.y = (playerID == PlayerID.Player1 ? Input.GetAxis("Vertical1") : Input.GetAxis("Vertical2")) * boostedSpeed;
         }
 
-        rigidbody2D.AddForce(velocity);
+        _rigidbody2D.AddForce(velocity);
+
+        // TODO: Apply opposite velocity to interior player and objects
+        InteriorManager.interiorManager.AddInertiaVelocityToObjects(-velocity);
     }
 
     private float fireRateStackDrainLeft = 0f; // won't drain fire rate stacks unless are firing.
@@ -279,6 +286,11 @@ public class Ship : MonoBehaviour
             }
         }
         */
+
+        if ((playerID == PlayerID.Player1 && (Input.GetKeyDown(KeyCode.Q) || Input.GetButtonDown("X1")) || (playerID == PlayerID.Player2 && (Input.GetKeyDown(KeyCode.V) || Input.GetButtonDown("X2")))))
+        {
+            FireEnergyBall(1f); // checks if have enough in inventory
+        }
     }
 
     private void UpdateManeuvers()
@@ -287,18 +299,18 @@ public class Ship : MonoBehaviour
         {
             barrelRollTimer -= Time.deltaTime;
 
-            spriteRenderer.color = Color.Lerp(Color.gray, Color.black, Mathf.Sin(barrelRollTimer));
+            _spriteRenderer.color = Color.Lerp(Color.gray, Color.black, Mathf.Sin(barrelRollTimer));
 
             if (barrelRollTimer <= 0f)
             {
-                spriteRenderer.color = Color.white;
+                _spriteRenderer.color = Color.white;
 
                 StopBarrelRoll();
             }
         }
         else
         {
-            if (crippledSpeedMult >= 1f && engineBoostStacks.Count > 0 && (playerID == PlayerID.Player1 && (Input.GetKey(KeyCode.R) || Input.GetButtonDown("B1")) || (playerID == PlayerID.Player2 && (Input.GetKey(KeyCode.B) || Input.GetButtonDown("B2")))))
+            if (crippledSpeedMult >= 1f && engineBoostStacks.Count > 0 && (playerID == PlayerID.Player1 && (Input.GetKeyDown(KeyCode.R) || Input.GetButtonDown("B1")) || (playerID == PlayerID.Player2 && (Input.GetKeyDown(KeyCode.B) || Input.GetButtonDown("B2")))))
             {
                 StartBarrelRoll(0.5f);
             }
@@ -324,7 +336,7 @@ public class Ship : MonoBehaviour
 
     private void FireProjectile(Transform t)
     {
-        audioSource.Play();
+        _audioSource.Play();
         Instantiate(projectilePrefab, t.position, t.rotation);
     }
 
@@ -412,14 +424,27 @@ public class Ship : MonoBehaviour
     public void DisableSpread() { spreadEnabled = false; }
     public void EnableSpread() { spreadEnabled = true; }
 
+    public void AddEnergyBall(int count)
+    {
+        numEnergyBalls += count;
+        UpdateEnergyBallUI();
+    }
     public void FireEnergyBall(float size)
     {
-        if (energyBallPrefab != null)
+        if (energyBallPrefab != null && numEnergyBalls > 0)
         {
             Instantiate(energyBallPrefab, projSpawnFront.position, Quaternion.identity);
 
             PushInDir(-Vector2.up, 1000f);
+
+            numEnergyBalls--;
+            UpdateEnergyBallUI();
         }
+    }
+
+    protected void UpdateEnergyBallUI()
+    {
+        ExteriorManager.exteriorManager.UpdateEnergyBallUI(numEnergyBalls);
     }
 
     [SerializeField] int shields = 0;
@@ -450,6 +475,6 @@ public class Ship : MonoBehaviour
 
     public void PushInDir(Vector2 dir, float force)
     {
-        rigidbody2D.AddForce(dir * force);
+        _rigidbody2D.AddForce(dir * force);
     }
 }

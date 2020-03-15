@@ -100,6 +100,7 @@ MonoBehaviour:
   speed: 25
   homingSpeed: 0
   homingRadius: 5
+  isInPosition: 0
   direction: {x: 0, y: -1}
 --- !u!50 &4092303813980180333
 Rigidbody2D:
@@ -150,7 +151,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21b6cf948f8a27b4888473b6fb5f9b50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 10
+  damage: 1
   problemOdds:
     nothingOdds: 0
     debrisOdds: 0
