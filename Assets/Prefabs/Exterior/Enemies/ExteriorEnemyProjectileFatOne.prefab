@@ -149,7 +149,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5105d6f10f2241219f87eb7f7a2a41ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explosionPrefab: {fileID: 0}
+  explosionPrefab: {fileID: 235347168054186532, guid: 096546276d9a9d549ad67e5cc88926c4,
+    type: 3}
   speed: 5
   damage: 1
   wobbleAmount: 0
@@ -161,3 +162,4 @@ MonoBehaviour:
     flameOdds: 30
     breachOdds: 10
     numProblems: 1
+  _direction: {x: 0, y: 0}

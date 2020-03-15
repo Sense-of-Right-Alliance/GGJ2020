@@ -8,30 +8,27 @@ public class InteriorManager : MonoBehaviour
     public static InteriorManager interiorManager;
 
     [SerializeField] GameObject resourcePrefab;
-    [SerializeField] Transform resourceSpawn;
     [SerializeField] GameObject flamePrefab;
     [SerializeField] GameObject[] debrisPrefabs;
-    [SerializeField] Transform[] debrisLocations;
+
+    [SerializeField] InteriorLayout interiorLayout;
 
     [SerializeField] GameObject steamVentPrefab;
-    [SerializeField] Transform[] steamVentLocations;
 
     [SerializeField] GameObject hullBreachPrefab;
-    [SerializeField] Transform[] hullBreachLocations;
 
     [SerializeField] Ship exteriorShip;
     [SerializeField] InteriorPlayer interiorPlayer;
-    [SerializeField] Station[] stations;
 
     [SerializeField] GameObject interiorCamera;
     [SerializeField] GameObject interiorCameraQuad;
     [SerializeField] GameObject interiorShipMap;
 
-    [SerializeField] Siren siren;
-
     [SerializeField] AudioClip[] hullHitSounds;
     [SerializeField] AudioClip[] shieldHitSounds;
     [SerializeField] AudioClip loadItemSfX;
+
+    [SerializeField] ShipHPUI shipHPUI;
 
     List<GameObject> spawnedResources = new List<GameObject>();
 
@@ -50,9 +47,9 @@ public class InteriorManager : MonoBehaviour
     {
         InteriorManager.interiorManager = this;
 
-        occupiedDebrisLocations = new GameObject[debrisLocations.Length];
-        occupiedSteamLocations = new GameObject[steamVentLocations.Length];
-        occupiedHullBreachLocations = new GameObject[hullBreachLocations.Length];
+        occupiedDebrisLocations = new GameObject[interiorLayout.DebrisLocations.Length];
+        occupiedSteamLocations = new GameObject[interiorLayout.SteamVentLocations.Length];
+        occupiedHullBreachLocations = new GameObject[interiorLayout.HullBreachLocations.Length];
 
         if (interiorPlayer == null) interiorPlayer = GameObject.FindObjectOfType<InteriorPlayer>();
         if (interiorCamera == null) interiorCamera = GameObject.Find("InteriorCamera");
@@ -94,6 +91,8 @@ public class InteriorManager : MonoBehaviour
         }
         numFlames = flames.Length;
 
+        shipHPUI.InitPips(exteriorShip);
+
         UpdateSiren();
     }
 
@@ -106,19 +105,19 @@ public class InteriorManager : MonoBehaviour
     {
         if (numBreaches > 0 || numFlames > 0 || exteriorShip.HitPointPercent < 0.4f)
         {
-            if (siren.Alert != Siren.AlertState.Red) siren.SetAlert(Siren.AlertState.Red);
+            if (interiorLayout.Siren.Alert != Siren.AlertState.Red) interiorLayout.Siren.SetAlert(Siren.AlertState.Red);
         }
         else if (numDebris > 0 || numVents > 0 || exteriorShip.HitPointPercent < 0.8f)
         {
-            if (siren.Alert != Siren.AlertState.Yellow) siren.SetAlert(Siren.AlertState.Yellow);
+            if (interiorLayout.Siren.Alert != Siren.AlertState.Yellow) interiorLayout.Siren.SetAlert(Siren.AlertState.Yellow);
         }
-        else if (siren.Alert != Siren.AlertState.None) siren.SetAlert(Siren.AlertState.None);
+        else if (interiorLayout.Siren.Alert != Siren.AlertState.None) interiorLayout.Siren.SetAlert(Siren.AlertState.None);
     }
 
     // Spawns a resource game object inside the ship, which the interior player can pickup and drop off at a station
     public void SpawnResource()
     {
-        GameObject resource = GameObject.Instantiate<GameObject>(resourcePrefab, resourceSpawn.position, Quaternion.identity);
+        GameObject resource = GameObject.Instantiate<GameObject>(resourcePrefab, interiorLayout.ResourceSpawnLocation.position, Quaternion.identity);
         resource.transform.position += new Vector3(Random.Range(-0.1f, 0.1f), Random.Range(-0.1f, 0.1f), 0);
         resource.transform.Rotate(Quaternion.Euler(0, 0, UnityEngine.Random.Range(0f, 360f)).eulerAngles);
 
@@ -134,7 +133,7 @@ public class InteriorManager : MonoBehaviour
     {
         Transform t = reclaimedObject.transform;
         
-        t.position = resourceSpawn.position + new Vector3(Random.Range(-0.1f, 0.1f), Random.Range(-0.1f, 0.1f), 0);
+        t.position = interiorLayout.ResourceSpawnLocation.position + new Vector3(Random.Range(-0.1f, 0.1f), Random.Range(-0.1f, 0.1f), 0);
         if (reclaimedObject.tag != "Player") t.Rotate(Quaternion.Euler(0, 0, UnityEngine.Random.Range(0f, 360f)).eulerAngles);
 
         reclaimedObject.SetActive(true);
@@ -185,26 +184,36 @@ public class InteriorManager : MonoBehaviour
             problemOdds.breachOdds = 100f;
         }
 
+        int problemsSpawned = 0;
+
         // Problems that can occur when shields are up
-        CheckSpawnSteamVents(problemOdds.ComputeChanceForProblem(InteriorProblemType.Steam), problemOdds.numProblems);
+        int steamSpawned = CheckSpawnSteamVents(problemOdds.ComputeChanceForProblem(InteriorProblemType.Steam), problemOdds.numProblems);
+
+        problemsSpawned += steamSpawned;
 
         // Problems that can only occur when shields are down
         if (exteriorShip.Shields <= 0 || !exteriorShip.ShieldsEnabled)
         {
             aSource.PlayOneShot(hullHitSounds[Random.Range(0, hullHitSounds.Length)], 0.5f);
 
-            CheckSpawnFlame(problemOdds.ComputeChanceForProblem(InteriorProblemType.Flame), problemOdds.numProblems);
-            CheckSpawnDebris(problemOdds.ComputeChanceForProblem(InteriorProblemType.Debris), problemOdds.numProblems);
-            CheckSpawnHullBreach(problemOdds.ComputeChanceForProblem(InteriorProblemType.Breach), problemOdds.numProblems);
+            int fSpawned = CheckSpawnFlame(problemOdds.ComputeChanceForProblem(InteriorProblemType.Flame), problemOdds.numProblems);
+            int dSpawned = CheckSpawnDebris(problemOdds.ComputeChanceForProblem(InteriorProblemType.Debris), problemOdds.numProblems);
+            int hSpawned = CheckSpawnHullBreach(problemOdds.ComputeChanceForProblem(InteriorProblemType.Breach), problemOdds.numProblems);
+
+            problemsSpawned += fSpawned + dSpawned + hSpawned;
         }
         else
         {
             aSource.PlayOneShot(shieldHitSounds[Random.Range(0, shieldHitSounds.Length)], 0.5f);
         }
+
+        if (problemsSpawned == 0) SpawnSteamVent(1); // always spawn at least one problem TEMPORARY FIX
+
+        UpdateShipHPUI();
     }
 
     // Flames only happen on stations and prevent them from functioning
-    private void CheckSpawnFlame(float odds, int num)
+    private int CheckSpawnFlame(float odds, int num)
     {
         int count = 0;
         for (int i = 0; i < num; i++)
@@ -213,15 +222,17 @@ public class InteriorManager : MonoBehaviour
         }
 
         if (count > 0) SpawnStationFlames(count);
+
+        return count;
     }
 
     private void SpawnStationFlames(int amount)
     {
         for (int i = 0; i < amount; i++)
         {
-            if (stations.Length > 0)
+            if (interiorLayout.Stations.Length > 0)
             {
-                Station igniteStation = stations[Random.Range(0, stations.Length)];
+                Station igniteStation = interiorLayout.Stations[Random.Range(0, interiorLayout.Stations.Length)];
                 if (flamePrefab != null)
                 {
                     GameObject flame = GameObject.Instantiate<GameObject>(flamePrefab, igniteStation.gameObject.transform.position, Quaternion.identity);
@@ -235,7 +246,7 @@ public class InteriorManager : MonoBehaviour
         }        
     }
 
-    private void CheckSpawnHullBreach(float odds, int num)
+    private int CheckSpawnHullBreach(float odds, int num)
     {
         int count = 0;
         for (int i = 0; i < num; i++)
@@ -244,12 +255,14 @@ public class InteriorManager : MonoBehaviour
         }
 
         if (count > 0) SpawnHullBreach(count);
+
+        return count;
     }
 
     private void SpawnHullBreach(int amount)
     {
         List<int> availableBreachLocations = new List<int>();
-        for (int i = 0; i < hullBreachLocations.Length; i++)
+        for (int i = 0; i < interiorLayout.HullBreachLocations.Length; i++)
         {
             if (occupiedHullBreachLocations[i] == null)
             {
@@ -267,7 +280,7 @@ public class InteriorManager : MonoBehaviour
 
             int index = availableBreachLocations[Random.Range(0, availableBreachLocations.Count)];
             
-            Transform t = hullBreachLocations[index];
+            Transform t = interiorLayout.HullBreachLocations[index];
             GameObject hullBreach = Instantiate(hullBreachPrefab, t.position, t.rotation);
             if (transform.parent != null) hullBreach.transform.SetParent(transform.parent);
 
@@ -276,8 +289,8 @@ public class InteriorManager : MonoBehaviour
             numBreaches++;
         }
     }
-
-    private void CheckSpawnSteamVents(float odds, int num)
+    
+    private int CheckSpawnSteamVents(float odds, int num)
     {
         int count = 0;
         for (int i = 0; i < num; i++)
@@ -286,12 +299,14 @@ public class InteriorManager : MonoBehaviour
         }
 
         if (count > 0) SpawnSteamVent(count);
+
+        return count;
     }
 
     private void SpawnSteamVent(int amount)
     {
         List<int> availableSteamLocations = new List<int>();
-        for (int i = 0; i < steamVentLocations.Length; i++)
+        for (int i = 0; i < interiorLayout.SteamVentLocations.Length; i++)
         {
             if (occupiedSteamLocations[i] == null)
             {
@@ -309,7 +324,7 @@ public class InteriorManager : MonoBehaviour
 
             int index = availableSteamLocations[Random.Range(0, availableSteamLocations.Count)];
             
-            Transform t = steamVentLocations[index];
+            Transform t = interiorLayout.SteamVentLocations[index];
             GameObject steamVent = Instantiate(steamVentPrefab, t.position, t.rotation);
             if (transform.parent != null) steamVent.transform.SetParent(transform.parent);
 
@@ -319,7 +334,7 @@ public class InteriorManager : MonoBehaviour
         }
     }
 
-    private void CheckSpawnDebris(float odds, int num)
+    private int CheckSpawnDebris(float odds, int num)
     {
         int count = 0;
         for (int i = 0; i < num; i++)
@@ -328,12 +343,13 @@ public class InteriorManager : MonoBehaviour
         }
 
         if (count > 0) SpawnDebris(count);
+        return count;
     }
 
     private void SpawnDebris(int amount)
     {
         List<int> availableDebrisLocations = new List<int>();
-        for (int i = 0; i < debrisLocations.Length; i++)
+        for (int i = 0; i < interiorLayout.DebrisLocations.Length; i++)
         {
             if (occupiedDebrisLocations[i] == null)
             {
@@ -351,7 +367,7 @@ public class InteriorManager : MonoBehaviour
 
             int index = availableDebrisLocations[Random.Range(0, availableDebrisLocations.Count)];
             
-            Transform t = debrisLocations[index];
+            Transform t = interiorLayout.DebrisLocations[index];
             GameObject debris = Instantiate(debrisPrefabs[Random.Range(0, debrisPrefabs.Length)], t.position, t.rotation);
             if (transform.parent != null) debris.transform.SetParent(transform.parent);
 
@@ -374,7 +390,7 @@ public class InteriorManager : MonoBehaviour
                 break;
             }
         }
-        ScoreManager.scoreManager.InteriorProblemFixed();
+        OnInteriorProblemFixed();
     }
 
     private void OnSteamVentDestroyed(GameObject gameObject)
@@ -388,7 +404,7 @@ public class InteriorManager : MonoBehaviour
                 break;
             }
         }
-        ScoreManager.scoreManager.InteriorProblemFixed();
+        OnInteriorProblemFixed();
     }
 
     private void OnHullBreachDestroyed(GameObject gameObject)
@@ -402,13 +418,42 @@ public class InteriorManager : MonoBehaviour
                 break;
             }
         }
-        ScoreManager.scoreManager.InteriorProblemFixed();
+        OnInteriorProblemFixed();
     }
 
     private void OnFlameDestroyed(GameObject gameObject)
     {
         numFlames--;
 
+        OnInteriorProblemFixed();
+    }
+
+    private void OnInteriorProblemFixed()
+    {
         ScoreManager.scoreManager.InteriorProblemFixed();
+        exteriorShip.RepairDamage(1);
+        UpdateShipHPUI();
+
+    }
+
+    private void UpdateShipHPUI()
+    {
+        shipHPUI.UpdatePips();
+    }
+
+    // Push all interior objects in this direction, to simulate inertia of the ship moving around
+    public void AddInertiaVelocityToObjects(Vector2 velocity)
+    {
+        Vector2 dir = velocity.normalized;
+        float mag = velocity.magnitude * 0.25f;
+
+        interiorPlayer.PushInDir(dir, mag);
+
+        // Push anything that can be pushed! Really shake things up.
+        Pushable[] pushables = GameObject.FindObjectsOfType<Pushable>();
+        for (int i = 0; i < pushables.Length; i++)
+        {
+            pushables[i].PushInDir(dir, mag);
+        }
     }
 }

@@ -59,6 +59,10 @@ public class Siren : MonoBehaviour
     {
         aSource = GetComponent<AudioSource>();
 
+        Vector2 centeredPos = filter.transform.position;
+        centeredPos.y = 0;
+        filter.transform.position = centeredPos;
+
         SetAlert(alertState);
     }
 }
