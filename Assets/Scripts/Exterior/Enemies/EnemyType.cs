@@ -22,4 +22,5 @@ public enum EnemyType
     Canon,
     ResourceAsteroid,
     AsteroidTurret,
+    RadialTurret,
 }

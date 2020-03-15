@@ -21,6 +21,7 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] GameObject enemyCanonPrefab;
     [SerializeField] GameObject resourceAsteroidPrefab;
     [SerializeField] GameObject asteroidTurretPrefab;
+    [SerializeField] GameObject radialTurretPrefab;
     [SerializeField] float spawnDelay = 0.5f; // seconds between each ship spawn in squadron
     [SerializeField] Transform enemyTopSpawnTransform;
     [SerializeField] Transform enemyBottomSpawnTransform;
@@ -79,6 +80,7 @@ public class SpawnManager : MonoBehaviour
             { EnemyType.Canon, enemyCanonPrefab },
             { EnemyType.ResourceAsteroid, resourceAsteroidPrefab },
             { EnemyType.AsteroidTurret, asteroidTurretPrefab },
+            { EnemyType.RadialTurret, radialTurretPrefab },
         };
 
         if (EnemyDestroyedOrRemovedEvent == null) EnemyDestroyedOrRemovedEvent = new UnityGameObjectEvent();

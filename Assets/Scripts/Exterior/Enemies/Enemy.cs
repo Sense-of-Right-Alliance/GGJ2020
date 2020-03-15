@@ -26,6 +26,9 @@ public class Enemy : MonoBehaviour
     [SerializeField] InteriorProblemOdds problemOdds;
 
     [SerializeField] int spreadShot = 0;
+    [SerializeField] float spreadRadius = 45f;
+
+    private Rect _bounds;
 
     private MovementBehaviour _movementBehaviour;
     private AudioSource _audioSource;
@@ -46,11 +49,20 @@ public class Enemy : MonoBehaviour
         _movementBehaviour.direction = -transform.up;
 
         _shootTimer = shootDelay;
+
+        _bounds = ExteriorManager.exteriorManager.Bounds;
+    }
+
+    private bool CheckOnScreen()
+    {
+        float x = transform.position.x;
+        float y = transform.position.y;
+        return x > _bounds.xMin && x < _bounds.xMax && y > _bounds.yMin && y < _bounds.yMax;
     }
 
     private void Update()
     {
-        if (projectilePrefab != null)
+        if (projectilePrefab != null && CheckOnScreen())
         {
             _shootTimer -= Time.deltaTime;
 
@@ -69,15 +81,14 @@ public class Enemy : MonoBehaviour
 
         if (spreadShot > 0)
         {
-            float fanAngle = 45f;
             for (int i = 0; i < spreadShot; i++)
             {
                 Quaternion rotation = transform.rotation * shootDirection;
                 GameObject obj = Instantiate(projectilePrefab, projectileSpawnTransform.position, rotation);
-                obj.transform.Rotate(new Vector3(0, 0, -fanAngle + (fanAngle/spreadShot) * i));
+                obj.transform.Rotate(new Vector3(0, 0, -spreadRadius + (spreadRadius / spreadShot) * i));
 
                 obj = Instantiate(projectilePrefab, projectileSpawnTransform.position, rotation);
-                obj.transform.Rotate(new Vector3(0, 0, fanAngle - (fanAngle / spreadShot) * i));
+                obj.transform.Rotate(new Vector3(0, 0, spreadRadius - (spreadRadius / spreadShot) * i));
             }
         }
     }

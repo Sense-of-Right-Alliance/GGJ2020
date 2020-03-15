@@ -8137,6 +8137,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72e0c58648a183446b60380de8da4e7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _bounds:
+    serializedVersion: 2
+    x: 21
+    y: -15
+    width: 18
+    height: 26
 --- !u!4 &1888508385
 Transform:
   m_ObjectHideFlags: 0
@@ -8193,6 +8199,8 @@ MonoBehaviour:
     type: 3}
   asteroidTurretPrefab: {fileID: 6784660339211800809, guid: 7c52ec5a4b348a44f937c3fa2b1f796b,
     type: 3}
+  radialTurretPrefab: {fileID: 5991815218621068424, guid: eb80673e787b7564f8d3ce27a3f6a530,
+    type: 3}
   spawnDelay: 0.3
   enemyTopSpawnTransform: {fileID: 688071271}
   enemyBottomSpawnTransform: {fileID: 1169332290}
@@ -8222,6 +8230,7 @@ MonoBehaviour:
   randomWavesAfterScripted: 0
   endlessSingleEnemyWave: 0
   waveText: {fileID: 907969971}
+  dontSpawn: 0
   WavesCompletedEvent:
     m_PersistentCalls:
       m_Calls: []

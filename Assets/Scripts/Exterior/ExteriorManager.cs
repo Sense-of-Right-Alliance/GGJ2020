@@ -14,6 +14,9 @@ public class ExteriorManager : MonoBehaviour
     private WaveManager _waveManager;
     private SpawnManager _spawnManager;
 
+    [SerializeField] Rect _bounds;
+    public Rect Bounds { get { return _bounds; } }
+
     private void Awake()
     {
         ExteriorManager.exteriorManager = this;
@@ -31,7 +34,8 @@ public class ExteriorManager : MonoBehaviour
 
     private void Update()
     {
-
+        Debug.DrawLine(new Vector2(Bounds.xMin, Bounds.yMin), new Vector2(Bounds.xMax, Bounds.yMin));
+        Debug.DrawLine(new Vector2(Bounds.xMin, Bounds.yMax), new Vector2(Bounds.xMax, Bounds.yMax));
     }
 
     private void OnEnemyDestroyedOrRemoved(GameObject enemy)

@@ -118,6 +118,35 @@ public class AsteroidMissionDetails : MissionDetails
                 WaveEvent.MediumDelay(),
                 WaveEvent.SpawnSquadron(new Squadron(EnemyType.HugeAsteroid, SpawnPattern.Center, SpawnZone.TopAsteroid, 1)),
             }),
+            new Wave(new List<WaveEvent>
+            {
+                WaveEvent.LongDelay(),
+                WaveEvent.LongDelay(),
+                WaveEvent.SpawnSquadron(new Squadron(EnemyType.RadialTurret, SpawnPattern.Center, SpawnZone.Top, 1)),
+                WaveEvent.MediumDelay(),
+                WaveEvent.SpawnSquadron(new Squadron(EnemyType.RadialTurret, SpawnPattern.JostledRow, SpawnZone.Top, 2)),
+                WaveEvent.ShortDelay(),
+                WaveEvent.SpawnSquadron(new Squadron(EnemyType.AsteroidTurret, SpawnPattern.Random, SpawnZone.Top, 4)),
+                WaveEvent.ShortDelay(),
+                WaveEvent.SpawnSquadron(new Squadron(EnemyType.RadialTurret, SpawnPattern.Random, SpawnZone.Top, 3)),
+                WaveEvent.MediumDelay(),
+                WaveEvent.SpawnSquadron(new Squadron(EnemyType.AsteroidTurret, SpawnPattern.Random, SpawnZone.Top, 4)),
+            }),
+            new Wave(new List<WaveEvent>
+            {
+                WaveEvent.LongDelay(),
+                WaveEvent.SpawnSquadron(new Squadron(EnemyType.BigBoi, SpawnPattern.Center)),
+                WaveEvent.MediumDelay(),
+                WaveEvent.SpawnSquadron(new Squadron(EnemyType.PlainJane, SpawnPattern.FlyingV, SpawnZone.Top, 3)),
+                WaveEvent.ShortDelay(),
+                WaveEvent.SpawnSquadron(new Squadron(EnemyType.BigBoi, SpawnPattern.Center)),
+                WaveEvent.MediumDelay(),
+                WaveEvent.SpawnSquadron(new Squadron(EnemyType.PlainJane, SpawnPattern.FlyingV, SpawnZone.Top, 4)),
+                WaveEvent.ShortDelay(),
+                WaveEvent.SpawnSquadron(new Squadron(EnemyType.BigBoi, SpawnPattern.FlyingV, SpawnZone.Top, 3)),
+                WaveEvent.ShortDelay(),
+                WaveEvent.SpawnSquadron(new Squadron(EnemyType.BigBoi, SpawnPattern.FlyingV, SpawnZone.Top, 3)),
+            }),
         };
     }
 }
