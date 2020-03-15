@@ -168,6 +168,7 @@ MonoBehaviour:
   speed: 50
   homingSpeed: 0
   homingRadius: 5
+  isInPosition: 0
   direction: {x: 0, y: -1}
 --- !u!114 &1855259337783851899
 MonoBehaviour:
@@ -182,6 +183,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EnemyDestroyedOrRemovedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  BlownUpEvent:
     m_PersistentCalls:
       m_Calls: []
   explosionPrefab: {fileID: 235347168054186532, guid: 6a990f3b44005534986bd67b0c61ed91,
@@ -347,13 +351,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5257026af32fb6a4cb90b96c579d03da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectilePrefab: {fileID: 2989912971476457516, guid: be9a4ed381f0f3445a03f4ab1eadb393,
+  projectilePrefab: {fileID: 2989912971476457516, guid: 4ba50be89a634224bbc9662043747e11,
     type: 3}
   projectileSpawnTransform: {fileID: 7322819694168108333}
-  shootDelay: 1.5
+  shootDelay: 0.8
   spreadShot: 0
   targetingRadius: 10
-  rotateSpeed: 1
+  rotateSpeed: 0.8
 --- !u!82 &7322819694497060053
 AudioSource:
   m_ObjectHideFlags: 0

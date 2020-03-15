@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2974633066756577965}
   - component: {fileID: 5403546388584931076}
-  - component: {fileID: -5212794706183490967}
   - component: {fileID: -1635305100421136544}
   - component: {fileID: -3529215680039391380}
+  - component: {fileID: 5443764194924040349}
   m_Layer: 11
   m_Name: ExteriorEnemyProjectileCannon
   m_TagString: Enemy Projectile
@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 2989912971476457516}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 1}
+  m_LocalScale: {x: 7, y: 7, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -84,38 +84,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!60 &-5212794706183490967
-PolygonCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2989912971476457516}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.48, y: 0.46}
-    newSize: {x: 0.09, y: 0.54}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: -0.024376974, y: 0.26999998}
-      - {x: -0.040270105, y: 0.23959744}
-      - {x: -0.014134511, y: -0.26999998}
-      - {x: 0.021251317, y: -0.2837279}
-      - {x: 0.01750263, y: -0.21}
-      - {x: 0.04156283, y: 0.23224813}
-      - {x: 0.020939719, y: 0.26999998}
 --- !u!50 &-1635305100421136544
 Rigidbody2D:
   serializedVersion: 4
@@ -161,3 +129,20 @@ MonoBehaviour:
     flameOdds: 40
     breachOdds: 20
     numProblems: 1
+  _direction: {x: 0, y: 0}
+--- !u!58 &5443764194924040349
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2989912971476457516}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.15

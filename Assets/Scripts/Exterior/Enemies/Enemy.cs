@@ -62,7 +62,7 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
-        if (projectilePrefab != null && CheckOnScreen())
+        if (projectilePrefab != null && CheckOnScreen() && shootDelay >= 0)
         {
             _shootTimer -= Time.deltaTime;
 

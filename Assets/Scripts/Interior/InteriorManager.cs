@@ -125,6 +125,8 @@ public class InteriorManager : MonoBehaviour
         if (transform.parent != null) resource.transform.SetParent(transform.parent);
         spawnedResources.Add(resource);
 
+        ScoreManager.scoreManager.ExteriorResourcePickedUp();
+
         aSource.PlayOneShot(loadItemSfX, 0.5f);
     }
 
@@ -372,6 +374,7 @@ public class InteriorManager : MonoBehaviour
                 break;
             }
         }
+        ScoreManager.scoreManager.InteriorProblemFixed();
     }
 
     private void OnSteamVentDestroyed(GameObject gameObject)
@@ -385,6 +388,7 @@ public class InteriorManager : MonoBehaviour
                 break;
             }
         }
+        ScoreManager.scoreManager.InteriorProblemFixed();
     }
 
     private void OnHullBreachDestroyed(GameObject gameObject)
@@ -398,10 +402,13 @@ public class InteriorManager : MonoBehaviour
                 break;
             }
         }
+        ScoreManager.scoreManager.InteriorProblemFixed();
     }
 
     private void OnFlameDestroyed(GameObject gameObject)
     {
         numFlames--;
+
+        ScoreManager.scoreManager.InteriorProblemFixed();
     }
 }

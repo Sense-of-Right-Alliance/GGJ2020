@@ -21,12 +21,16 @@ public class Squadron
     [SerializeField] float _spawnDelay;
     public float SpawnDelay { get { return _spawnDelay; } private set { _spawnDelay = value; } }
 
-    public Squadron(EnemyType enemyType, SpawnPattern spawnPattern, SpawnZone spawnZone = SpawnZone.Top, int count = -1, float spawnDelay = -1)
+    [SerializeField] bool _edgeBuffer;
+    public bool EdgeBuffer { get { return _edgeBuffer; } private set { _edgeBuffer = value; } }
+
+    public Squadron(EnemyType enemyType, SpawnPattern spawnPattern, SpawnZone spawnZone = SpawnZone.Top, int count = -1, float spawnDelay = -1, bool edgeBuffer = false)
     {
         _enemyType = enemyType;
         _pattern = spawnPattern;
         _zone = spawnZone;
         _count = count;
         _spawnDelay = spawnDelay;
+        _edgeBuffer = edgeBuffer;
     }
 }

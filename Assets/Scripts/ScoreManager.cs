@@ -20,6 +20,14 @@ public class ScoreManager : MonoBehaviour
     [SerializeField] int pastMissionsScore = 0;
     public int CummulativeScore { get { return pastMissionsScore + score; } }
 
+    // stats
+    public int HitsTaken = 0;
+    public int ResourcesCollected = 0;
+    public int ResourcesConsumed = 0;
+    public int InteriorProblemsFixed = 0;
+    public int EnemiesDestroyed = 0; 
+    public int AsteroidsDestroyed = 0; 
+
     private void Awake()
     {
         ScoreManager.scoreManager = this;
@@ -51,15 +59,19 @@ public class ScoreManager : MonoBehaviour
         }
     }
 
-    public void PlayerShipHit() { AddScore(-100); }
+    public void PlayerShipHit() { AddScore(-100); HitsTaken++; }
 
-    public void EnemyDestroyed(int scoreValue) { AddScore(scoreValue); }
+    public void EnemyDestroyed(int scoreValue) { AddScore(scoreValue); EnemiesDestroyed++; }
+
+    public void AsteroidDestroyed(int scoreValue) { AddScore(scoreValue); AsteroidsDestroyed++; }
 
     public void MainCannonCharged() { AddScore(500); }
 
-    public void StationUsed() { AddScore(75); }
+    public void StationUsed() { AddScore(75); ResourcesConsumed++; }
 
-    public void FireExtinguished() { AddScore(100); }
+    public void InteriorProblemFixed() { AddScore(100); }
+
+    public void ExteriorResourcePickedUp() { AddScore(50); ResourcesCollected++; }
 
     private void AddScore(int amount)
     {

@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2060634952429158421}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.18, z: 0}
+  m_LocalPosition: {x: 0, y: -0.9, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4303212633405705332}
@@ -43,9 +43,9 @@ GameObject:
   - component: {fileID: 4303212633405705333}
   - component: {fileID: 4303212633405705338}
   - component: {fileID: 942606664080155765}
-  - component: {fileID: -4036976034239442463}
   - component: {fileID: -1765939175171844581}
   - component: {fileID: -7398798133603600050}
+  - component: {fileID: -3849653102096467199}
   m_Layer: 9
   m_Name: ExteriorEnemyShipCannon
   m_TagString: Enemy
@@ -208,6 +208,7 @@ MonoBehaviour:
     breachOdds: 20
     numProblems: 1
   spreadShot: 0
+  spreadRadius: 45
 --- !u!50 &942606664080155765
 Rigidbody2D:
   serializedVersion: 4
@@ -220,8 +221,8 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 1
+  m_Mass: 10
+  m_LinearDrag: 2
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
@@ -229,22 +230,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!114 &-4036976034239442463
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4303212633405705334}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ce4e229dbc0ba74e8744018fb730044, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 0.5
-  homingSpeed: 0
-  homingRadius: 5
-  direction: {x: 0, y: -1}
 --- !u!82 &-1765939175171844581
 AudioSource:
   m_ObjectHideFlags: 0
@@ -358,3 +343,21 @@ MonoBehaviour:
   dropChanceOnDestroy: 0.5
   dropChanceOnHit: 0
   dropCount: 1
+--- !u!114 &-3849653102096467199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4303212633405705334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5dec2ee78a47d84fbc90d4946e6aad7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 30
+  homingSpeed: 0
+  homingRadius: 5
+  isInPosition: 0
+  direction: {x: 0, y: -1}
+  isPacing: 0
