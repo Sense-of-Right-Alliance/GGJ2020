@@ -155,6 +155,7 @@ MonoBehaviour:
   speed: 60
   homingSpeed: 0
   homingRadius: 5
+  isInPosition: 0
   direction: {x: 0, y: -1}
 --- !u!114 &-278988709436758044
 MonoBehaviour:
@@ -169,6 +170,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EnemyDestroyedOrRemovedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  BlownUpEvent:
     m_PersistentCalls:
       m_Calls: []
   explosionPrefab: {fileID: 235347168054186532, guid: 6a990f3b44005534986bd67b0c61ed91,
@@ -188,7 +192,7 @@ MonoBehaviour:
   scoreValue: 5
   shrapnelForce: 3500
   problemOdds:
-    nothingOdds: 50
+    nothingOdds: 0
     debrisOdds: 50
     steamOdds: 10
     flameOdds: 10

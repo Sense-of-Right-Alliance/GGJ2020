@@ -21,6 +21,9 @@ public class EngineStation : Station
                 if (i < maxStacks) ProcessResource(null);
             }
         }
+
+        stationName = "Engine Station";
+        description = "Stock to increase ship speed and enable maneuvers";
     }
 
     protected override void ProcessResource(InteriorResource r)

@@ -154,12 +154,14 @@ MonoBehaviour:
   speed: 5
   damage: 1
   wobbleAmount: 0
+  spin: 0
   problemOdds:
-    nothingOdds: 20
+    nothingOdds: 0
     debrisOdds: 50
     steamOdds: 10
     flameOdds: 10
     breachOdds: 50
     numProblems: 1
+  _direction: {x: 0, y: 0}
   targetingRadius: 5
   rotateSpeed: 1.2

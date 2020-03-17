@@ -23,6 +23,9 @@ public class WeaponRepeaterStation : Station
                 if (i < maxStacks) ProcessResource(null);
             }
         }
+
+        stationName = "Gun Station";
+        description = "Stock to increase fire rate for one of the ship's main guns";
     }
 
     protected override void ProcessResource(InteriorResource r)

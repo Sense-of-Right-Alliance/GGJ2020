@@ -123,7 +123,7 @@ MonoBehaviour:
   wobbleAmount: 0
   spin: 1
   problemOdds:
-    nothingOdds: 5
+    nothingOdds: 0
     debrisOdds: 5
     steamOdds: 40
     flameOdds: 40

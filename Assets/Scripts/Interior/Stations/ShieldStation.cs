@@ -12,6 +12,12 @@ public class ShieldStation : Station
         base.ProcessResource(r);
     }
 
+    protected override void InitStation()
+    {
+        stationName = "Shield Station";
+        description = "Stock to add shield that protects the ship";
+    }
+
     protected override void InitPips()
     {
         resourcePips = new ResourcePip[Ship.MaxShields];

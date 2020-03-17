@@ -15,4 +15,10 @@ public class WeaponBallStation : Station
     {
         ScoreManager.scoreManager.MainCannonCharged();
     }
+
+    protected override void InitStation()
+    {
+        stationName = "Canon Station";
+        description = "Stock to add Canon round to Pilot's inventory";
+    }
 }

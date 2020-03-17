@@ -15,6 +15,9 @@ public class ToolStation : Station
         {
             TrySecureObject(securedObject, true);
         }
+
+        stationName = "Tool Station";
+        description = "Afix a a tool here so it doesn't move; Stock to make a new tool";
     }
 
     public bool TrySecureObject(GameObject obj, bool force = false)
