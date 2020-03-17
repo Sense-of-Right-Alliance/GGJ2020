@@ -155,9 +155,10 @@ MonoBehaviour:
   wobbleAmount: 0.01
   spin: 0
   problemOdds:
-    nothingOdds: 20
+    nothingOdds: 0
     debrisOdds: 20
     steamOdds: 20
     flameOdds: 10
     breachOdds: 10
     numProblems: 1
+  _direction: {x: 0, y: 0}

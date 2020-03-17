@@ -211,6 +211,8 @@ MonoBehaviour:
   addResourceSFX: {fileID: 8300000, guid: 6038f9e6cf9f0b6439b795cbf001c388, type: 3}
   doEffectSFX: {fileID: 8300000, guid: c3cd6fad04cc7cb4da2f9c05c4f63081, type: 3}
   disableSFX: {fileID: 8300000, guid: db9c42ae04551ce49978816123ad803b, type: 3}
+  TooltipPrefab: {fileID: 7989602271765571800, guid: f20a9d03ce120aa48833574df7a38b70,
+    type: 3}
 --- !u!82 &410399006
 AudioSource:
   m_ObjectHideFlags: 0
@@ -548,6 +550,8 @@ MonoBehaviour:
   addResourceSFX: {fileID: 8300000, guid: 6038f9e6cf9f0b6439b795cbf001c388, type: 3}
   doEffectSFX: {fileID: 8300000, guid: c3cd6fad04cc7cb4da2f9c05c4f63081, type: 3}
   disableSFX: {fileID: 8300000, guid: db9c42ae04551ce49978816123ad803b, type: 3}
+  TooltipPrefab: {fileID: 7989602271765571800, guid: f20a9d03ce120aa48833574df7a38b70,
+    type: 3}
 --- !u!82 &736944286
 AudioSource:
   m_ObjectHideFlags: 0
@@ -804,6 +808,8 @@ MonoBehaviour:
   addResourceSFX: {fileID: 8300000, guid: 6038f9e6cf9f0b6439b795cbf001c388, type: 3}
   doEffectSFX: {fileID: 8300000, guid: c3cd6fad04cc7cb4da2f9c05c4f63081, type: 3}
   disableSFX: {fileID: 8300000, guid: db9c42ae04551ce49978816123ad803b, type: 3}
+  TooltipPrefab: {fileID: 7989602271765571800, guid: f20a9d03ce120aa48833574df7a38b70,
+    type: 3}
   boostMultPerResource: 1.2
   duration: 25
   maxStacks: 5
@@ -1026,6 +1032,8 @@ MonoBehaviour:
   addResourceSFX: {fileID: 8300000, guid: 6038f9e6cf9f0b6439b795cbf001c388, type: 3}
   doEffectSFX: {fileID: 8300000, guid: c3cd6fad04cc7cb4da2f9c05c4f63081, type: 3}
   disableSFX: {fileID: 8300000, guid: db9c42ae04551ce49978816123ad803b, type: 3}
+  TooltipPrefab: {fileID: 7989602271765571800, guid: f20a9d03ce120aa48833574df7a38b70,
+    type: 3}
   toolPrefab: {fileID: 1886941738297210853, guid: 07a4a8ccb7b1f834ba6fcc9e41c7de1f,
     type: 3}
   securedObject: {fileID: 0}
@@ -1246,6 +1254,8 @@ MonoBehaviour:
   addResourceSFX: {fileID: 8300000, guid: 6038f9e6cf9f0b6439b795cbf001c388, type: 3}
   doEffectSFX: {fileID: 8300000, guid: c3cd6fad04cc7cb4da2f9c05c4f63081, type: 3}
   disableSFX: {fileID: 8300000, guid: db9c42ae04551ce49978816123ad803b, type: 3}
+  TooltipPrefab: {fileID: 7989602271765571800, guid: f20a9d03ce120aa48833574df7a38b70,
+    type: 3}
   toolPrefab: {fileID: 4960148900392517658, guid: 0faf1b6dcc28102478e1bf949873c5bd,
     type: 3}
   securedObject: {fileID: 0}
@@ -1743,6 +1753,8 @@ MonoBehaviour:
   addResourceSFX: {fileID: 8300000, guid: 6038f9e6cf9f0b6439b795cbf001c388, type: 3}
   doEffectSFX: {fileID: 8300000, guid: c3cd6fad04cc7cb4da2f9c05c4f63081, type: 3}
   disableSFX: {fileID: 8300000, guid: db9c42ae04551ce49978816123ad803b, type: 3}
+  TooltipPrefab: {fileID: 7989602271765571800, guid: f20a9d03ce120aa48833574df7a38b70,
+    type: 3}
   boostMultPerResource: 0.25
   duration: 30
   maxStacks: 5
@@ -2091,6 +2103,8 @@ MonoBehaviour:
   addResourceSFX: {fileID: 8300000, guid: 6038f9e6cf9f0b6439b795cbf001c388, type: 3}
   doEffectSFX: {fileID: 8300000, guid: c3cd6fad04cc7cb4da2f9c05c4f63081, type: 3}
   disableSFX: {fileID: 8300000, guid: db9c42ae04551ce49978816123ad803b, type: 3}
+  TooltipPrefab: {fileID: 7989602271765571800, guid: f20a9d03ce120aa48833574df7a38b70,
+    type: 3}
   boostMultPerResource: 1.2
   duration: 25
   maxStacks: 5

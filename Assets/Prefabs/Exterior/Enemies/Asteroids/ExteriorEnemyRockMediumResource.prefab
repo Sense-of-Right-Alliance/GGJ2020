@@ -156,6 +156,7 @@ MonoBehaviour:
   speed: 60
   homingSpeed: 0
   homingRadius: 5
+  isInPosition: 0
   direction: {x: 0, y: -1}
 --- !u!114 &-278988709436758044
 MonoBehaviour:
@@ -172,6 +173,9 @@ MonoBehaviour:
   EnemyDestroyedOrRemovedEvent:
     m_PersistentCalls:
       m_Calls: []
+  BlownUpEvent:
+    m_PersistentCalls:
+      m_Calls: []
   explosionPrefab: {fileID: 235347168054186532, guid: 6a990f3b44005534986bd67b0c61ed91,
     type: 3}
   explosionSFXOverride: {fileID: 8300000, guid: 602d87e36a1df6e438a1c7ef51bb6083,
@@ -183,7 +187,7 @@ MonoBehaviour:
   scoreValue: 50
   shrapnelForce: 0
   problemOdds:
-    nothingOdds: 10
+    nothingOdds: 0
     debrisOdds: 50
     steamOdds: 10
     flameOdds: 5

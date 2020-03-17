@@ -205,7 +205,7 @@ MonoBehaviour:
   scoreValue: 150
   shrapnelForce: 0
   problemOdds:
-    nothingOdds: 20
+    nothingOdds: 0
     debrisOdds: 50
     steamOdds: 10
     flameOdds: 5

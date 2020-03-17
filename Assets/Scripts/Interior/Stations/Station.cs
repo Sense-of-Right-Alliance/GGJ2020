@@ -16,6 +16,8 @@ public class Station : MonoBehaviour
     [SerializeField] AudioClip doEffectSFX;
     [SerializeField] AudioClip disableSFX;
 
+    [SerializeField] protected GameObject TooltipPrefab;
+
     protected ResourcePip[] resourcePips;
 
     protected bool Activated { get { return activated; } }
@@ -25,6 +27,11 @@ public class Station : MonoBehaviour
     protected Ship Ship { get { return exteriorShip; }  }
 
     protected GameObject ResourcePipPrefab { get { return resourcePipPrefab; } }
+    
+    protected Tooltip tooltip;
+
+    protected string stationName = "Station";
+    protected string description = "Consumes resources to provide effect";
 
     private AudioSource aSource;
 
@@ -53,6 +60,30 @@ public class Station : MonoBehaviour
     protected virtual void InitStation()
     {
 
+    }
+
+
+    public void ShowTooltip()
+    { 
+        if (tooltip == null)
+        {
+            tooltip = Instantiate(TooltipPrefab, transform).GetComponent<Tooltip>();
+            tooltip.Text.text = stationName + "\n" + description;
+            //tooltip.GetComponent<RectTransform>().rect.height = tooltip.Text.text.
+            //tooltip.gameObject.transform.SetParent(this.transform);
+            //tooltip.gameObject.GetComponent<RectTransform>().position = Vector2.zero;
+        }
+
+        tooltip.gameObject.SetActive(true);
+        //tooltip
+    }
+
+    public void HideTooltip()
+    {
+        if (tooltip != null)
+        {
+            tooltip.gameObject.SetActive(false);
+        }
     }
 
     protected virtual void InitPips()
@@ -102,6 +133,17 @@ public class Station : MonoBehaviour
         
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "Player") ShowTooltip();
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.tag == "Player") HideTooltip();
+    }
+
+
     /*
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -133,9 +175,9 @@ public class Station : MonoBehaviour
 
         UpdateResourcePips();
     }
-    */
+        */
 
-    protected void CollectResource(InteriorResource r)
+        protected void CollectResource(InteriorResource r)
     {
         IncreaseResources(r);
         r.Consume();
