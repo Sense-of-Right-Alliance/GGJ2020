@@ -7,6 +7,9 @@ public class Ship : MonoBehaviour
 {
     public UnityEvent shipHitEvent;
 
+    [SerializeField] Camera exteriorBoundsCamera;
+    [SerializeField] float boundsPadding = 1f;
+
     [SerializeField] int maxHitPoints = 5;
     public int MaxHitPoints { get { return maxHitPoints; } }
 
@@ -73,6 +76,12 @@ public class Ship : MonoBehaviour
     AudioSource _audioSource;
     SpriteRenderer _spriteRenderer;
 
+    // bounds variables
+    float xMin;
+    float xMax;
+    float yMin;
+    float yMax;
+
     private void Awake()
     {
         _rigidbody2D = GetComponent<Rigidbody2D>();
@@ -81,10 +90,22 @@ public class Ship : MonoBehaviour
 
         if (exteriorManager == null) exteriorManager = GameObject.FindObjectOfType<ExteriorManager>();
         if (interiorManager == null) interiorManager = GameObject.FindObjectOfType<InteriorManager>();
+        if (exteriorBoundsCamera == null) exteriorBoundsCamera = GameObject.Find("ExteriorCamera").GetComponent<Camera>();
 
         if (shipHitEvent == null) shipHitEvent = new UnityEvent();
 
         //currentHitPoints = maxHitPoints; // disabled, so can set starting health in editor.
+
+        // calc bounds
+
+        if (exteriorBoundsCamera != null)
+        {
+            xMin = exteriorBoundsCamera.ViewportToWorldPoint(new Vector3(0, 0, 0)).x + boundsPadding;
+            xMax = exteriorBoundsCamera.ViewportToWorldPoint(new Vector3(1, 0, 0)).x - boundsPadding;
+
+            yMin = exteriorBoundsCamera.ViewportToWorldPoint(new Vector3(0, 0, 0)).y + boundsPadding;
+            yMax = exteriorBoundsCamera.ViewportToWorldPoint(new Vector3(0, 1, 0)).y - boundsPadding;
+        }
     }
 
     // Start is called before the first frame update
@@ -236,6 +257,15 @@ public class Ship : MonoBehaviour
         else
         {
             velocity.y = (playerID == PlayerID.Player1 ? Input.GetAxis("Vertical1") : Input.GetAxis("Vertical2")) * boostedSpeed;
+        }
+
+        // Correct if at bounds...
+        if (exteriorBoundsCamera != null) // means we've got mins and maxs defined in start
+        {
+            if (velocity.x < 0 && transform.position.x <= xMin) velocity.x = 0;
+            if (velocity.x > 0 && transform.position.x > xMax) velocity.x = 0;
+            if (velocity.y < 0 && transform.position.y < yMin) velocity.y = 0;
+            if (velocity.y > 0 && transform.position.y > yMax) velocity.y = 0;
         }
 
         _rigidbody2D.AddForce(velocity);
