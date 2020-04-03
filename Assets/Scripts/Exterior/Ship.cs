@@ -262,7 +262,7 @@ public class Ship : MonoBehaviour
         // Correct if at bounds...
         if (exteriorBoundsCamera != null) // means we've got mins and maxs defined in start
         {
-            if (velocity.x < 0 && transform.position.x <= xMin) velocity.x = 0;
+            if (velocity.x < 0 && transform.position.x < xMin) velocity.x = 0;
             if (velocity.x > 0 && transform.position.x > xMax) velocity.x = 0;
             if (velocity.y < 0 && transform.position.y < yMin) velocity.y = 0;
             if (velocity.y > 0 && transform.position.y > yMax) velocity.y = 0;
