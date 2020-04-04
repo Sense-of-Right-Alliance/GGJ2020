@@ -11,7 +11,7 @@ public class ScoreManager : MonoBehaviour
 
     [SerializeField] TextMeshProUGUI scoreText;
 
-    [SerializeField] Ship exteriorPlayer;
+    [SerializeField] ExteriorShip exteriorPlayer;
     [SerializeField] InteriorPlayer interiorPlayer;
 
     [SerializeField] int score = 0;
@@ -37,7 +37,7 @@ public class ScoreManager : MonoBehaviour
     {
         if (scoreText == null) scoreText = GameObject.Find("Score Text").GetComponent<TextMeshProUGUI>();
 
-        if (exteriorPlayer == null) exteriorPlayer = GameObject.FindObjectOfType<Ship>();
+        if (exteriorPlayer == null) exteriorPlayer = GameObject.FindObjectOfType<ExteriorShip>();
         exteriorPlayer.shipHitEvent.AddListener(PlayerShipHit);
         // todo subscrib to events
 

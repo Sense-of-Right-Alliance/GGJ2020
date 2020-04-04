@@ -22,7 +22,7 @@ public class EnemyShockwave : MonoBehaviour
     {
         if (collision.tag == "Player")
         {
-            collision.gameObject.GetComponent<Ship>().TakeHit(damage, problemOdds); 
+            collision.gameObject.GetComponent<ExteriorShip>().TakeHit(damage, problemOdds); 
         }
     }
 }

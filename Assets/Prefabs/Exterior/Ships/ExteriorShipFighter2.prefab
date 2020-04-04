@@ -9939,7 +9939,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6589233759244413117}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.15, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 9144624870734944553}
@@ -10184,6 +10184,8 @@ MonoBehaviour:
   shipHitEvent:
     m_PersistentCalls:
       m_Calls: []
+  exteriorBoundsCamera: {fileID: 0}
+  boundsPadding: 1
   maxHitPoints: 8
   invincible: 0
   speed: 30

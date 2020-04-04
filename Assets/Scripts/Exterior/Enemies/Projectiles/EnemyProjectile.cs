@@ -60,7 +60,7 @@ public class EnemyProjectile : MonoBehaviour
         else if (collision.transform.CompareTag("Player"))
         {
             if (explosionPrefab != null) Instantiate(explosionPrefab, transform.position, Quaternion.identity);
-            collision.gameObject.GetComponent<Ship>().TakeHit(damage, problemOdds);
+            collision.gameObject.GetComponent<ExteriorShip>().TakeHit(damage, problemOdds);
             Destroy(gameObject);
         }
         else if (collision.transform.CompareTag("Asteroid"))

@@ -45,7 +45,7 @@ public class ExteriorManager : MonoBehaviour
         CheckEndMission();
     }
 
-    public void HandleShipDestroyed(Ship ship)
+    public void HandleShipDestroyed(ExteriorShip ship)
     {
         _waveManager.StopWaves();
 

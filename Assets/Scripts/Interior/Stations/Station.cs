@@ -5,7 +5,7 @@ using System.Linq;
 
 public class Station : MonoBehaviour
 {
-    [SerializeField] Ship exteriorShip;
+    [SerializeField] ExteriorShip exteriorShip;
     [SerializeField] bool activated = true;
     [SerializeField] int resourceRequirement = 1;
     [SerializeField] int resourceCount = 0;
@@ -24,7 +24,7 @@ public class Station : MonoBehaviour
     protected int ResourceRequirement { get { return resourceRequirement; } }
     protected int ResourceCount { get { return resourceCount; } set { resourceCount = value; } }
     protected ResourcePip[] ResourcePips { get { return resourcePips; } }
-    protected Ship Ship { get { return exteriorShip; }  }
+    protected ExteriorShip Ship { get { return exteriorShip; }  }
 
     protected GameObject ResourcePipPrefab { get { return resourcePipPrefab; } }
     
@@ -37,7 +37,7 @@ public class Station : MonoBehaviour
 
     private void Awake()
     {
-        if (exteriorShip == null) exteriorShip = GameObject.Find("ExteriorShip").GetComponent<Ship>();
+        if (exteriorShip == null) exteriorShip = GameObject.Find("ExteriorShip").GetComponent<ExteriorShip>();
 
         aSource = GetComponent<AudioSource>();
 
