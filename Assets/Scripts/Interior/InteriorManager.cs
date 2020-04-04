@@ -17,7 +17,7 @@ public class InteriorManager : MonoBehaviour
 
     [SerializeField] GameObject hullBreachPrefab;
 
-    [SerializeField] Ship exteriorShip;
+    [SerializeField] ExteriorShip exteriorShip;
     [SerializeField] InteriorPlayer interiorPlayer;
 
     [SerializeField] GameObject interiorCamera;
@@ -56,7 +56,7 @@ public class InteriorManager : MonoBehaviour
         if (interiorCameraQuad == null) interiorCameraQuad = GameObject.Find("InteriorCameraQuad");
         if (interiorShipMap == null) interiorShipMap = GameObject.Find("ShipInteriorMap");
 
-        if (exteriorShip == null) exteriorShip = GameObject.Find("ExteriorShip").GetComponent<Ship>();
+        if (exteriorShip == null) exteriorShip = GameObject.Find("ExteriorShip").GetComponent<ExteriorShip>();
 
         aSource = GetComponent<AudioSource>();
     }

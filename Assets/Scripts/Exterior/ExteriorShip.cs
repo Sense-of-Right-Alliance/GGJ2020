@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Ship : MonoBehaviour
+public class ExteriorShip : MonoBehaviour
 {
     public UnityEvent shipHitEvent;
 

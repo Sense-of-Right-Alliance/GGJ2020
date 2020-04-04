@@ -34,7 +34,7 @@ public class RingExplosion : MonoBehaviour
         {
             if (hitColliders[i].tag == "Player")
             {
-                hitColliders[i].GetComponent<Ship>().TakeHit(1, problemOdds);
+                hitColliders[i].GetComponent<ExteriorShip>().TakeHit(1, problemOdds);
             }
             else if (hitColliders[i].tag == "Enemy")
             {

@@ -103,7 +103,7 @@ public class Asteroid : MonoBehaviour
     {
         if (collision.transform.CompareTag("Player"))
         {
-            collision.gameObject.GetComponent<Ship>().TakeHit(1, problemOdds); // deals only 1 damage because we're not masochists
+            collision.gameObject.GetComponent<ExteriorShip>().TakeHit(1, problemOdds); // deals only 1 damage because we're not masochists
             TakeHit(breakAgainstOtherAsteroids ? this.hitPoints : 1);
         }
         else if (collision.transform.CompareTag("Enemy") || collision.transform.CompareTag("AmbushEnemy"))

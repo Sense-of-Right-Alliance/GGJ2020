@@ -8,14 +8,14 @@ public class ShipHPUI : MonoBehaviour
     [SerializeField] GameObject pipPrefab;
 
     protected ResourcePip[] pips;
-    protected Ship ship;
+    protected ExteriorShip ship;
 
     private void Start()
     {
         GetComponent<SpriteRenderer>().enabled = false;
     }
 
-    public virtual void InitPips(Ship ship)
+    public virtual void InitPips(ExteriorShip ship)
     {
         this.ship = ship;
 

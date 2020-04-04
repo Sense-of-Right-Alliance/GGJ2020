@@ -55,7 +55,7 @@ public class Siren : MonoBehaviour
         }
     }
 
-    private void Start()
+    private void Awake()
     {
         aSource = GetComponent<AudioSource>();
 

@@ -55,7 +55,7 @@ public class SpawnManager : MonoBehaviour
     {
         if (playerShip == null)
         {
-            Ship ship = GameObject.FindObjectOfType<Ship>();
+            ExteriorShip ship = GameObject.FindObjectOfType<ExteriorShip>();
             if (ship != null) playerShip = ship.gameObject;
         }
 
