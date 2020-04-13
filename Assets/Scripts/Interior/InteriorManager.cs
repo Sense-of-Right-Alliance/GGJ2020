@@ -56,7 +56,8 @@ public class InteriorManager : MonoBehaviour
         if (interiorCameraQuad == null) interiorCameraQuad = GameObject.Find("InteriorCameraQuad");
         if (interiorShipMap == null) interiorShipMap = GameObject.Find("ShipInteriorMap");
 
-        if (exteriorShip == null) exteriorShip = GameObject.Find("ExteriorShip").GetComponent<ExteriorShip>();
+        GameObject exteriorShipObj = GameObject.Find("ExteriorShip");
+        if (exteriorShip == null && exteriorShipObj != null) exteriorShip = exteriorShipObj.GetComponent<ExteriorShip>();
 
         aSource = GetComponent<AudioSource>();
     }
@@ -91,9 +92,27 @@ public class InteriorManager : MonoBehaviour
         }
         numFlames = flames.Length;
 
-        shipHPUI.InitPips(exteriorShip);
+        if (exteriorShip != null)
+        {
+            exteriorShip.exteriorShipMoveEvent.AddListener(AddInertiaVelocityToObjects);
+            exteriorShip.shipHitEvent.AddListener(OnExternalShipDamaged);
+            shipHPUI.InitPips(exteriorShip);
+        }
+        else
+        {
+            Debug.Log("InteriorManager: Unable to find game object with name 'ExternalShip' to add events listeners to");
+        }
 
         UpdateSiren();
+    }
+
+    private void OnExternalShipDamaged(GameObject damager)
+    {
+        InteriorProblemMaker problemMaker = damager.GetComponent<InteriorProblemMaker>();
+        if (problemMaker)
+        {
+            HandleShipDamage(problemMaker.ProblemOdds);
+        }
     }
 
     private void Update()
@@ -442,8 +461,10 @@ public class InteriorManager : MonoBehaviour
     }
 
     // Push all interior objects in this direction, to simulate inertia of the ship moving around
-    public void AddInertiaVelocityToObjects(Vector2 velocity)
+    private void AddInertiaVelocityToObjects(ExteriorShip ship)
     {
+        Vector2 velocity = ship.lastVelocity;
+
         Vector2 dir = velocity.normalized;
         float mag = velocity.magnitude * 0.25f;
 

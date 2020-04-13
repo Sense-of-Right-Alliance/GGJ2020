@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 3745531017145603611}
   - component: {fileID: 8053541066677162967}
   - component: {fileID: 4007266958333850579}
+  - component: {fileID: 938339366077448241}
+  - component: {fileID: 6533064043504146208}
   m_Layer: 0
   m_Name: RingExplosion
   m_TagString: Untagged
@@ -235,3 +237,35 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &938339366077448241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3745531017145603687}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e549384fa8306044a77e517c235f251, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  problemOdds:
+    nothingOdds: 0
+    debrisOdds: 0
+    steamOdds: 50
+    flameOdds: 40
+    breachOdds: 30
+    numProblems: 2
+--- !u!114 &6533064043504146208
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3745531017145603687}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdeba8495c6841046914f1c5a5665d10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 1

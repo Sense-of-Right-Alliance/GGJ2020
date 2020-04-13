@@ -13,6 +13,7 @@ public class UnityGameObjectEvent : UnityEvent<GameObject>
 public class Enemy : MonoBehaviour
 {
     public UnityGameObjectEvent EnemyDestroyedOrRemovedEvent;
+    public UnityGameObjectEvent BlownUpEvent;
 
     [SerializeField] GameObject explosionPrefab;
     [SerializeField] int hitPoints = 2;
@@ -22,8 +23,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] Quaternion shootDirection = Quaternion.identity;
 
     [SerializeField] int scoreValue = 100;
-
-    [SerializeField] InteriorProblemOdds problemOdds;
+    public int ScoreValue { get { return scoreValue; } }
 
     [SerializeField] int spreadShot = 0;
     [SerializeField] float spreadRadius = 45f;
@@ -41,7 +41,8 @@ public class Enemy : MonoBehaviour
         _audioSource = GetComponent<AudioSource>();
         _movementBehaviour = GetComponent<MovementBehaviour>();
 
-        if (EnemyDestroyedOrRemovedEvent == null) EnemyDestroyedOrRemovedEvent = new UnityGameObjectEvent();
+        EnemyDestroyedOrRemovedEvent = new UnityGameObjectEvent();
+        BlownUpEvent = new UnityGameObjectEvent();
     }
 
     private void Start()
@@ -117,7 +118,8 @@ public class Enemy : MonoBehaviour
 
     public void BlowUp(bool canDropResource = true)
     {
-        ScoreManager.scoreManager.EnemyDestroyed(scoreValue);
+        //ScoreManager.scoreManager.EnemyDestroyed(scoreValue);
+        BlownUpEvent.Invoke(gameObject);
 
         if (explosionPrefab != null) Instantiate(explosionPrefab, transform.position, Quaternion.identity);
 
@@ -136,7 +138,7 @@ public class Enemy : MonoBehaviour
     {
         if (collision.transform.CompareTag("Player"))
         {
-            collision.gameObject.GetComponent<ExteriorShip>().TakeHit(1, problemOdds); // deals only 1 damage because we're not masochists
+            collision.gameObject.GetComponent<ExteriorShip>().TakeHit(gameObject);// 1, problemOdds); // deals only 1 damage because we're not masochists
             Destroy(gameObject);
         }
     }

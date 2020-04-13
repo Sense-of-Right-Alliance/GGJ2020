@@ -47,6 +47,8 @@ GameObject:
   - component: {fileID: 4839187529499272593}
   - component: {fileID: -6527524262841828267}
   - component: {fileID: 6841108643916625415}
+  - component: {fileID: -292225546918919563}
+  - component: {fileID: -1876775836087448906}
   m_Layer: 9
   m_Name: ExteriorEnemyShipPlainJane
   m_TagString: Enemy
@@ -171,6 +173,9 @@ MonoBehaviour:
   EnemyDestroyedOrRemovedEvent:
     m_PersistentCalls:
       m_Calls: []
+  BlownUpEvent:
+    m_PersistentCalls:
+      m_Calls: []
   explosionPrefab: {fileID: 235347168054186532, guid: 096546276d9a9d549ad67e5cc88926c4,
     type: 3}
   hitPoints: 2
@@ -188,6 +193,7 @@ MonoBehaviour:
     breachOdds: 20
     numProblems: 1
   spreadShot: 0
+  spreadRadius: 45
 --- !u!50 &942606664080155765
 Rigidbody2D:
   serializedVersion: 4
@@ -357,3 +363,35 @@ MonoBehaviour:
   isInPosition: 0
   direction: {x: 0, y: -1}
   isPacing: 0
+--- !u!114 &-292225546918919563
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4303212633405705334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e549384fa8306044a77e517c235f251, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  problemOdds:
+    nothingOdds: 0
+    debrisOdds: 50
+    steamOdds: 10
+    flameOdds: 10
+    breachOdds: 20
+    numProblems: 1
+--- !u!114 &-1876775836087448906
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4303212633405705334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdeba8495c6841046914f1c5a5665d10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 1

@@ -25,6 +25,16 @@ public class ExteriorHUD : MonoBehaviour
             _energyBalls[i].transform.SetParent(null);
             _energyBalls[i].SetActive(false);
         }
+
+        // register for events to update UI
+        GameObject shipObj = GameObject.Find("ExteriorShip");
+        if (shipObj)
+        {
+            ExteriorShip exteriorShip = shipObj.GetComponent<ExteriorShip>();
+            exteriorShip.exteriorShipUpdatedEvent.AddListener(UpdateEnergyBallUI);
+        } else {
+            Debug.Log("ExteriorHUD: Unable to find game object with name 'ExternalShip' to add events listeners to");
+        }
     }
 
     private void Update()
@@ -32,15 +42,17 @@ public class ExteriorHUD : MonoBehaviour
         
     }
 
-    public void UpdateEnergyBallUI(int count)
+    public void UpdateEnergyBallUI(ExteriorShip ship)
     {
+        int nullBalls = ship.NumEnergyBalls;
+
         for (int i = 0; i < _energyBalls.Count; i++)
         {
             _energyBalls[i].transform.SetParent(null);
             _energyBalls[i].SetActive(false);
         }
 
-        for (int i = 0; i < count;i++)
+        for (int i = 0; i < nullBalls; i++)
         {
             if (i >= _energyBalls.Count)
             {

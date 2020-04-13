@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 5181666675172989378}
   - component: {fileID: -4036976034239442463}
   - component: {fileID: -278988709436758044}
+  - component: {fileID: -279713679097222818}
+  - component: {fileID: -1253062475361474696}
   m_Layer: 17
   m_Name: ExteriorEnemyBulletRock
   m_TagString: Asteroid
@@ -154,6 +156,7 @@ MonoBehaviour:
   speed: 250
   homingSpeed: 0
   homingRadius: 5
+  isInPosition: 0
   direction: {x: 0, y: -1}
 --- !u!114 &-278988709436758044
 MonoBehaviour:
@@ -168,6 +171,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EnemyDestroyedOrRemovedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  BlownUpEvent:
     m_PersistentCalls:
       m_Calls: []
   explosionPrefab: {fileID: 235347168054186532, guid: 6a990f3b44005534986bd67b0c61ed91,
@@ -187,3 +193,35 @@ MonoBehaviour:
     flameOdds: 0
     breachOdds: 1
     numProblems: 1
+--- !u!114 &-279713679097222818
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4303212633405705334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e549384fa8306044a77e517c235f251, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  problemOdds:
+    nothingOdds: 0
+    debrisOdds: 0
+    steamOdds: 0
+    flameOdds: 0
+    breachOdds: 1
+    numProblems: 1
+--- !u!114 &-1253062475361474696
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4303212633405705334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdeba8495c6841046914f1c5a5665d10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 1

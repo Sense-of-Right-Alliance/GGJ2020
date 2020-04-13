@@ -8,9 +8,13 @@ public class RingExplosion : MonoBehaviour
     [SerializeField] float damageRadius = 2f;
     [SerializeField] float damageDelay = 0.2f;
 
-    [SerializeField] InteriorProblemOdds problemOdds;
-
     private float t = 0f;
+    private DamageDealer _damageDealer;
+
+    private void Start()
+    {
+        _damageDealer = GetComponent<DamageDealer>();
+    }
 
     private void Update()
     {
@@ -28,21 +32,24 @@ public class RingExplosion : MonoBehaviour
 
     private void DealDamage()
     {
+        int damage = 1;
+        if (_damageDealer) damage = _damageDealer.GetDamage();
+
         Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, damageRadius);
         int i = 0;
         while (i < hitColliders.Length)
         {
             if (hitColliders[i].tag == "Player")
             {
-                hitColliders[i].GetComponent<ExteriorShip>().TakeHit(1, problemOdds);
+                hitColliders[i].GetComponent<ExteriorShip>().TakeHit(gameObject); // will take damage from DamageDealer component, and start problems from InteriorProblemMaker component
             }
             else if (hitColliders[i].tag == "Enemy")
             {
-                hitColliders[i].GetComponent<Enemy>().TakeHit(1);
+                hitColliders[i].GetComponent<Enemy>().TakeHit(damage);
             }
             else if (hitColliders[i].tag == "Asteroid")
             {
-                hitColliders[i].GetComponent<Asteroid>().TakeHit(1);
+                hitColliders[i].GetComponent<Asteroid>().TakeHit(damage);
             }
             i++;
         }
