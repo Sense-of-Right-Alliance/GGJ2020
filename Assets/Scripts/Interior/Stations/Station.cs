@@ -128,7 +128,7 @@ public class Station : MonoBehaviour
         }
     }
 
-    protected virtual void HandleShipHit(ExteriorShip ship)
+    protected virtual void HandleShipHit(GameObject hittingObject)
     {
         
     }

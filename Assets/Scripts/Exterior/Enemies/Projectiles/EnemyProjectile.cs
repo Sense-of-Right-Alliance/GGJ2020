@@ -7,22 +7,24 @@ public class EnemyProjectile : MonoBehaviour
     [SerializeField] GameObject explosionPrefab;
 
     [SerializeField] protected float speed = 10f;
-    [SerializeField] protected int damage = 1;
     [SerializeField] protected float wobbleAmount = 0f;
     [SerializeField] bool spin = false;
 
-    [SerializeField] InteriorProblemOdds problemOdds;
-
     [SerializeField] protected Vector2 _direction;
+
     protected Quaternion _rotationAmount;
+    protected DamageDealer _damageDealer;
 
     protected Vector2 overrideDir;
 
     protected Vector2 Direction { get { return overrideDir != null && overrideDir.magnitude > 0 ? overrideDir : _direction; } }
+    
 
     // Start is called before the first frame update
     private void Start()
     {
+        _damageDealer = GetComponent<DamageDealer>();
+
         _direction = -transform.up;
 
         //if (spin) _rotationAmount = Quaternion.Euler(0, 0, UnityEngine.Random.Range(-speed, speed));
@@ -60,13 +62,13 @@ public class EnemyProjectile : MonoBehaviour
         else if (collision.transform.CompareTag("Player"))
         {
             if (explosionPrefab != null) Instantiate(explosionPrefab, transform.position, Quaternion.identity);
-            collision.gameObject.GetComponent<ExteriorShip>().TakeHit(damage, problemOdds);
+            collision.gameObject.GetComponent<ExteriorShip>().TakeHit(gameObject);// damage, problemOdds);
             Destroy(gameObject);
         }
         else if (collision.transform.CompareTag("Asteroid"))
         {
             if (explosionPrefab != null) Instantiate(explosionPrefab, transform.position, Quaternion.identity);
-            collision.gameObject.GetComponent<Asteroid>().TakeHit(damage);
+            if (_damageDealer) collision.gameObject.GetComponent<Asteroid>().TakeHit(_damageDealer.GetDamage());
             Destroy(gameObject);
         }
     }

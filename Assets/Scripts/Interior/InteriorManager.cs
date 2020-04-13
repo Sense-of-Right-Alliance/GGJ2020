@@ -95,6 +95,7 @@ public class InteriorManager : MonoBehaviour
         if (exteriorShip != null)
         {
             exteriorShip.exteriorShipMoveEvent.AddListener(AddInertiaVelocityToObjects);
+            exteriorShip.shipHitEvent.AddListener(OnExternalShipDamaged);
             shipHPUI.InitPips(exteriorShip);
         }
         else
@@ -103,6 +104,15 @@ public class InteriorManager : MonoBehaviour
         }
 
         UpdateSiren();
+    }
+
+    private void OnExternalShipDamaged(GameObject damager)
+    {
+        InteriorProblemMaker problemMaker = damager.GetComponent<InteriorProblemMaker>();
+        if (problemMaker)
+        {
+            HandleShipDamage(problemMaker.ProblemOdds);
+        }
     }
 
     private void Update()

@@ -25,8 +25,6 @@ public class Enemy : MonoBehaviour
     [SerializeField] int scoreValue = 100;
     public int ScoreValue { get { return scoreValue; } }
 
-    [SerializeField] InteriorProblemOdds problemOdds;
-
     [SerializeField] int spreadShot = 0;
     [SerializeField] float spreadRadius = 45f;
 
@@ -140,7 +138,7 @@ public class Enemy : MonoBehaviour
     {
         if (collision.transform.CompareTag("Player"))
         {
-            collision.gameObject.GetComponent<ExteriorShip>().TakeHit(1, problemOdds); // deals only 1 damage because we're not masochists
+            collision.gameObject.GetComponent<ExteriorShip>().TakeHit(gameObject);// 1, problemOdds); // deals only 1 damage because we're not masochists
             Destroy(gameObject);
         }
     }

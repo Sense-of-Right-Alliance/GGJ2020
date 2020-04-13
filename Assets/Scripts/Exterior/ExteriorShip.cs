@@ -10,7 +10,7 @@ public class ExteriorShipEvent : UnityEvent<ExteriorShip>
 
 public class ExteriorShip : MonoBehaviour
 {
-    public ExteriorShipEvent shipHitEvent;
+    public UnityGameObjectEvent shipHitEvent;
     public ExteriorShipEvent exteriorShipUpdatedEvent; // if any property changes, usually used by UI
     public ExteriorShipEvent exteriorShipMoveEvent; // if any property changes, usually used by UI
 
@@ -106,7 +106,7 @@ public class ExteriorShip : MonoBehaviour
             if (exteriorBoundsObj != null) exteriorBoundsCamera = exteriorBoundsObj.GetComponent<Camera>();
         }
 
-        shipHitEvent = new ExteriorShipEvent();
+        shipHitEvent = new UnityGameObjectEvent();
         exteriorShipUpdatedEvent = new ExteriorShipEvent();
         exteriorShipMoveEvent = new ExteriorShipEvent();
 
@@ -386,8 +386,13 @@ public class ExteriorShip : MonoBehaviour
         Instantiate(projectilePrefab, t.position, t.rotation);
     }
 
-    public void TakeHit(int damage, InteriorProblemOdds problemOdds = null)
+    public void TakeHit(GameObject damager)//int damage, InteriorProblemOdds problemOdds = null)
     {
+        int damage = 1; // min damage
+
+        DamageDealer damageDealer = damager.GetComponent<DamageDealer>();
+        if (damageDealer) damage = damageDealer.GetDamage();
+
         if (!invincible && barrelRollTimer <= 0f)
         { 
             if (shields > 0 && ShieldsEnabled)
@@ -403,14 +408,14 @@ public class ExteriorShip : MonoBehaviour
                 if (currentHitPoints <= 0)
                 {
                     if (explosionPrefab != null) Instantiate(explosionPrefab, transform.position, Quaternion.identity);
-                    exteriorManager.HandleShipDestroyed(this);
+                    exteriorManager.HandleShipDestroyed(this); // TODO: extend into an event so ExteriorShip can be independent.
                     Destroy(gameObject);
                 }
             }
         }
 
-        shipHitEvent.Invoke(this);
-        interiorManager.HandleShipDamage(problemOdds);
+        shipHitEvent.Invoke(damager);
+        //interiorManager.HandleShipDamage(problemOdds); // TODO: extend into an event so ExteriorShip can be independent.
     }
 
     private void UpdateDamageSprite()

@@ -7,8 +7,8 @@ public class Projectile : MonoBehaviour
     [SerializeField] GameObject explosionPrefab;
 
     [SerializeField] float speed = 40f;
-    [SerializeField] int damage = 1;
     [SerializeField] bool indestructable = false;
+    [SerializeField] int damage = 1;
     [SerializeField] float spin = 0;
 
     Vector2 direction = new Vector2(0, 1);
@@ -17,10 +17,12 @@ public class Projectile : MonoBehaviour
     float damageTimer = 0f;
 
     Rigidbody2D _rigidbody2D;
+    //protected DamageDealer _damageDealer; // Not used... YET! Currently just an enemy thing.
 
     private void Awake()
     {
         _rigidbody2D = GetComponent<Rigidbody2D>();
+        //_damageDealer = GetComponent<DamageDealer>();
     }
 
     // Start is called before the first frame update

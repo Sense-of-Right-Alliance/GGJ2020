@@ -45,6 +45,8 @@ GameObject:
   - component: {fileID: 942606664080155765}
   - component: {fileID: -1765939175171844581}
   - component: {fileID: -1237359101557811532}
+  - component: {fileID: -6121688928446864562}
+  - component: {fileID: -5593627810353632485}
   m_Layer: 9
   m_Name: ExteriorEnemyShipBigBoi
   m_TagString: Enemy
@@ -167,6 +169,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EnemyDestroyedOrRemovedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  BlownUpEvent:
     m_PersistentCalls:
       m_Calls: []
   explosionPrefab: {fileID: 235347168054186532, guid: 096546276d9a9d549ad67e5cc88926c4,
@@ -321,3 +326,35 @@ MonoBehaviour:
   homingRadius: 5
   isInPosition: 0
   direction: {x: 0, y: -1}
+--- !u!114 &-6121688928446864562
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4303212633405705334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e549384fa8306044a77e517c235f251, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  problemOdds:
+    nothingOdds: 0
+    debrisOdds: 50
+    steamOdds: 10
+    flameOdds: 10
+    breachOdds: 20
+    numProblems: 1
+--- !u!114 &-5593627810353632485
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4303212633405705334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdeba8495c6841046914f1c5a5665d10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 1

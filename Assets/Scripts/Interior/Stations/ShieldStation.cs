@@ -60,7 +60,7 @@ public class ShieldStation : Station
         Ship.EnableShields();
     }
 
-    protected override void HandleShipHit(ExteriorShip ship)
+    protected override void HandleShipHit(GameObject hittingObject)
     {
         UpdateResourcePips();
     }

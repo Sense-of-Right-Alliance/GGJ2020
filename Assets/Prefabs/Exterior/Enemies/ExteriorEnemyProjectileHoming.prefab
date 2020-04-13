@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 784357087647990589}
   - component: {fileID: 6054189079366962740}
   - component: {fileID: 2064703090375110278}
+  - component: {fileID: 3227476451495385115}
+  - component: {fileID: 8308460559704311185}
   m_Layer: 11
   m_Name: ExteriorEnemyProjectileHoming
   m_TagString: Enemy Projectile
@@ -165,3 +167,35 @@ MonoBehaviour:
   _direction: {x: 0, y: 0}
   targetingRadius: 5
   rotateSpeed: 1.2
+--- !u!114 &3227476451495385115
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1455991204806863224}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdeba8495c6841046914f1c5a5665d10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 1
+--- !u!114 &8308460559704311185
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1455991204806863224}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e549384fa8306044a77e517c235f251, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  problemOdds:
+    nothingOdds: 0
+    debrisOdds: 50
+    steamOdds: 10
+    flameOdds: 10
+    breachOdds: 50
+    numProblems: 1

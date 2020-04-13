@@ -13,7 +13,9 @@ GameObject:
   - component: {fileID: 4092303813980180332}
   - component: {fileID: 4092303813980180333}
   - component: {fileID: 4092303813980180334}
-  - component: {fileID: 4092303813980180335}
+  - component: {fileID: -7973292091081351742}
+  - component: {fileID: 7558817703712553508}
+  - component: {fileID: -1013600601846406725}
   m_Layer: 9
   m_Name: EnemyShockwave
   m_TagString: Shockwave
@@ -139,7 +141,39 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 1.43}
   serializedVersion: 2
   m_Radius: 1.83
---- !u!114 &4092303813980180335
+--- !u!114 &-7973292091081351742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4092303813980180328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdeba8495c6841046914f1c5a5665d10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 1
+--- !u!114 &7558817703712553508
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4092303813980180328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e549384fa8306044a77e517c235f251, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  problemOdds:
+    nothingOdds: 0
+    debrisOdds: 0
+    steamOdds: 50
+    flameOdds: 50
+    breachOdds: 0
+    numProblems: 3
+--- !u!114 &-1013600601846406725
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -151,11 +185,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21b6cf948f8a27b4888473b6fb5f9b50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 1
-  problemOdds:
-    nothingOdds: 0
-    debrisOdds: 0
-    steamOdds: 50
-    flameOdds: 50
-    breachOdds: 0
-    numProblems: 3

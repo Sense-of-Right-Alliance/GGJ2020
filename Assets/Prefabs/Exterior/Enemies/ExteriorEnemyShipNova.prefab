@@ -45,6 +45,8 @@ GameObject:
   - component: {fileID: 94788791518665274}
   - component: {fileID: 1851274661952397043}
   - component: {fileID: 6678644327731537664}
+  - component: {fileID: -2487413774650644641}
+  - component: {fileID: -175902519209332347}
   m_Layer: 9
   m_Name: ExteriorEnemyShipNova
   m_TagString: Enemy
@@ -130,6 +132,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EnemyDestroyedOrRemovedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  BlownUpEvent:
     m_PersistentCalls:
       m_Calls: []
   explosionPrefab: {fileID: 3745531017145603687, guid: 7f8ec35e5037d8f45bf94489280a06b4,
@@ -299,3 +304,35 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.455
+--- !u!114 &-2487413774650644641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9012005631985633197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e549384fa8306044a77e517c235f251, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  problemOdds:
+    nothingOdds: 0
+    debrisOdds: 50
+    steamOdds: 10
+    flameOdds: 10
+    breachOdds: 20
+    numProblems: 1
+--- !u!114 &-175902519209332347
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9012005631985633197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdeba8495c6841046914f1c5a5665d10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 1

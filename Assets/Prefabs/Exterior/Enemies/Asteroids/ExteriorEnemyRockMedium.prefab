@@ -15,6 +15,8 @@ GameObject:
   - component: {fileID: -4036976034239442463}
   - component: {fileID: -278988709436758044}
   - component: {fileID: 632619011698001377}
+  - component: {fileID: 5803506376870192435}
+  - component: {fileID: 2576241868748948841}
   m_Layer: 17
   m_Name: ExteriorEnemyRockMedium
   m_TagString: Asteroid
@@ -213,3 +215,35 @@ MonoBehaviour:
   dropChanceOnDestroy: 0
   dropChanceOnHit: 0
   dropCount: 0
+--- !u!114 &5803506376870192435
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4303212633405705334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e549384fa8306044a77e517c235f251, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  problemOdds:
+    nothingOdds: 0
+    debrisOdds: 50
+    steamOdds: 10
+    flameOdds: 5
+    breachOdds: 10
+    numProblems: 1
+--- !u!114 &2576241868748948841
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4303212633405705334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdeba8495c6841046914f1c5a5665d10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 1

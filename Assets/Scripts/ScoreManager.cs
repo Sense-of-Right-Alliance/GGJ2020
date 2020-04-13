@@ -75,7 +75,7 @@ public class ScoreManager : MonoBehaviour
         else if (asteroid) EnemyDestroyed(asteroid.ScoreValue);
     }
 
-    public void PlayerShipHit(ExteriorShip ship) { AddScore(-100); HitsTaken++; }
+    public void PlayerShipHit(GameObject hittingObject) { AddScore(-100); HitsTaken++; }
 
     public void EnemyDestroyed(int scoreValue) { AddScore(scoreValue); EnemiesDestroyed++; }
 
