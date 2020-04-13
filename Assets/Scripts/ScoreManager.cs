@@ -44,6 +44,14 @@ public class ScoreManager : MonoBehaviour
         if (interiorPlayer == null) interiorPlayer = GameObject.FindObjectOfType<InteriorPlayer>();
         // todo subscrib to events
 
+        ExteriorManager exteriorManager = GameObject.FindObjectOfType<ExteriorManager>();
+        if (exteriorManager != null)
+        {
+            exteriorManager.GetSpawnManager().EnemyBlownUpEvent.AddListener(OnEnemyBlownUp);
+        } else {
+            Debug.Log("ScoreManager: Unable to find game object with type 'ExteriorManager' to add events listeners to");
+        }
+
         UpdatePastMissionsScore();
 
         UpdateScoreText();
@@ -59,7 +67,15 @@ public class ScoreManager : MonoBehaviour
         }
     }
 
-    public void PlayerShipHit() { AddScore(-100); HitsTaken++; }
+    private void OnEnemyBlownUp(GameObject obj)
+    {
+        Enemy enemy = obj.GetComponent<Enemy>();
+        Asteroid asteroid = obj.GetComponent<Asteroid>();
+        if (enemy) EnemyDestroyed(enemy.ScoreValue);
+        else if (asteroid) EnemyDestroyed(asteroid.ScoreValue);
+    }
+
+    public void PlayerShipHit(ExteriorShip ship) { AddScore(-100); HitsTaken++; }
 
     public void EnemyDestroyed(int scoreValue) { AddScore(scoreValue); EnemiesDestroyed++; }
 

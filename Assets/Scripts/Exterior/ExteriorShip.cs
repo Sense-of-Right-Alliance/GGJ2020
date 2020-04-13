@@ -3,9 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+public class ExteriorShipEvent : UnityEvent<ExteriorShip>
+{
+
+}
+
 public class ExteriorShip : MonoBehaviour
 {
-    public UnityEvent shipHitEvent;
+    public ExteriorShipEvent shipHitEvent;
+    public ExteriorShipEvent exteriorShipUpdatedEvent; // if any property changes, usually used by UI
+    public ExteriorShipEvent exteriorShipMoveEvent; // if any property changes, usually used by UI
 
     [SerializeField] Camera exteriorBoundsCamera;
     [SerializeField] float boundsPadding = 1f;
@@ -66,6 +73,7 @@ public class ExteriorShip : MonoBehaviour
     [SerializeField] List<ShipBonusStack> fireRateBoostStacksRight = new List<ShipBonusStack>();
 
     [SerializeField] int numEnergyBalls = 0;
+    public int NumEnergyBalls { get { return numEnergyBalls; } }
 
     public int NumFireSpreadStacks { get { return spreadStacks.Count; } }
     public int NumEngineBoostStacks { get { return engineBoostStacks.Count; } }
@@ -82,6 +90,8 @@ public class ExteriorShip : MonoBehaviour
     float yMin;
     float yMax;
 
+    public Vector2 lastVelocity = Vector2.zero;
+
     private void Awake()
     {
         _rigidbody2D = GetComponent<Rigidbody2D>();
@@ -90,9 +100,15 @@ public class ExteriorShip : MonoBehaviour
 
         if (exteriorManager == null) exteriorManager = GameObject.FindObjectOfType<ExteriorManager>();
         if (interiorManager == null) interiorManager = GameObject.FindObjectOfType<InteriorManager>();
-        if (exteriorBoundsCamera == null) exteriorBoundsCamera = GameObject.Find("ExteriorCamera").GetComponent<Camera>();
+        if (exteriorBoundsCamera == null)
+        {
+            GameObject exteriorBoundsObj = GameObject.Find("ExteriorCamera");
+            if (exteriorBoundsObj != null) exteriorBoundsCamera = exteriorBoundsObj.GetComponent<Camera>();
+        }
 
-        if (shipHitEvent == null) shipHitEvent = new UnityEvent();
+        shipHitEvent = new ExteriorShipEvent();
+        exteriorShipUpdatedEvent = new ExteriorShipEvent();
+        exteriorShipMoveEvent = new ExteriorShipEvent();
 
         //currentHitPoints = maxHitPoints; // disabled, so can set starting health in editor.
 
@@ -113,8 +129,6 @@ public class ExteriorShip : MonoBehaviour
     {
         UpdateDamageSprite();
         UpdateShieldsSprite();
-        //speedBoostMult = 1;
-        //fireRateBoost = 0f;
 
         int savedPlayerID = PlayerPrefs.GetInt("Pilot", -1);
         if (savedPlayerID == 0) playerID = PlayerID.Player1;
@@ -270,8 +284,10 @@ public class ExteriorShip : MonoBehaviour
 
         _rigidbody2D.AddForce(velocity);
 
-        // TODO: Apply opposite velocity to interior player and objects
-        InteriorManager.interiorManager.AddInertiaVelocityToObjects(-velocity);
+        // Apply opposite velocity to interior player and objects
+        //InteriorManager.interiorManager.AddInertiaVelocityToObjects(-velocity);
+        lastVelocity = velocity; // story so any events traking movement can use it how they wish!
+        exteriorShipMoveEvent.Invoke(this);
     }
 
     private float fireRateStackDrainLeft = 0f; // won't drain fire rate stacks unless are firing.
@@ -393,7 +409,7 @@ public class ExteriorShip : MonoBehaviour
             }
         }
 
-        shipHitEvent.Invoke();
+        shipHitEvent.Invoke(this);
         interiorManager.HandleShipDamage(problemOdds);
     }
 
@@ -474,7 +490,7 @@ public class ExteriorShip : MonoBehaviour
 
     protected void UpdateEnergyBallUI()
     {
-        ExteriorManager.exteriorManager.UpdateEnergyBallUI(numEnergyBalls);
+        exteriorShipUpdatedEvent.Invoke(this);
     }
 
     [SerializeField] int shields = 0;

@@ -540,6 +540,7 @@ MonoBehaviour:
   - {fileID: 1229690214}
   - {fileID: 1276214929}
   moveSpeed: 10
+  waveConfig: {fileID: 0}
 --- !u!212 &1362829816
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1175,6 +1176,11 @@ PrefabInstance:
       propertyPath: followTarget
       value: 
       objectReference: {fileID: 492021158}
+    - target: {fileID: 8741327019749381851, guid: e492f4ec6443b1342b7281ef9920a34b,
+        type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e492f4ec6443b1342b7281ef9920a34b, type: 3}
 --- !u!1001 &9144624871216020623
@@ -1184,6 +1190,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6589233758739280081, guid: 396845d0d6da92e4192d66243fa000c9,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9144624870734944552, guid: 396845d0d6da92e4192d66243fa000c9,
         type: 3}
       propertyPath: exteriorManager

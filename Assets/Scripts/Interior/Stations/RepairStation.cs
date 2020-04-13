@@ -26,7 +26,7 @@ public class RepairStation : Station
         }
     }
 
-    protected override void HandleShipHit()
+    protected override void HandleShipHit(ExteriorShip ship)
     {
         UpdateResourcePips();
     }

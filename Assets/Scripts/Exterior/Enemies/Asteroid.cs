@@ -18,6 +18,7 @@ public class Asteroid : MonoBehaviour
     [SerializeField] bool breakAgainstOtherAsteroids = false;
 
     [SerializeField] int scoreValue = 100;
+    public int ScoreValue { get { return scoreValue; } }
 
     [SerializeField] float shrapnelForce = 0;
 
@@ -89,13 +90,14 @@ public class Asteroid : MonoBehaviour
 
         BlownUpEvent.Invoke(gameObject);
 
-        ScoreManager.scoreManager.AsteroidDestroyed(scoreValue);
+        //ScoreManager.scoreManager.AsteroidDestroyed(scoreValue);
         Remove();
     }
 
     public void Remove()
     {
         EnemyDestroyedOrRemovedEvent.Invoke(gameObject);
+        EnemyDestroyedOrRemovedEvent.RemoveAllListeners();
         Destroy(gameObject);
     }
 

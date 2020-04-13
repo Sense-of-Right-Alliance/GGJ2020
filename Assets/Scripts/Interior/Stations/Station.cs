@@ -128,7 +128,7 @@ public class Station : MonoBehaviour
         }
     }
 
-    protected virtual void HandleShipHit()
+    protected virtual void HandleShipHit(ExteriorShip ship)
     {
         
     }

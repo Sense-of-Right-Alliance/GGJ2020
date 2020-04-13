@@ -33,6 +33,7 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] GameObject resourcePrefab;
 
     public UnityGameObjectEvent EnemyDestroyedOrRemovedEvent; // event for managers to listen to, like Exterior for tracking game end
+    public UnityGameObjectEvent EnemyBlownUpEvent; // for score, mostly
     public int NumEnemies { get { return _enemySpawns.Count; } }
 
     private readonly Dictionary<SpawnPattern, int> _squadronSpawns = new Dictionary<SpawnPattern, int>
@@ -84,7 +85,8 @@ public class SpawnManager : MonoBehaviour
             { EnemyType.RadialTurret, radialTurretPrefab },
         };
 
-        if (EnemyDestroyedOrRemovedEvent == null) EnemyDestroyedOrRemovedEvent = new UnityGameObjectEvent();
+        EnemyDestroyedOrRemovedEvent = new UnityGameObjectEvent();
+        EnemyBlownUpEvent = new UnityGameObjectEvent();
     }
 
     private void Update()
@@ -108,6 +110,11 @@ public class SpawnManager : MonoBehaviour
         EnemyDestroyedOrRemovedEvent.Invoke(enemy);
     }
 
+    private void OnEnemyBlownUp(GameObject enemy)
+    {
+        EnemyBlownUpEvent.Invoke(enemy);
+    }
+
     private void SpawnEnemy(GameObject prefab, Vector2 spawnPos, Quaternion rotation, string tagName)
     {
         var enemy = Instantiate(prefab, spawnPos, rotation);
@@ -117,8 +124,16 @@ public class SpawnManager : MonoBehaviour
 
         Enemy eComp = enemy.GetComponent<Enemy>();
         Asteroid aComp = enemy.GetComponent<Asteroid>();
-        if (eComp) eComp.EnemyDestroyedOrRemovedEvent.AddListener(OnEnemyDestroyedOrRemoved);
-        else if (aComp) aComp.EnemyDestroyedOrRemovedEvent.AddListener(OnEnemyDestroyedOrRemoved);
+        if (eComp)
+        {
+            eComp.EnemyDestroyedOrRemovedEvent.AddListener(OnEnemyDestroyedOrRemoved);
+            eComp.BlownUpEvent.AddListener(OnEnemyBlownUp);
+        }
+        else if (aComp)
+        {
+            aComp.EnemyDestroyedOrRemovedEvent.AddListener(OnEnemyDestroyedOrRemoved);
+            aComp.BlownUpEvent.AddListener(OnEnemyBlownUp);
+        }
 
         //Debug.Log("Spawned! Num Spawns = " + _enemySpawns.Count);
     }
